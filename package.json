@@ -1,0 +1,65 @@
+{
+  "name": "nodegate",
+  "description": "Fast and easy to use node.js based gateway.",
+  "version": "0.1.0",
+  "author": "Julien Martin <martin.julien82@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "deepmerge": "^3.2.0",
+    "express": "^4.16.4",
+    "immutable": "^4.0.0-rc.12",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0",
+    "jest": "^24.7.1",
+    "nock": "^10.0.6",
+    "nodemon": "^1.18.9",
+    "supertest": "^4.0.2"
+  },
+  "repository": "weekendesk/nodegate",
+  "keywords": [
+    "nodegate",
+    "api",
+    "gateway",
+    "framework",
+    "web",
+    "rest",
+    "router",
+    "express"
+  ],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "entities/",
+    "modifiers/",
+    "services/"
+  ],
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ]
+  }
+}
