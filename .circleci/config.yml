@@ -5,9 +5,20 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run: yarn install
-      - run: yarn test
-      - run: yarn lint
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Run tests
+          command: yarn test --coverage
+      - run:
+          name: Run linter
+          command: yarn lint
+      - run:
+          name: Collect coverage
+          command: |
+            yarn add coveralls
+            ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info
 
 workflows:
   version: 2
