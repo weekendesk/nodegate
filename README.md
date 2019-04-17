@@ -5,6 +5,7 @@ The easy plugin to programmatically manage an API Gateway. Based on top of [Expr
 [![CircleCI][circleci-badge]][circleci-url]
 [![Dependencies status][david-badge]][david-url]
 [![Coverage status][coveralls-badge]][coveralls-url]
+[![Version][version-badge]][version-url]
 
 ```js
 const nodegate = require('nodegate');
@@ -51,4 +52,6 @@ $ npm install nodegate
 [david-url]: https://david-dm.org/weekendesk/nodegate
 [coveralls-badge]: https://coveralls.io/repos/github/weekendesk/nodegate/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/weekendesk/nodegate?branch=master
+[version-badge]: https://badge.fury.io/js/nodegate.svg
+[version-url]: https://badge.fury.io/js/nodegate
 [wiki-api-management]: https://en.wikipedia.org/wiki/API_management
