@@ -1,4 +1,4 @@
-![nodegate](documentation/assets/logo-readme.png)
+![nodegate](assets/images/logo-readme.png)
 
 The easy plugin to programmatically manage a JSON API Gateway. Builded on top of [Express](https://expressjs.com/) & [Request](https://github.com/request/request).
 
@@ -26,7 +26,7 @@ gate.listen(8080);
 
 ## Usage
 
-![Nodegate usage](documentation/assets/schema-readme.png)
+![Nodegate usage](assets/images/schema-readme.png)
 
 This plugin help you to solve the well known problem of [API management][wiki-api-management].
 Some people are doing this by themselves, others by using complex tools or services, but
@@ -42,7 +42,7 @@ The concept of **nodegate** is simple:
  - Each pipeline contain one or more modifier,
  - For each call, a data container will pass through every modifier before the response.
 
-![Nodegate philosohpy](documentation/assets/philosophy-readme.png)
+![Nodegate philosohpy](assets/images/philosophy-readme.png)
 
 _And yes, there is more!_
 
