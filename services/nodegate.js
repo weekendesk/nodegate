@@ -46,6 +46,8 @@ const nodegate = () => {
 
   app.route = route(expressApp);
 
+  app.listen = expressApp.listen;
+
   return app;
 };
 
