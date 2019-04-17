@@ -49,6 +49,9 @@
   "engines": {
     "node": ">= 8.0.0"
   },
+  "eslintIgnore": [
+    "assets/examples/*"
+  ],
   "eslintConfig": {
     "extends": "airbnb-base",
     "env": {
