@@ -7,8 +7,8 @@ gate.route({
   method: 'get',
   path: '/weather/:city',
   pipeline: [
-    aggregate('get', 'http://www.metaweather.com/api/location/search/?query={params.city}', 'search'),
-    aggregate('get', 'http://www.metaweather.com/api/location/{body.search.0.woeid}'),
+    aggregate('get', 'https://www.metaweather.com/api/location/search/?query={params.city}', 'search'),
+    aggregate('get', 'https://www.metaweather.com/api/location/{body.search.0.woeid}'),
   ],
 });
 
