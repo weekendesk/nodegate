@@ -12,13 +12,17 @@ describe('entities/container', () => {
   describe('#extractFromRequest()', () => {
     it('should correctly set the headers, body and params', () => {
       const container = extractFromRequest({
-        headers: { 'X-ship': 'NCC-1701-E' },
         body: { captain: 'Jean-Luc Picard' },
         params: { pips: 4 },
       });
-      expect(container.headers['X-ship']).toBe('NCC-1701-E');
       expect(container.body.captain).toBe('Jean-Luc Picard');
       expect(container.params.pips).toBe(4);
+    });
+    it('should not set the headers of the request', () => {
+      const container = extractFromRequest({
+        headers: { 'X-ship': 'NCC-1701-E' },
+      });
+      expect(container.headers['X-ship']).toBeUndefined();
     });
     it('should ignore not wanted properties', () => {
       const container = extractFromRequest({

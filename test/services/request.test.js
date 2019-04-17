@@ -82,11 +82,13 @@ describe('services/request', () => {
       expect(result.statusCode).toBe(200);
     });
     it('should use the headers of the container', async () => {
-      const container = extractFromRequest({
+      const container = {
         headers: {
           origin: 'https://enterprise.com',
         },
-      });
+        body: {},
+        params: {},
+      };
       nock('https://wiki.federation.com', {
         reqheaders: {
           origin: 'https://enterprise.com',
@@ -135,11 +137,13 @@ describe('services/request', () => {
       expect(result.statusCode).toBe(200);
     });
     it('should use the headers of the container', async () => {
-      const container = extractFromRequest({
+      const container = {
         headers: {
           origin: 'https://enterprise.com',
         },
-      });
+        body: {},
+        params: {},
+      };
       nock('https://wiki.federation.com', {
         reqheaders: {
           origin: 'https://enterprise.com',

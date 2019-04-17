@@ -6,7 +6,7 @@
  */
 
 const extractFromRequest = request => ({
-  headers: request.headers || {},
+  headers: {},
   body: request.body || {},
   params: request.params || {},
 });
