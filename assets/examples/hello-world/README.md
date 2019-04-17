@@ -1,4 +1,4 @@
-![nodegate](../../images/logo-readme.png)
+![nodegate](../../images/logo-documentation.png)
 
 # Hello world example
 
