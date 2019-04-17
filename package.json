@@ -1,6 +1,6 @@
 {
   "name": "nodegate",
-  "description": "Fast and easy to use node.js based gateway.",
+  "description": "API gateway made simple, fast and easy to configure.",
   "version": "0.1.0",
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
