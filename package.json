@@ -63,7 +63,9 @@
     "collectCoverageFrom": [
       "**/*.js",
       "!**/node_modules/**",
-      "!**/vendor/**"
+      "!**/vendor/**",
+      "!**/coverage/**",
+      "!**/assets/**"
     ]
   }
 }

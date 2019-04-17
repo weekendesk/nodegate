@@ -16,14 +16,22 @@ const getHeaders = (container, options) => ({
   ...((options && options.headers) || {}),
 });
 
-const doRequest = (container, method, url, options) => requestNative({
-  ...defaultOptions(),
-  ...options,
-  headers: getHeaders(container, options),
-  method,
-  url: (typeof url === 'function' && url(container)) || url,
-  body: (container && container.body) || {},
-});
+const doRequest = (container, method, url, options) => {
+  const parameters = {
+    ...defaultOptions(),
+    ...options,
+    headers: getHeaders(container, options),
+    method,
+    url: (typeof url === 'function' && url(container)) || url,
+    body: (container && container.body) || {},
+  };
+
+  if (method === 'get') {
+    delete parameters.body;
+  }
+
+  return requestNative(parameters);
+};
 
 const request = container => ({
   get: (url, options) => doRequest(container, 'get', url, options),

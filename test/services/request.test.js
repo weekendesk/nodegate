@@ -121,10 +121,11 @@ describe('services/request', () => {
         },
       });
       nock('https://wiki.federation.com')
-        .get('/ships', { ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).get('https://wiki.federation.com/ships');
+        .get('/ships')
+        .reply(200, (_, requestBody) => ({ ...requestBody }));
+      const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships'));
       expect(result.statusCode).toBe(200);
+      expect(result.body.ship).toBeUndefined();
     });
   });
   describe('#(container).post()', () => {
