@@ -1,4 +1,4 @@
-![nodegate](documentation/assets/logo-50.png)
+![nodegate](documentation/assets/logo-readme.png)
 
 The easy plugin to programmatically manage an API Gateway. Based on top of [Express](https://expressjs.com/) & [Request](https://github.com/request/request).
 
@@ -25,7 +25,11 @@ gate.listen(8080);
 
 ## Usage
 
+![nodegate](documentation/assets/schema-readme.png)
 
+This plugin help you to solve the well known problem of [API management][wiki-api-management].
+Some people are doing this by themselves, others by using complex tools or services, but even with this kind of systems you will have to program some mechanics.
+This plugin help you to programmatically configure, develop and run your API gateway, in the simple way.
 
 ## Installation
 
@@ -47,3 +51,4 @@ $ npm install nodegate
 [david-url]: https://david-dm.org/weekendesk/nodegate
 [coveralls-badge]: https://coveralls.io/repos/github/weekendesk/nodegate/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/weekendesk/nodegate?branch=master
+[wiki-api-management]: https://en.wikipedia.org/wiki/API_management
