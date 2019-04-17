@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "nodegate": "^0.1.0"
+  }
+}
