@@ -268,7 +268,7 @@ const { aggregate } = require('nodegate/modifiers');
 
 Here is the complete list of all the bundled modifiers:
 
- - [aggregate()](#aggregate)
+ - [aggregate](#aggregatemethod-url-property)
 
 #### aggregate(method, url, [property])
 
