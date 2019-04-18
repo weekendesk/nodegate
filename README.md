@@ -28,10 +28,10 @@ gate.listen(8080);
 
 ![Nodegate usage](assets/images/schema-readme.png)
 
-This plugin help you to solve the well known problem of [API management][wiki-api-management].
+This plugin helps you to solve the well known problem of [API management][wiki-api-management].
 Some people are doing this by themselves, others by using complex tools or services, but
 even with this kind of systems you will have to program some mechanics.
-**Nodegate** help you to programmatically configure, develop and run your API gateway, in the simple way.
+**Nodegate** helps you to programmatically configure, develop and run your API gateway, in the simple way.
 
 ### Philosophy
 
@@ -39,8 +39,8 @@ The concept of **nodegate** is simple:
 
  - You declare the gateway routes,
  - Each route have a pipeline,
- - Each pipeline contain one or more modifier,
- - For each call, a data container will pass through every modifier before the response.
+ - Each pipeline contain one or more modifier(s),
+ - For each call, a data container will pass through every modifiers before the response.
 
 ![Nodegate philosohpy](assets/images/philosophy-readme.png)
 
@@ -80,7 +80,7 @@ We gather the weather data from a plugin API: [MetaWeather](https://www.metaweat
 
 Let's check the [API documentation](https://www.metaweather.com/api/) first:
 
-The route `/api/location/search/?query=(query)` allow us to fetch metadata about a city,
+The route `/api/location/search/?query=(query)` allows us to fetch metadata about a city,
 containing the `woeid` attribute needed to fetch the weather of the city with the route
 `/api/location/(woeid)`.
 
@@ -97,8 +97,8 @@ const { aggregate } = nodegate.modifiers;
 ```
 
 Now we will create our first route, `GET`, with the name of the city on the path. The route
-object need three attributes: the method, the path, and the pipeline. The pipeline will then
-be processes synchronously, using on each step a *container* generated from the request, and
+object needs three attributes: the method, the path, and the pipeline. The pipeline will then
+be processed synchronously, using on each step a *container* generated from the request, and
 containing the parameters and the body of the request.
 
 ```js
@@ -111,7 +111,7 @@ gate.route({
 ```
 
 Now we have to set the pipeline of our route. The process is simple: we need to fetch the `woeid` from
-the first route of the API, then to fetch the weather from the second one. On this example, we will
+the first route of the API, then fetch the weather from the second one. On this example, we will
 return all the collected data by using the `aggregate` modifier two times.
 
 ```js
@@ -133,13 +133,13 @@ We finally just have to listen a port:
 gate.listen(8080);
 ```
 
-And to start our server by using your terminal:
+And to start our server by using our terminal:
 
 ```bash
 $ node index.js
 ```
 
-**That's it!** Open your brower and try it out by typing on the url:
+**That's it!** Open your browser and try it out by typing on the url:
 http://localhost:8080/weather/paris
 
 You should have a JSON with all the data we wanted!
