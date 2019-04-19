@@ -270,6 +270,7 @@ Here is the complete list of all the bundled modifiers:
 
  - [aggregate(method, url, [property])](#aggregatemethod-url-property)
  - [filter(properties)](#filterproperties)
+ - [forwardedhost()](#forwardedhost)
  - [waitfor(method, url, test)](#waitformethod-url-test)
 
 #### aggregate(method, url, [property])
@@ -308,6 +309,19 @@ _Example_
 ```js
 const pipeline = [
   filter(['firstname', 'lastname']),
+];
+```
+
+#### forwardedhost()
+
+Add the the container headers the property `X-Forwarded-Host` with the value of the original request
+header `host`.
+
+_Example_
+
+```js
+const pipeline = [
+  forwardedhost(),
 ];
 ```
 
