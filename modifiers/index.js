@@ -7,10 +7,12 @@
 
 const aggregate = require('./aggregate');
 const filter = require('./filter');
+const forwardedhost = require('./forwardedhost');
 const waitfor = require('./waitfor');
 
 module.exports = {
   aggregate,
   filter,
+  forwardedhost,
   waitfor,
 };
