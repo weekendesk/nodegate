@@ -268,9 +268,9 @@ const { aggregate } = require('nodegate/modifiers');
 
 Here is the complete list of all the bundled modifiers:
 
- - [aggregate](#aggregatemethod-url-property)
- - [filter](#filterproperties)
- - [waitfor](#waitformethod-url-test)
+ - [aggregate(method, url, [property])](#aggregatemethod-url-property)
+ - [filter(properties)](#filterproperties)
+ - [waitfor(method, url, test)](#waitformethod-url-test)
 
 #### aggregate(method, url, [property])
 
