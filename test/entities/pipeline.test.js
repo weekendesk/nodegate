@@ -43,13 +43,13 @@ describe('entities/pipeline', () => {
     timedStep2.mockClear();
   });
   describe('#execute()', () => {
-    it('should correctly call a unique pipeline step', async () => {
+    it('should call a unique pipeline step', async () => {
       await executor([step1])(request, { send });
       expect(step1.mock.calls.length).toBe(1);
       expect(step1.mock.calls[0][0].body).toBe(request.body);
       expect(send.mock.calls.length).toBe(1);
     });
-    it('should correctly call all the pipeline steps', async () => {
+    it('should call all the pipeline steps', async () => {
       await executor([step1, step2, step3])(request, { send });
       expect(step1.mock.calls.length).toBe(1);
       expect(step2.mock.calls.length).toBe(1);
@@ -63,6 +63,11 @@ describe('entities/pipeline', () => {
       expect(timedStep2.mock.calls.length).toBe(1);
       expect(send.mock.calls.length).toBe(1);
       expect(send.mock.results[0].value.name).toEqual('NCC-1701-F');
+    });
+    it('should send the original request to the modifiers', async () => {
+      await executor([step1])(request, { send });
+      expect(step1.mock.calls.length).toBe(1);
+      expect(step1.mock.calls[0][1].headers.origin).toEqual('https://wiki.federation.com');
     });
   });
 });
