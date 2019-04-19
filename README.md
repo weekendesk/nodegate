@@ -269,6 +269,7 @@ const { aggregate } = require('nodegate/modifiers');
 Here is the complete list of all the bundled modifiers:
 
  - [aggregate](#aggregatemethod-url-property)
+ - [filter](#filterproperties)
  - [waitfor](#waitformethod-url-test)
 
 #### aggregate(method, url, [property])
@@ -289,6 +290,24 @@ _Example_
 ```js
 const pipeline = [
   aggregate('get', 'https://api.github.com/users/shudrum'),
+];
+```
+
+#### filter(properties)
+
+Filter the container's body to keep only the properties listed on the `properties` argument array.
+
+_Arguments_
+
+| Argument       | Type    | Description                                  |
+| :------------- | :------ | :------------------------------------------- |
+| `properties`   | `array` | Array containing all the properties to keep. |
+
+_Example_
+
+```js
+const pipeline = [
+  filter(['firstname', 'lastname']),
 ];
 ```
 

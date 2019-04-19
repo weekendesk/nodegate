@@ -6,9 +6,11 @@
  */
 
 const aggregate = require('./aggregate');
+const filter = require('./filter');
 const waitfor = require('./waitfor');
 
 module.exports = {
   aggregate,
+  filter,
   waitfor,
 };
