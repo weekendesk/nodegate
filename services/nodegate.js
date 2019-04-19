@@ -28,11 +28,17 @@ const buildExpressApp = () => {
   return app;
 };
 
-const route = expressApp => (settings) => {
-  expressApp[settings.method.toLowerCase()](
-    settings.path,
-    executor(settings.pipeline),
-  );
+const addRoute = expressApp => (routes) => {
+  let routesToAdd = routes;
+  if (!Array.isArray(routes)) {
+    routesToAdd = [routes];
+  }
+  routesToAdd.forEach((route) => {
+    expressApp[route.method.toLowerCase()](
+      route.path,
+      executor(route.pipeline),
+    );
+  });
 };
 
 const nodegate = () => {
@@ -44,7 +50,7 @@ const nodegate = () => {
   // TODO: app.passthrough = (route) => {};
   // TODO: app.beforeEach = () => {};
 
-  app.route = route(expressApp);
+  app.route = addRoute(expressApp);
 
   app.listen = expressApp.listen;
 

@@ -16,5 +16,19 @@ describe('services/nodegate', () => {
       });
       await request(gate).get('/').expect(200);
     });
+    it('should accept an array of route', async () => {
+      const gate = nodegate();
+      gate.route([{
+        method: 'get',
+        path: '/route1',
+        pipeline: [],
+      }, {
+        method: 'get',
+        path: '/route2',
+        pipeline: [],
+      }]);
+      await request(gate).get('/route1').expect(200);
+      await request(gate).get('/route2').expect(200);
+    });
   });
 });
