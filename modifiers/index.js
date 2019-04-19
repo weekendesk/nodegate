@@ -6,7 +6,9 @@
  */
 
 const aggregate = require('./aggregate');
+const waitfor = require('./waitfor');
 
 module.exports = {
   aggregate,
+  waitfor,
 };

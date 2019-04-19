@@ -16,6 +16,12 @@ const defaultConfiguration = {
     json: true,
     resolveWithFullResponse: true,
   },
+  modifiers: {
+    waitfor: {
+      delay: 300,
+      tentatives: 10,
+    },
+  },
 };
 
 let configuration = defaultConfiguration;

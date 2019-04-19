@@ -5,7 +5,7 @@
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "lint": "eslint ."
   },
   "dependencies": {
