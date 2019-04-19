@@ -284,6 +284,14 @@ _Arguments_
 | `url`      | `string` | URL to call.                                |
 | `property` | `string` | Aggregate the result to that property name. |
 
+_Example_
+
+```js
+const pipeline = [
+  aggregate('get', 'https://api.github.com/users/shudrum'),
+];
+```
+
 #### waitfor(method, url, test)
 
 Execute a request until the `test` argument function returns `true`. The test function will receive
