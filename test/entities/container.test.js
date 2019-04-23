@@ -7,16 +7,19 @@ describe('entities/container', () => {
       expect(container.headers).toBeTruthy();
       expect(container.body).toBeTruthy();
       expect(container.params).toBeTruthy();
+      expect(container.query).toBeTruthy();
     });
   });
   describe('#extractFromRequest()', () => {
-    it('should correctly set the headers, body and params', () => {
+    it('should correctly set the headers, body, params and query', () => {
       const container = extractFromRequest({
         body: { captain: 'Jean-Luc Picard' },
         params: { pips: 4 },
+        query: { ship: 'enterprise' },
       });
       expect(container.body.captain).toBe('Jean-Luc Picard');
       expect(container.params.pips).toBe(4);
+      expect(container.query.ship).toBe('enterprise');
     });
     it('should not set the headers of the request', () => {
       const container = extractFromRequest({

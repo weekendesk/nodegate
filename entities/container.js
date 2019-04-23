@@ -9,12 +9,14 @@ const extractFromRequest = request => ({
   headers: {},
   body: request.body || {},
   params: request.params || {},
+  query: request.query || {},
 });
 
 const getEmpty = () => ({
   headers: {},
   body: {},
   params: {},
+  query: {},
 });
 
 module.exports = {
