@@ -1,5 +1,7 @@
 ![nodegate](../images/logo-documentation.png)
 
+---
+
 # [Documentation](README.md) > Hello world!
 
 Displaying "Hello world!" is a nonsense for this kind of plugin.
@@ -73,3 +75,7 @@ $ node index.js
 You should have a JSON with all the data we wanted!
 
 [You can find this complete example here.](../examples/hello-world)
+
+---
+
+**[Next: API reference](api-reference.md)**

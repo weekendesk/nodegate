@@ -1,13 +1,17 @@
 ![nodegate](../images/logo-documentation.png)
 
+---
+
 # Documentation
 
 - [Installation](installation.md)
 - [Hello world!](hello-world.md)
-- [API](api.md)
-  - [nodegate()](api.md#nodegate)
-  - [Gateway](api.md#gateway)
-  - [Routes](api.md#routes)
-  - [Container](api.md#container)
-  - [Pipelines](api.md#pipelines)
-  - [Modifiers](api.md#modifiers-1)
+- [API](api-reference.md)
+  - [nodegate()](api-reference-nodegate.md)
+  - [Gateway](api-reference-gateway.md)
+  - [Routes](api-reference-routes.md)
+  - [Modifiers](api-reference-modifiers.md)
+
+---
+
+**[Start reading: Installation](installation.md)**
