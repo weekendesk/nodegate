@@ -293,6 +293,12 @@ The principle of nodegate is to compose the container with each modifier.
 
 ### Pipelines
 
+The pipelines are the list of modifiers to execute **synchronously** to modify the container.
+
+Each modifier will be called with two arguments:
+ - The container, with the update of the previous modifier
+ - The original requests received by nodegate. (The Express request).
+
 ### Modifiers
 
 All modifiers can be accessed from the top level function of **nodegate** or by direclty import the
