@@ -160,7 +160,6 @@ Everything is detailled bellow:
   - [Gateway](#gateway)
   - [Routes](#routes)
   - [Container](#container)
-  - [Pipelines](#pipelines)
   - [Modifiers](#modifiers-1)
 
 ### nodegate()
@@ -258,6 +257,12 @@ _Properties_
 | `path`     | `string` | Path of the route, the path can be written on the Express way, for example: `/user/:id` |
 | `pipeline` | `array`  | List of the modifiers to apply to the container.                                        |
 
+The pipelines are the list of modifiers to execute **synchronously** to modify the container.
+
+Each modifier of the pipeline will be called with two arguments:
+ - The container, with the update of the previous modifier
+ - The original requests received by nodegate. (The Express request).
+
 ### Container
 
 For each http call, nodegate will start to execute a pipeline of different modifiers. This container
@@ -290,14 +295,6 @@ Will initialize the container to:
 The principle of nodegate is to compose the container with each modifier.
 
 **At the end of the pipeline, nodegate will, by default, answer 200 with the container body.**
-
-### Pipelines
-
-The pipelines are the list of modifiers to execute **synchronously** to modify the container.
-
-Each modifier will be called with two arguments:
- - The container, with the update of the previous modifier
- - The original requests received by nodegate. (The Express request).
 
 ### Modifiers
 
