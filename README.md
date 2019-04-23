@@ -248,6 +248,16 @@ _Arguments_
 
 ### Routes
 
+Routes are object defining the behavior of nodegate for a specific path and method.
+
+_Properties_
+
+| Argument   | Type     | Description                                                                             |
+| :--------- | :------- | :-------------------------------------------------------------------------------------- |
+| `method`   | `string` | Method of the route (`get`, `post`, `patch`, …).                                        |
+| `path`     | `string` | Path of the route, the path can be written on the Express way, for example: `/user/:id` |
+| `pipeline` | `array`  | List of the modifiers to apply to the container.                                        |
+
 ### Container
 
 ### Pipelines
