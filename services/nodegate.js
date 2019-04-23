@@ -8,7 +8,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const { executor } = require('../entities/pipeline');
+const { execute } = require('../entities/pipeline');
 const { getConfiguration } = require('../services/configuration');
 
 const buildExpressApp = () => {
@@ -28,29 +28,35 @@ const buildExpressApp = () => {
   return app;
 };
 
-const addRoute = expressApp => (routes) => {
-  let routesToAdd = routes;
-  if (!Array.isArray(routes)) {
-    routesToAdd = [routes];
-  }
-  routesToAdd.forEach((route) => {
-    expressApp[route.method.toLowerCase()](
-      route.path,
-      executor(route.pipeline),
-    );
-  });
-};
-
 const nodegate = () => {
   const expressApp = buildExpressApp();
+  const beforeEach = [];
   const app = (req, res, next) => {
     expressApp.handle(req, res, next);
   };
 
   // TODO: app.passthrough = (route) => {};
-  // TODO: app.beforeEach = () => {};
 
-  app.route = addRoute(expressApp);
+  app.beforeEach = (modifiers) => {
+    let modifiersToAdd = modifiers;
+    if (!Array.isArray(modifiers)) {
+      modifiersToAdd = [modifiers];
+    }
+    modifiersToAdd.forEach(modifier => beforeEach.push(modifier));
+  };
+
+  app.route = (routes) => {
+    let routesToAdd = routes;
+    if (!Array.isArray(routes)) {
+      routesToAdd = [routes];
+    }
+    routesToAdd.forEach((route) => {
+      expressApp[route.method.toLowerCase()](
+        route.path,
+        execute(route.pipeline, beforeEach),
+      );
+    });
+  };
 
   app.listen = expressApp.listen;
 

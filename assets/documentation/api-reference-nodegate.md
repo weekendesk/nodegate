@@ -20,7 +20,9 @@ This object contains all the built-in modifiers shipped with nodegate.
 ```js
 const nodegate = require('nodegate');
 const { aggregate } = nodegate.modifiers;
+
 // or
+
 const aggregate = nodegate.modifiers.aggregate;
 ```
 

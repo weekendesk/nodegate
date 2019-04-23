@@ -1,4 +1,4 @@
-const { executor } = require('../../entities/pipeline');
+const { execute } = require('../../entities/pipeline');
 
 const step1 = jest.fn(container => container);
 const step2 = jest.fn(container => container);
@@ -44,13 +44,13 @@ describe('entities/pipeline', () => {
   });
   describe('#execute()', () => {
     it('should call a unique pipeline step', async () => {
-      await executor([step1])(request, { send });
+      await execute([step1])(request, { send });
       expect(step1.mock.calls.length).toBe(1);
       expect(step1.mock.calls[0][0].body).toBe(request.body);
       expect(send.mock.calls.length).toBe(1);
     });
     it('should call all the pipeline steps', async () => {
-      await executor([step1, step2, step3])(request, { send });
+      await execute([step1, step2, step3])(request, { send });
       expect(step1.mock.calls.length).toBe(1);
       expect(step2.mock.calls.length).toBe(1);
       expect(step3.mock.calls.length).toBe(1);
@@ -58,16 +58,26 @@ describe('entities/pipeline', () => {
       expect(send.mock.calls.length).toBe(1);
     });
     it('should work with asynchronous modifiers', async () => {
-      await executor([timedStep1, timedStep2])(request, { send });
+      await execute([timedStep1, timedStep2])(request, { send });
       expect(timedStep1.mock.calls.length).toBe(1);
       expect(timedStep2.mock.calls.length).toBe(1);
       expect(send.mock.calls.length).toBe(1);
       expect(send.mock.results[0].value.name).toEqual('NCC-1701-F');
     });
     it('should send the original request to the modifiers', async () => {
-      await executor([step1])(request, { send });
+      await execute([step1])(request, { send });
       expect(step1.mock.calls.length).toBe(1);
       expect(step1.mock.calls[0][1].headers.origin).toEqual('https://wiki.federation.com');
+    });
+    it('should execute the beforeEach attribute', async () => {
+      await execute([step1], [step2, step3])(request, { send });
+      expect(step1.mock.calls.length).toBe(1);
+      expect(step2.mock.calls.length).toBe(1);
+      expect(step3.mock.calls.length).toBe(1);
+    });
+    it('should execute the beforeEach modifiers before the pipeline', async () => {
+      await execute([step1], [() => ({ body: { value: 'before' } })])(request, { send });
+      expect(step1.mock.calls[0][0].body.value).toEqual('before');
     });
   });
 });

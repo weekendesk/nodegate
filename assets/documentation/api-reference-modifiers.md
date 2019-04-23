@@ -11,7 +11,7 @@ modifiers path:
 const nodegate = require('nodegate');
 const { aggregate } = nodegate;
 
-// Or
+// or
 
 const { aggregate } = require('nodegate/modifiers');
 ```

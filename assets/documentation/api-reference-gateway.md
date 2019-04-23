@@ -40,6 +40,27 @@ _Arguments_
 | :------- | :--------------------- | :---------------------------------------------- |
 | `route`  | `object` or `[object]` | Route or array of routes to add to the gateway. |
 
+### beforeEach(modifier)
+
+Add one or more modifier to execute before each request.
+
+```js
+gateway.beforeEach(forwardedHost());
+
+// or
+
+gateway.beforeEach([
+  forwardedHost(),
+  aggregate('get', 'https://api.github.com/users/shudrum'),
+]);
+```
+
+_Arguments_
+
+| Argument   | Type                       | Description                                                    |
+| :--------- | :------------------------- | :------------------------------------------------------------- |
+| `modifier` | `function` or `[function]` | Modifier or array of modifiers to execute before all requests. |
+
 ---
 
 **[Next: Routes](api-reference-routes.md)**
