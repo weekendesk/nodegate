@@ -25,8 +25,6 @@ gate.route({
 gate.listen(8080);
 ```
 
----
-
 ## Usage
 
 ![Nodegate usage](assets/images/schema-readme.png)

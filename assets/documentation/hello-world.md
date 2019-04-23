@@ -68,8 +68,7 @@ And to start our server by using your terminal:
 $ node index.js
 ```
 
-**That's it!** Open your brower and try it out by typing on the url:
-http://localhost:8080/weather/paris
+**That's it!** Open your brower and try it out by typing on the url: http://localhost:8080/weather/paris
 
 You should have a JSON with all the data we wanted!
 
