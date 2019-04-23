@@ -260,6 +260,37 @@ _Properties_
 
 ### Container
 
+For each http call, nodegate will start to execute a pipeline of different modifiers. This container
+will be used for each request done by nodegate and for the response of the route.
+
+The container contains the headers, body, parameters and query. By default everything is extracted
+from the request except for the headers.
+
+For example this request:
+
+```bash
+$ curl -X POST http://localhost/users \
+    --header "Content-Type: application/json" \
+    --data '{"firstname":"Shudrum"}'
+```
+
+Will initialize the container to:
+
+```json
+{
+  "headers": {},
+  "body": {
+    "firstname": "Shudrum"
+  },
+  "params": {},
+  "query": {}
+}
+```
+
+The principle of nodegate is to compose the container with each modifier.
+
+**At the end of the pipeline, nodegate will, by default, answer 200 with the container body.**
+
 ### Pipelines
 
 ### Modifiers
