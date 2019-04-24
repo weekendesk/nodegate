@@ -22,6 +22,7 @@ Here is the complete list of all the bundled modifiers:
  - [filter(properties)](#filterproperties)
  - [forwardedhost()](#forwardedhost)
  - [waitfor(method, url, test)](#waitformethod-url-test)
+ - [routematch(regex, pipeline)](#routematchregex-pipeline)
  - [statuscode(code)](#statuscodecode)
 
 ## aggregate(method, url, [property])
@@ -91,7 +92,29 @@ _Example_
 
 ```js
 const pipeline = [
-  statuscode(201),ù
+  statuscode(201),
+];
+```
+
+## routematch(regex, pipeline)
+
+Execute the `pipeline` argument if the path of the current route match the regex.
+Mainly usefull for the `beforeEach()` pipeline.
+
+_Arguments_
+
+| Argument   | Type    | Description                                            |
+| :--------- | :------ | :----------------------------------------------------- |
+| `regex`    | `regex` | Regular expression to test with the path of the route. |
+| `pipeline` | `array` | Pipeline to execute if the path match.                 |
+
+_Example_
+
+```js
+const pipeline = [
+  routematch(/\/user/, [
+    // Pipeline
+  ]),
 ];
 ```
 
