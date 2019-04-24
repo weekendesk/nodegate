@@ -10,7 +10,7 @@ jobs:
           command: yarn install
       - run:
           name: Run tests
-          command: yarn test --coverage
+          command: yarn test
       - run:
           name: Run linter
           command: yarn lint
@@ -22,6 +22,9 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install
+      - run:
+          name: Run tests for coverage
+          command: yarn test --coverage
       - run:
           name: Collect coverage
           command: |
