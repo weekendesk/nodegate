@@ -82,4 +82,9 @@ describe('services/nodegate', () => {
         });
     });
   });
+  describe('HTTP status codes', () => {
+    it.todo('should respond a 500 error in case of error');
+    it.todo('should respond the last request error code in case of error');
+    it.todo('should execute the onError pipeline of the route in case of error');
+  });
 });

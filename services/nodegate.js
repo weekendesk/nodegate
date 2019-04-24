@@ -8,7 +8,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const { execute } = require('../entities/pipeline');
+const { execute } = require('../entities/route');
 const { getConfiguration } = require('../services/configuration');
 
 const buildExpressApp = () => {
@@ -52,7 +52,7 @@ const nodegate = () => {
     toArray(routes).forEach((route) => {
       expressApp[route.method.toLowerCase()](
         route.path,
-        execute(route.pipeline, beforeEach),
+        execute(route, beforeEach),
       );
     });
   };
