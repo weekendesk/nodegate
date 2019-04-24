@@ -75,6 +75,25 @@ const pipeline = [
 ];
 ```
 
+## statuscode(code)
+
+Set the status code of the response of the route. Note that another modifier called after this one
+can modify the status code.
+
+_Arguments_
+
+| Argument | Type      | Description                 |
+| :------- | :-------- | :-------------------------- |
+| `code`   | `integer` | Status code of the reponse. |
+
+_Example_
+
+```js
+const pipeline = [
+  statuscode(201),
+];
+```
+
 ## waitfor(method, url, test)
 
 Execute a request until the `test` argument function returns `true`. The test function will receive
