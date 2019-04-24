@@ -40,6 +40,7 @@ describe('entities/route', () => {
     step2.mockClear();
     step3.mockClear();
     send.mockClear();
+    status.mockClear();
     timedStep1.mockClear();
     timedStep2.mockClear();
   });
@@ -82,6 +83,16 @@ describe('entities/route', () => {
     });
     it('should respond with the container status code', async () => {
       await execute({ pipeline: [() => ({ statusCode: 201 })] })(request, { status });
+    });
+    it('should work with a recursive pipeline', async () => {
+      const modifier = letter => container => ({
+        body: {
+          value: `${container.body.value}${letter}`,
+        },
+      });
+      const pipeline = [modifier('a'), [modifier('b'), modifier('c')], modifier('d')];
+      await execute({ pipeline })({ body: { value: '' } }, { status });
+      expect(send.mock.calls[0][0].value).toEqual('abcd');
     });
   });
 });

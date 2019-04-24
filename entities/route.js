@@ -10,8 +10,13 @@ const { extractFromRequest } = require('./container');
 const executeChunk = async (chunk, originalContainer, req) => {
   let container = originalContainer;
   for (let i = 0; i < chunk.length; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    container = await chunk[i](container, req, this);
+    if (Array.isArray(chunk[i])) {
+      // eslint-disable-next-line no-await-in-loop
+      container = await executeChunk(chunk[i], container, req);
+    } else {
+      // eslint-disable-next-line no-await-in-loop
+      container = await chunk[i](container, req, executeChunk);
+    }
   }
   return container;
 };
