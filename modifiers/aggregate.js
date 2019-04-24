@@ -12,12 +12,12 @@ const urlBuilder = require('../services/urlBuilder');
 module.exports = (method, url, key) => {
   const buildedUrl = urlBuilder(url);
   return async (container) => {
-    const { body } = await request(container)[method](buildedUrl);
+    const { body, statusCode } = await request(container)[method](buildedUrl);
 
     const containerMap = fromJS(container);
     if (!key) {
-      return containerMap.mergeDeep(fromJS({ body })).toJS();
+      return containerMap.mergeDeep(fromJS({ body, statusCode })).toJS();
     }
-    return containerMap.mergeDeep(fromJS({ body: { [key]: body } })).toJS();
+    return containerMap.mergeDeep(fromJS({ body: { [key]: body }, statusCode })).toJS();
   };
 };

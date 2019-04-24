@@ -20,7 +20,7 @@ const execute = (route, beforeEach = []) => async (req, res) => {
   let container = extractFromRequest(req);
   container = await executeChunk(beforeEach, container, req);
   container = await executeChunk(route.pipeline, container, req);
-  res.send(container.body);
+  res.status(container.statusCode).send(container.body);
 };
 
 module.exports = { execute };

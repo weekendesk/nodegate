@@ -10,14 +10,10 @@ const extractFromRequest = request => ({
   body: request.body || {},
   params: request.params || {},
   query: request.query || {},
+  statusCode: 200,
 });
 
-const getEmpty = () => ({
-  headers: {},
-  body: {},
-  params: {},
-  query: {},
-});
+const getEmpty = () => extractFromRequest({});
 
 module.exports = {
   extractFromRequest,

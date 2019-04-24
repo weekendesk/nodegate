@@ -9,6 +9,10 @@ describe('entities/container', () => {
       expect(container.params).toBeTruthy();
       expect(container.query).toBeTruthy();
     });
+    it('should contain the default status code', () => {
+      const container = getEmpty();
+      expect(container.statusCode).toEqual(200);
+    });
   });
   describe('#extractFromRequest()', () => {
     it('should correctly set the headers, body, params and query', () => {
@@ -20,6 +24,12 @@ describe('entities/container', () => {
       expect(container.body.captain).toBe('Jean-Luc Picard');
       expect(container.params.pips).toBe(4);
       expect(container.query.ship).toBe('enterprise');
+    });
+    it('should set the default status code', () => {
+      const container = extractFromRequest({
+        body: { captain: 'Jean-Luc Picard' },
+      });
+      expect(container.statusCode).toEqual(200);
     });
     it('should not set the headers of the request', () => {
       const container = extractFromRequest({

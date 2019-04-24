@@ -93,4 +93,15 @@ describe('modifiers/aggregate', () => {
     expect(result.body.armaments.phasers).toBe(16);
     expect(result.body.armaments.torpedoes).toBe(2);
   });
+  it('should correctly set the statusCode of the container from the request', async () => {
+    const container = getEmpty();
+    nock('https://wiki.federation.com')
+      .post('/armaments')
+      .reply(201);
+    const result = await aggregate(
+      'post',
+      'https://wiki.federation.com/armaments',
+    )(container);
+    expect(result.statusCode).toBe(201);
+  });
 });
