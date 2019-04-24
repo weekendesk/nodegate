@@ -28,6 +28,13 @@ const buildExpressApp = () => {
   return app;
 };
 
+const toArray = (value) => {
+  if (!Array.isArray(value)) {
+    return [value];
+  }
+  return value;
+};
+
 const nodegate = () => {
   const expressApp = buildExpressApp();
   const beforeEach = [];
@@ -38,19 +45,11 @@ const nodegate = () => {
   // TODO: app.passthrough = (route) => {};
 
   app.beforeEach = (modifiers) => {
-    let modifiersToAdd = modifiers;
-    if (!Array.isArray(modifiers)) {
-      modifiersToAdd = [modifiers];
-    }
-    modifiersToAdd.forEach(modifier => beforeEach.push(modifier));
+    toArray(modifiers).forEach(modifier => beforeEach.push(modifier));
   };
 
   app.route = (routes) => {
-    let routesToAdd = routes;
-    if (!Array.isArray(routes)) {
-      routesToAdd = [routes];
-    }
-    routesToAdd.forEach((route) => {
+    toArray(routes).forEach((route) => {
       expressApp[route.method.toLowerCase()](
         route.path,
         execute(route.pipeline, beforeEach),
