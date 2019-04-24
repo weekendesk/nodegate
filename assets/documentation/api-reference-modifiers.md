@@ -22,6 +22,7 @@ Here is the complete list of all the bundled modifiers:
  - [filter(properties)](#filterproperties)
  - [forwardedhost()](#forwardedhost)
  - [waitfor(method, url, test)](#waitformethod-url-test)
+ - [statuscode(code)](#statuscodecode)
 
 ## aggregate(method, url, [property])
 
@@ -90,7 +91,7 @@ _Example_
 
 ```js
 const pipeline = [
-  statuscode(201),
+  statuscode(201),ù
 ];
 ```
 
