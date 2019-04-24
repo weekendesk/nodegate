@@ -8,11 +8,15 @@
 const aggregate = require('./aggregate');
 const filter = require('./filter');
 const forwardedhost = require('./forwardedhost');
+const routematch = require('./routematch');
+const statuscode = require('./statuscode');
 const waitfor = require('./waitfor');
 
 module.exports = {
   aggregate,
   filter,
   forwardedhost,
+  routematch,
+  statuscode,
   waitfor,
 };

@@ -15,6 +15,7 @@
     - [filter(properties)](api-reference-modifiers.md#filterproperties)
     - [forwardedhost()](api-reference-modifiers.md#forwardedhost)
     - [waitfor(method, url, test)](api-reference-modifiers.md#waitformethod-url-test)
+    - [routematch(regex, pipeline)](api-reference-modifiers.md#routematchregex-pipeline)
     - [statuscode(code)](api-reference-modifiers.md#statuscodecode)
 
 ---
