@@ -4,9 +4,9 @@ describe('modifiers/index', () => {
   it('should correctly expose all the modifiers', () => {
     expect(modifiers.aggregate).toBeInstanceOf(Function);
     expect(modifiers.filter).toBeInstanceOf(Function);
-    expect(modifiers.forwardedhost).toBeInstanceOf(Function);
-    expect(modifiers.routematch).toBeInstanceOf(Function);
-    expect(modifiers.statuscode).toBeInstanceOf(Function);
-    expect(modifiers.waitfor).toBeInstanceOf(Function);
+    expect(modifiers.forwardedHost).toBeInstanceOf(Function);
+    expect(modifiers.routeMatch).toBeInstanceOf(Function);
+    expect(modifiers.statusCode).toBeInstanceOf(Function);
+    expect(modifiers.waitFor).toBeInstanceOf(Function);
   });
 });

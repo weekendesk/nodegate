@@ -13,10 +13,10 @@
   - [Modifiers](api-reference-modifiers.md)
     - [aggregate(method, url, [property])](api-reference-modifiers.md#aggregatemethod-url-property)
     - [filter(properties)](api-reference-modifiers.md#filterproperties)
-    - [forwardedhost()](api-reference-modifiers.md#forwardedhost)
-    - [waitfor(method, url, test)](api-reference-modifiers.md#waitformethod-url-test)
-    - [routematch(regex, pipeline)](api-reference-modifiers.md#routematchregex-pipeline)
-    - [statuscode(code)](api-reference-modifiers.md#statuscodecode)
+    - [forwardedHost()](api-reference-modifiers.md#forwardedhost)
+    - [waitFor(method, url, test)](api-reference-modifiers.md#waitformethod-url-test)
+    - [routeMatch(regex, pipeline)](api-reference-modifiers.md#routematchregex-pipeline)
+    - [statusCode(code)](api-reference-modifiers.md#statuscodecode)
 
 ---
 

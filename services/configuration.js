@@ -17,7 +17,7 @@ const defaultConfiguration = {
     resolveWithFullResponse: true,
   },
   modifiers: {
-    waitfor: {
+    waitFor: {
       delay: 300,
       tentatives: 10,
     },

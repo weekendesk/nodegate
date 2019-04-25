@@ -20,10 +20,10 @@ Here is the complete list of all the bundled modifiers:
 
  - [aggregate(method, url, [property])](#aggregatemethod-url-property)
  - [filter(properties)](#filterproperties)
- - [forwardedhost()](#forwardedhost)
- - [waitfor(method, url, test)](#waitformethod-url-test)
- - [routematch(regex, pipeline)](#routematchregex-pipeline)
- - [statuscode(code)](#statuscodecode)
+ - [forwardedHost()](#forwardedhost)
+ - [waitFor(method, url, test)](#waitformethod-url-test)
+ - [routeMatch(regex, pipeline)](#routematchregex-pipeline)
+ - [statusCode(code)](#statuscodecode)
 
 ## aggregate(method, url, [property])
 
@@ -64,7 +64,7 @@ const pipeline = [
 ];
 ```
 
-## forwardedhost()
+## forwardedHost()
 
 Add the the container headers the property `X-Forwarded-Host` with the value of the original request
 header `host`.
@@ -73,11 +73,11 @@ _Example_
 
 ```js
 const pipeline = [
-  forwardedhost(),
+  forwardedHost(),
 ];
 ```
 
-## statuscode(code)
+## statusCode(code)
 
 Set the status code of the response of the route. Note that another modifier called after this one
 can modify the status code.
@@ -92,11 +92,11 @@ _Example_
 
 ```js
 const pipeline = [
-  statuscode(201),
+  statusCode(201),
 ];
 ```
 
-## routematch(regex, pipeline)
+## routeMatch(regex, pipeline)
 
 Execute the `pipeline` argument if the path of the current route match the regex.
 Mainly usefull for the `beforeEach()` pipeline.
@@ -112,13 +112,13 @@ _Example_
 
 ```js
 const pipeline = [
-  routematch(/\/user/, [
-    // Pipeline
+  routeMatch(/\/user/, [
+    // pipeline
   ]),
 ];
 ```
 
-## waitfor(method, url, test)
+## waitFor(method, url, test)
 
 Execute a request until the `test` argument function returns `true`. The test function will receive
 two arguments: A simplified response, and the container of the route.
@@ -135,7 +135,7 @@ _Examples_
 
 ```js
 const pipeline = [
-  waitfor(
+  waitFor(
     'get',
     'https://api.github.com/users/shudrum',
     response => response.statusCode === 200,
@@ -145,7 +145,7 @@ const pipeline = [
 
 ```js
 const pipeline = [
-  waitfor(
+  waitFor(
     'get',
     'https://api.github.com/users/shudrum',
     (response, body) => response.user.firstname === body.user.firstname,
