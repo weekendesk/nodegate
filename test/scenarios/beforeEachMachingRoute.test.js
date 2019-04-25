@@ -1,13 +1,13 @@
 const nock = require('nock');
 const request = require('supertest');
 const nodegate = require('../../services/nodegate');
-const { aggregate, routematch } = require('../../modifiers');
+const { aggregate, routeMatch } = require('../../modifiers');
 
 describe('scenarios/beforeEachMachingRoute', () => {
   let gate;
   beforeEach(() => {
     gate = nodegate();
-    gate.beforeEach(routematch(/\/captain\/*/, [
+    gate.beforeEach(routeMatch(/\/captain\/*/, [
       container => ({ ...container, body: { ...container.body, type: 'captain' } }),
     ]));
     gate.route({

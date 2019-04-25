@@ -7,16 +7,16 @@
 
 const aggregate = require('./aggregate');
 const filter = require('./filter');
-const forwardedhost = require('./forwardedhost');
-const routematch = require('./routematch');
-const statuscode = require('./statuscode');
-const waitfor = require('./waitfor');
+const forwardedHost = require('./forwardedHost');
+const routeMatch = require('./routeMatch');
+const statusCode = require('./statusCode');
+const waitFor = require('./waitFor');
 
 module.exports = {
   aggregate,
   filter,
-  forwardedhost,
-  routematch,
-  statuscode,
-  waitfor,
+  forwardedHost,
+  routeMatch,
+  statusCode,
+  waitFor,
 };
