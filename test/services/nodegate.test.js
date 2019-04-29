@@ -1,4 +1,5 @@
 const request = require('supertest');
+const PipelineError = require('../../entities/PipelineError');
 const nodegate = require('../../services/nodegate');
 
 describe('services/nodegate', () => {
@@ -83,8 +84,48 @@ describe('services/nodegate', () => {
     });
   });
   describe('HTTP status codes', () => {
-    it.todo('should respond a 500 error in case of error');
-    it.todo('should respond the last request error code in case of error');
-    it.todo('should execute the onError pipeline of the route in case of error');
+    it('should respond a 500 error in case of error', async () => {
+      const gate = nodegate();
+      gate.route({
+        method: 'get',
+        path: '/',
+        pipeline: [
+          () => { throw new Error('Section 31 classified'); },
+        ],
+      });
+      await request(gate)
+        .get('/')
+        .expect(500);
+    });
+    it('should respond the last request error code in case of error', async () => {
+      const gate = nodegate();
+      gate.route({
+        method: 'get',
+        path: '/',
+        pipeline: [
+          () => { throw new PipelineError('Section 31 classified', { statusCode: 404 }); },
+        ],
+      });
+      await request(gate)
+        .get('/')
+        .expect(404);
+    });
+    it('should execute the onError pipeline of the route in case of error', async () => {
+      const gate = nodegate();
+      gate.route({
+        method: 'get',
+        path: '/',
+        pipeline: [
+          () => { throw new Error('Section 31 classified'); },
+        ],
+        onError: error => ({
+          ...error.container,
+          statusCode: 503,
+        }),
+      });
+      await request(gate)
+        .get('/')
+        .expect(503);
+    });
   });
 });
