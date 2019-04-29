@@ -161,3 +161,7 @@ _Default configuration_
   "tentatives": 10,
 }
 ```
+
+---
+
+**[Next: PipelineError](api-reference-pipelineerror.md)**
