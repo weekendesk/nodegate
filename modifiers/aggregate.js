@@ -23,6 +23,10 @@ module.exports = (method, url, key) => {
       return containerMap.mergeDeep(fromJS({ body: { [key]: body }, statusCode })).toJS();
     } catch (err) {
       const error = new PipelineError(err, err.response);
+      error.setContainer({
+        ...container,
+        errorBody: err.response.body,
+      });
       throw error;
     }
   };

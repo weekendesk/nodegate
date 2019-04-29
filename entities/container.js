@@ -8,6 +8,7 @@
 const extractFromRequest = request => ({
   headers: {},
   body: request.body || {},
+  errorBody: null,
   params: request.params || {},
   query: request.query || {},
   statusCode: 200,

@@ -9,12 +9,12 @@ class PipelineError extends Error {
   constructor(message, response = null) {
     super(message);
     this.response = response;
-    this.container = {};
+    this.container = null;
     Error.captureStackTrace(this, this.constructor);
   }
 
   setContainer(container) {
-    this.container = { ...container, statusCode: 500 };
+    this.container = { ...container };
     if (this.response && this.response.statusCode) {
       this.container.statusCode = this.response.statusCode;
     }

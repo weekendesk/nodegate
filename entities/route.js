@@ -26,7 +26,8 @@ const executeChunk = async (chunk, originalContainer, req) => {
     if (!(error instanceof PipelineError)) {
       error = new PipelineError(err.message);
       error.setContainer({ ...container, statusCode: 500 });
-    } else {
+    }
+    if (!error.container) {
       error.setContainer(container);
     }
     throw error;
@@ -45,7 +46,11 @@ const execute = (route, beforeEach = []) => async (req, res) => {
       res.status(container.statusCode).send(container.body);
       return;
     }
-    res.status(err.container.statusCode).send(err.container.body);
+    if (err.container.errorBody) {
+      res.status(err.container.statusCode).send(err.container.errorBody);
+      return;
+    }
+    res.sendStatus(err.container.statusCode);
   }
 };
 

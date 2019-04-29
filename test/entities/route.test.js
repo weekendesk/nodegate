@@ -5,8 +5,9 @@ const step = jest.fn(container => container);
 const asyncStep = jest.fn(container => new Promise(resolve => resolve(container)));
 
 const send = jest.fn(container => container);
+const sendStatus = jest.fn();
 const status = jest.fn(() => ({ send }));
-const response = { status };
+const response = { status, sendStatus };
 
 const onError = jest.fn(error => error.container);
 
@@ -24,6 +25,7 @@ describe('entities/route', () => {
     step.mockClear();
     asyncStep.mockClear();
     send.mockClear();
+    sendStatus.mockClear();
     status.mockClear();
     onError.mockClear();
   });
@@ -89,18 +91,38 @@ describe('entities/route', () => {
       await execute({ pipeline: [throwingModifier], onError })(request, response);
       expect(onError.mock.calls[0][0].container.body).toBe(request.body);
     });
+    it('should set the container to a PipelineError withour Container', async () => {
+      const throwingModifier = () => { throw new PipelineError('error'); };
+      await execute({ pipeline: [throwingModifier], onError })(request, response);
+      expect(onError.mock.calls[0][0].container.body).toBe(request.body);
+    });
     it('respond 500 error in case of error', async () => {
       const throwingModifier = () => { throw new Error('error'); };
       await execute({ pipeline: [throwingModifier] })(request, response);
-      expect(send.mock.calls.length).toBe(1);
-      expect(status.mock.calls[0][0]).toEqual(500);
+      expect(sendStatus.mock.calls.length).toBe(1);
+      expect(sendStatus.mock.calls[0][0]).toEqual(500);
     });
-    it('respond the response status code in case of error', async () => {
-      const error = new PipelineError('error', { statusCode: 404 });
+    it('respond the error container statusCode if set', async () => {
+      const error = new PipelineError('error');
+      error.setContainer({ statusCode: 404 });
       const throwingModifier = () => { throw error; };
-      await execute({ pipeline: [throwingModifier], onError })(request, response);
+      await execute({ pipeline: [throwingModifier] })(request, response);
+      expect(sendStatus.mock.calls.length).toBe(1);
+      expect(sendStatus.mock.calls[0][0]).toEqual(404);
+    });
+    it('should use the response body for the error', async () => {
+      const error = new PipelineError('error');
+      const errorBody = { reason: 'The section 31 does not exists' };
+      error.setContainer({
+        statusCode: 404,
+        errorBody,
+      });
+      const throwingModifier = () => { throw error; };
+      await execute({ pipeline: [throwingModifier] })(request, response);
       expect(send.mock.calls.length).toBe(1);
+      expect(status.mock.calls.length).toBe(1);
       expect(status.mock.calls[0][0]).toEqual(404);
+      expect(send.mock.calls[0][0]).toEqual(errorBody);
     });
   });
 });

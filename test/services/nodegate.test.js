@@ -103,7 +103,11 @@ describe('services/nodegate', () => {
         method: 'get',
         path: '/',
         pipeline: [
-          () => { throw new PipelineError('Section 31 classified', { statusCode: 404 }); },
+          () => {
+            const error = new PipelineError('Section 31 classified');
+            error.setContainer({ statusCode: 404 });
+            throw error;
+          },
         ],
       });
       await request(gate)
