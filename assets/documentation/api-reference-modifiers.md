@@ -84,9 +84,9 @@ can modify the status code.
 
 _Arguments_
 
-| Argument | Type      | Description                 |
-| :------- | :-------- | :-------------------------- |
-| `code`   | `integer` | Status code of the reponse. |
+| Argument | Type      | Description                  |
+| :------- | :-------- | :--------------------------- |
+| `code`   | `integer` | Status code of the response. |
 
 _Example_
 

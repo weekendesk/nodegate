@@ -13,7 +13,7 @@ This error extends the default Node.js `Error` object.
 
 Container state before the error.
 
-### reponse
+### response
 
 If applicable: the last request executed response.
 
