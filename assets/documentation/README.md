@@ -17,7 +17,7 @@
     - [waitFor(method, url, test)](api-reference-modifiers.md#waitformethod-url-test)
     - [routeMatch(regex, pipeline)](api-reference-modifiers.md#routematchregex-pipeline)
     - [statusCode(code)](api-reference-modifiers.md#statuscodecode)
-
+  - [PipelineError](api-reference-pipelineerror.md)
 ---
 
 **[Start reading: Installation](installation.md)**

@@ -84,9 +84,9 @@ can modify the status code.
 
 _Arguments_
 
-| Argument | Type      | Description                 |
-| :------- | :-------- | :-------------------------- |
-| `code`   | `integer` | Status code of the reponse. |
+| Argument | Type      | Description                  |
+| :------- | :-------- | :--------------------------- |
+| `code`   | `integer` | Status code of the response. |
 
 _Example_
 
@@ -161,3 +161,7 @@ _Default configuration_
   "tentatives": 10,
 }
 ```
+
+---
+
+**[Next: PipelineError](api-reference-pipelineerror.md)**

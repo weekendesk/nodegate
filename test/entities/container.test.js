@@ -8,6 +8,7 @@ describe('entities/container', () => {
       expect(container.body).toBeTruthy();
       expect(container.params).toBeTruthy();
       expect(container.query).toBeTruthy();
+      expect(container.errorBody).toBeNull();
     });
     it('should contain the default status code', () => {
       const container = getEmpty();

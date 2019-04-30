@@ -6,18 +6,28 @@
  */
 
 const { fromJS } = require('immutable');
+const PipelineError = require('../entities/PipelineError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
 
 module.exports = (method, url, key) => {
   const buildedUrl = urlBuilder(url);
   return async (container) => {
-    const { body, statusCode } = await request(container)[method](buildedUrl);
+    try {
+      const { body, statusCode } = await request(container)[method](buildedUrl);
 
-    const containerMap = fromJS(container);
-    if (!key) {
-      return containerMap.mergeDeep(fromJS({ body, statusCode })).toJS();
+      const containerMap = fromJS(container);
+      if (!key) {
+        return containerMap.mergeDeep(fromJS({ body, statusCode })).toJS();
+      }
+      return containerMap.mergeDeep(fromJS({ body: { [key]: body }, statusCode })).toJS();
+    } catch (err) {
+      const error = new PipelineError(err, err.response);
+      error.setContainer({
+        ...container,
+        errorBody: err.response.body,
+      });
+      throw error;
     }
-    return containerMap.mergeDeep(fromJS({ body: { [key]: body }, statusCode })).toJS();
   };
 };

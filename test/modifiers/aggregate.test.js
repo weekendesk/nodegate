@@ -1,6 +1,7 @@
 const nock = require('nock');
 const aggregate = require('../../modifiers/aggregate');
 const { getEmpty, extractFromRequest } = require('../../entities/container');
+const PipelineError = require('../../entities/PipelineError');
 
 describe('modifiers/aggregate', () => {
   it('should correctly return a function', () => {
@@ -103,5 +104,84 @@ describe('modifiers/aggregate', () => {
       'https://wiki.federation.com/armaments',
     )(container);
     expect(result.statusCode).toBe(201);
+  });
+  it('should throw a Pipeline error in case of 500 error', async () => {
+    expect.assertions(1);
+    try {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/section31')
+        .reply(500);
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/section31',
+      )(container);
+    } catch (err) {
+      expect(err).toBeInstanceOf(PipelineError);
+    }
+  });
+  it('should contain the request result on the error', async () => {
+    expect.assertions(1);
+    try {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/section31')
+        .reply(500);
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/section31',
+      )(container);
+    } catch (err) {
+      expect(err.response.statusCode).toEqual(500);
+    }
+  });
+  it('should set the container on the PipelineError', async () => {
+    expect.assertions(1);
+    try {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/section31')
+        .reply(500);
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/section31',
+      )(container);
+    } catch (err) {
+      expect(err.container).toBeTruthy();
+    }
+  });
+  it('should set the container errorBody on error', async () => {
+    expect.assertions(1);
+    try {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/section31')
+        .reply(500, {
+          reason: 'Section 31 does not exists',
+        });
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/section31',
+      )(container);
+    } catch (err) {
+      expect(err.container.errorBody).toEqual({
+        reason: 'Section 31 does not exists',
+      });
+    }
+  });
+  it('should set the container errorBody on error', async () => {
+    expect.assertions(1);
+    try {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/armaments')
+        .reply(404);
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/armaments',
+      )(container);
+    } catch (err) {
+      expect(err.container.statusCode).toEqual(404);
+    }
   });
 });
