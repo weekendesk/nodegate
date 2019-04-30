@@ -41,4 +41,18 @@ describe('services/urlBuilder', () => {
     };
     expect(() => url(container)).toThrow();
   });
+  it('should work with complex paths', () => {
+    const url = urlBuilder('http://wiki.federation.com/{body.fleet.ships[1].name}');
+    const container = {
+      body: {
+        fleet: {
+          ships: [
+            { name: 'NCC-1701' },
+            { name: 'NCC-1700' },
+          ],
+        },
+      },
+    };
+    expect(url(container)).toBe('http://wiki.federation.com/NCC-1700');
+  });
 });
