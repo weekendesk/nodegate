@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { fromJS } = require('immutable');
+const { cloneDeep } = require('lodash');
 
-module.exports = value => (container) => {
-  const containerMap = fromJS(container);
-  return containerMap.set('statusCode', value).toJS();
-};
+module.exports = statusCode => container => ({
+  ...cloneDeep(container),
+  statusCode,
+});
