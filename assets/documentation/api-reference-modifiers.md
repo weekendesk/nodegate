@@ -46,15 +46,15 @@ const pipeline = [
 ];
 ```
 
-## filter(properties)
+## filter(paths)
 
 Filter the container's body to keep only the properties listed on the `properties` argument array.
 
 _Arguments_
 
-| Argument       | Type    | Description                                  |
-| :------------- | :------ | :------------------------------------------- |
-| `properties`   | `array` | Array containing all the properties to keep. |
+| Argument | Type           | Description                                        |
+| :------- | :------------- | :------------------------------------------------- |
+| `paths`  | `string|array` | **Required.** Paths or path to filter on the body. |
 
 _Example_
 

@@ -5,12 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { fromJS } = require('immutable');
+const { cloneDeep, pick } = require('lodash');
 
-module.exports = properties => (container) => {
-  const containerMap = fromJS(container);
-  return containerMap.update(
-    'body',
-    map => map.filter((_, key) => properties.includes(key)),
-  ).toJS();
-};
+module.exports = paths => container => ({
+  ...cloneDeep(container),
+  body: pick(container.body, paths),
+});
