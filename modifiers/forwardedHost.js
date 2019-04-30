@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { fromJS } = require('immutable');
+const { cloneDeep, merge } = require('lodash');
 
-module.exports = () => (container, request) => {
-  const containerMap = fromJS(container);
-  return containerMap.setIn(['headers', 'X-Forwarded-Host'], request.headers.host).toJS();
-};
+module.exports = () => (container, request) => ({
+  ...cloneDeep(container),
+  headers: merge(container.headers, { 'X-Forwarded-Host': request.headers.host }),
+});
