@@ -5,22 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { fromJS } = require('immutable');
+const { cloneDeep, merge, set } = require('lodash');
 const PipelineError = require('../entities/PipelineError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
 
-module.exports = (method, url, key) => {
+module.exports = (method, url, path) => {
   const buildedUrl = urlBuilder(url);
   return async (container) => {
     try {
       const { body, statusCode } = await request(container)[method](buildedUrl);
-
-      const containerMap = fromJS(container);
-      if (!key) {
-        return containerMap.mergeDeep(fromJS({ body, statusCode })).toJS();
+      if (path) {
+        return merge(cloneDeep(container), { statusCode, body: set({}, path, body) });
       }
-      return containerMap.mergeDeep(fromJS({ body: { [key]: body }, statusCode })).toJS();
+      return merge(cloneDeep(container), { statusCode, body });
     } catch (err) {
       const error = new PipelineError(err, err.response);
       error.setContainer({

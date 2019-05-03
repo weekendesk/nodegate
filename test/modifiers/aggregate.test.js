@@ -30,7 +30,7 @@ describe('modifiers/aggregate', () => {
     const result = await aggregate('get', 'https://wiki.federation.com/armaments')(container);
     expect(container).not.toBe(result);
   });
-  it('should correclty use the key parameter', async () => {
+  it('should correclty use the path parameter', async () => {
     const container = getEmpty();
     nock('https://wiki.federation.com')
       .get('/armaments')
