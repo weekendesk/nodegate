@@ -21,6 +21,7 @@ Here is the complete list of all the bundled modifiers:
  - [aggregate(method, url, [property])](#aggregatemethod-url-property)
  - [filter(properties)](#filterproperties)
  - [forwardedHost()](#forwardedhost)
+ - [mergeBody(body)](#mergebody-body)
  - [waitFor(method, url, test)](#waitformethod-url-test)
  - [routeMatch(regex, pipeline)](#routematchregex-pipeline)
  - [statusCode(code)](#statuscodecode)
@@ -74,6 +75,24 @@ _Example_
 ```js
 const pipeline = [
   forwardedHost(),
+];
+```
+
+## mergeBody(body)
+
+Merge the body parameter to the container body.
+
+_Arguments_
+
+| Argument | Type     | Description                            |
+| :------- | :------- | :------------------------------------- |
+| `body`   | `object` | Object to merge to the body container. |
+
+_Example_
+
+```js
+const pipeline = [
+  mergeBody({ data: 'value' }),
 ];
 ```
 
