@@ -26,10 +26,6 @@ const doRequest = (container, method, url, options) => {
     body: (container && container.body) || {},
   };
 
-  if (method === 'get') {
-    delete parameters.body;
-  }
-
   return requestNative(parameters);
 };
 
