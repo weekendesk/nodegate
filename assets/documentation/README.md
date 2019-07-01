@@ -14,6 +14,8 @@
     - [aggregate(method, url, [property])](api-reference-modifiers.md#aggregatemethod-url-property)
     - [filter(properties)](api-reference-modifiers.md#filterproperties)
     - [forwardedHost()](api-reference-modifiers.md#forwardedhost)
+    - [mergeBody(body)](api-reference-modifiers.md#mergebodybody)
+    - [mergeHeaders(headers)](api-reference-modifiers.md#mergeheadersheaders)
     - [waitFor(method, url, test)](api-reference-modifiers.md#waitformethod-url-test)
     - [routeMatch(regex, pipeline)](api-reference-modifiers.md#routematchregex-pipeline)
     - [statusCode(code)](api-reference-modifiers.md#statuscodecode)
