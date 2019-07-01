@@ -125,7 +125,7 @@ describe('services/request', () => {
         .reply(200, (_, requestBody) => ({ ...requestBody }));
       const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships'));
       expect(result.statusCode).toBe(200);
-      expect(result.body.ship).toBeUndefined();
+      expect(result.body.ship).toEqual('NCC-1701');
     });
   });
   describe('#(container).post()', () => {
