@@ -1,0 +1,18 @@
+---
+layout: content
+title: Modifiers
+---
+
+<h1>Modifiers</h1>
+
+{% for category in site.data.modifiers_toc.toc %}
+  <h2>{{ category.title }}</h2>
+  {% for modifier in category.content %}
+    <a class="big-button" href="{{ modifier.url }}">
+      {% if modifier.icon %}
+        <i class="fas fa-{{ modifier.icon }}"></i>
+      {% endif %}
+      <span class="big-button__title">{{ modifier.title }}</span>
+    </a>
+  {% endfor %}
+{% endfor %}

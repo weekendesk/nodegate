@@ -1,0 +1,30 @@
+@mixin container() {
+  width: 90%;
+  margin: 0 auto;
+}
+
+@mixin surface($color) {
+  $text-color: $color;
+  @if $color == $color-white {
+    $text-color: $color-black;
+  }
+  @if $color == $color-black {
+    $text-color: $color-white;
+  }
+
+  background: $color;
+  color: $text-color;
+
+  &:hover {
+    background: $color;
+    color: $text-color;
+  }
+}
+
+@mixin borderRadius($size: 1) {
+  border-radius: grid($size);
+}
+
+@mixin marginBottom() {
+  margin-bottom: grid(4);
+}

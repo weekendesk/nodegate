@@ -1,0 +1,38 @@
+toc:
+  - title: Body
+    content:
+      - title: aggregate
+        url: /modifiers/aggregate.html
+        icon: plus
+      - title: filter
+        url: /modifiers/filter.html
+        icon: filter
+      - title: mergeBody
+        url: /modifiers/merge-body.html
+        icon: plus
+      - title: project
+        url: /modifiers/project.html
+        icon: project-diagram
+  - title: Header
+    content:
+      - title: forwardedHost
+        url: /modifiers/forwarded-host.html
+        icon: share-square
+      - title: mergeHeaders
+        url: /modifiers/merge-headers.html
+        icon: filter
+  - title: Conditions
+    content:
+      - title: routeMatch
+        url: /modifiers/route-match.html
+        icon: equals
+  - title: Response
+    content:
+      - title: statusCode
+        url: /modifiers/status-code.html
+        icon: info
+  - title: Workflow
+    content:
+      - title: waitFor
+        url: /modifiers/wait-for.html
+        icon: pause

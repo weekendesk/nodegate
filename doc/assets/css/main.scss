@@ -1,0 +1,196 @@
+---
+---
+
+@import '../../node_modules/sass-easy-bem/easy-bem';
+@import 'settings';
+@import 'functions';
+@import 'mixins';
+@import 'reset';
+
+@include b('header') {
+  background: $color-brand;
+
+  @include e('container') {
+    @include container();
+    display: flex;
+    height: $size-header;
+  }
+
+  @include e('logo') {
+    line-height: $size-header;
+    vertical-align: baseline;
+    margin-right: grid(4);
+  }
+
+  @include e('logo-image') {
+    display: inline-block;
+    vertical-align: text-bottom;
+    height: $size-header / 3;
+  }
+
+  @include e('nav') {
+    display: flex;
+    flex-direction: row;
+  }
+
+  @include e('link') {
+    color: $color-white;
+    padding: {
+      left: grid(4);
+      right: grid(4);
+    }
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: rgba($color-white, 0.1);
+    }
+  }
+}
+
+@include b('home-jumbo') {
+  background: rgba($color-black, 0.05);
+
+  &__container {
+    @include container();
+    text-align: center;
+    padding: grid(16) grid(4);
+  }
+
+  &__logo {
+    display: inline-block;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  &__headline {
+    font-weight: 100;
+    font-size: 24px;
+  }
+}
+@include b('home') {
+  @include e('container') {
+    @include container();
+  }
+
+  @include e('schema') {
+    display: block;
+    width: 750px;
+    max-width: 90%;
+    margin: grid(16) auto;
+  }
+}
+
+@include b('container') {
+  @include container();
+
+  @include m('flex') {
+    display: flex;
+  }
+
+  @include e('content') {
+    flex-grow: 1;
+    padding: grid(4);
+    margin: grid(4);
+  }
+}
+
+@include b('left-menu') {
+  @include marginBottom();
+
+  flex: 0 0 $size-left-menu;
+  margin: grid(4);
+  padding: grid(4);
+
+  @include e('entry') {
+    list-style: none;
+  }
+
+  @include e('title') {
+    padding-left: grid(4);
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-top: grid(4);
+    margin-bottom: grid(2);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  @include e('link') {
+    color: $color-black;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding-left: grid(4);
+
+    &:hover {
+      background: none;
+      border-bottom: none;
+      font-weight: bold;
+    }
+
+    @include m('current') {
+      border-left: grid() solid $color-brand;
+      padding-left: grid(3);
+    }
+  }
+}
+
+@include b('footer') {
+  @include surface($color-black);
+
+  @include e('container') {
+    @include container();
+    padding: grid(4);
+  }
+}
+
+.highlighter-rouge {
+  background: rgba($color-black, 0.05);
+  padding: 2px 4px;
+  border-radius: 2px;
+
+  &.language-bash,
+  &.language-js,
+  &.language-json {
+    @include borderRadius();
+    @include marginBottom();
+    background: #333;
+    padding: grid(4);
+    margin-left: grid(-4);
+    margin-right: grid(-4);
+  }
+
+  &.language-bash * {
+    color: white;
+  }
+}
+
+@include b('big-button') {
+  @include borderRadius();
+  @include marginBottom();
+  @include surface($color-white);
+  display: block;
+  text-decoration: none;
+  border: 1px solid rgba($color-black, 0.15);
+  box-shadow: rgba($color-black, 0.5) 0 0 0;
+  padding: grid(2);
+  transition: all ease-in-out 0.2s;
+
+  @include e('title') {
+    font-weight: 500;
+    display: block;
+  }
+  @include e('description') {
+    font-weight: 200;
+    display: block;
+  }
+
+  &:hover {
+    border: 1px solid rgba($color-black, 0.15);
+    box-shadow: rgba($color-black, 0.25) 0 3px 5px;
+  }
+}

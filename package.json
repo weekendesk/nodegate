@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --runInBand",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "jekyll": "cd doc && bundle exec jekyll serve"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -16,7 +17,8 @@
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7"
+    "request-promise-native": "^1.0.7",
+    "sass-easy-bem": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

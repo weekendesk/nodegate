@@ -1,0 +1,19 @@
+toc:
+  - title: Installation
+    content:
+      - title: Getting started
+        url: /docs/getting-started.html
+      - title: Installation
+        url: /docs/installation.html
+  - title: API
+    content:
+      - title: Gateway
+        url: /docs/gateway.html
+      - title: nodegate()
+        url: /docs/nodegate.html
+      - title: Modifiers
+        url: /docs/modifiers.html
+      - title: Routes
+        url: /docs/routes.html
+      - title: Errors
+        url: /docs/errors.html
