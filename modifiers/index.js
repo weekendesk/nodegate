@@ -9,6 +9,7 @@ const aggregate = require('./aggregate');
 const filter = require('./filter');
 const forwardedHost = require('./forwardedHost');
 const mergeBody = require('./mergeBody');
+const project = require('./project');
 const routeMatch = require('./routeMatch');
 const statusCode = require('./statusCode');
 const waitFor = require('./waitFor');
@@ -18,6 +19,7 @@ module.exports = {
   filter,
   forwardedHost,
   mergeBody,
+  project,
   routeMatch,
   statusCode,
   waitFor,
