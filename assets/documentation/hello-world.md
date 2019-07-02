@@ -28,7 +28,7 @@ const { aggregate } = nodegate.modifiers;
 ```
 
 Now we will create our first route, `GET`, with the name of the city on the path. The route object
-need three attributes: the method, the path, and the pipeline. The pipeline will then be processes
+needs three attributes: the method, the path, and the pipeline. The pipeline will then be processes
 synchronously, using on each step a *container* generated from the request, and containing the
 parameters and the body of the request.
 
