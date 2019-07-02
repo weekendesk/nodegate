@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Modifiers
 
-All modifiers can be accessed from the top level function of **nodegate** or by direclty import the
+All modifiers can be accessed from the top level function of **nodegate** or by direclty importing the
 modifiers path:
 
 ```js
