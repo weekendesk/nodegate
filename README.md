@@ -31,7 +31,7 @@ gate.listen(8080);
 
 This plugin will help you to solve the well known problem of [API management][url-wiki-api-management].
 Some people are doing this by themselves, others by using complex tools or services. But even with
-this kind of systems you will have to program some mechanics. **Nodegate** help you to
+this kind of systems you will have to program some mechanics. **Nodegate** helps you to
 programmatically configure, develop and run your API gateway, in the simple way.
 
 > Everything can be done by declaring routes with a pipeline containing modifiers. Each modifier
