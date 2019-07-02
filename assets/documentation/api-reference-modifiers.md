@@ -144,7 +144,7 @@ _Arguments_
 | Argument   | Type    | Description                                            |
 | :--------- | :------ | :----------------------------------------------------- |
 | `regex`    | `regex` | Regular expression to test with the path of the route. |
-| `pipeline` | `array` | Pipeline to execute if the path match.                 |
+| `pipeline` | `array` | Pipeline to execute if the path matches.               |
 
 _Example_
 
