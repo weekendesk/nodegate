@@ -42,7 +42,7 @@ _Arguments_
 
 ### beforeEach(modifier)
 
-Add one or more modifier to execute before each request.
+Add one or more modifiers to execute before each request.
 
 ```js
 gateway.beforeEach(forwardedHost());
