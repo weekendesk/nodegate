@@ -29,7 +29,7 @@ Here is the complete list of all the bundled modifiers:
 
 ## aggregate(method, url, [property])
 
-Execute a request with the content of the container and aggregate the result to it. If `property` is
+Execute a request with the contents of the container and aggregate the result to it. If `property` is
 set, the result will be aggregated to the defined property name on the container.
 
 _Arguments_
