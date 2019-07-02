@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Gateway
 
-The `gateway` is by convention, the resulting object when calling the top level `nodegate()`
+The `gateway` is, by convention, the resulting object when calling the top level `nodegate()`
 function. It contains the methods you need to configure and start your gateway.
 
 ```js
