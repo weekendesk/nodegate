@@ -15,7 +15,7 @@ _Properties_
 | `pipeline` | `array`    | **Required.** List of the modifiers to apply to the container.                                                            |
 | `onError`  | `function` | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
 
-The pipelines are the list of modifiers to execute **synchronously** to modify the container.
+The pipelines are lists of modifiers to execute **synchronously** to modify the container.
 
 Each modifier of the pipeline will be called with two arguments:
  - The container, with the update of the previous modifier
