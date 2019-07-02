@@ -11,7 +11,7 @@ _Properties_
 | Argument   | Type       | Description                                                                                                               |
 | :--------- | :--------- | :------------------------------------------------------------------------------------------------------------------------ |
 | `method`   | `string`   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                                            |
-| `path`     | `string`   | **Required.** Path of the route, the path can be written on the Express way, for example: `/user/:id`                     |
+| `path`     | `string`   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id`                        |
 | `pipeline` | `array`    | **Required.** List of the modifiers to apply to the container.                                                            |
 | `onError`  | `function` | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
 
