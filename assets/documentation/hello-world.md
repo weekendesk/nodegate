@@ -43,7 +43,7 @@ gate.route({
 
 Now we have to set the pipeline of our route. The process is simple: we need to fetch the `woeid`
 from the first route of the API, then to fetch the weather from the second one. On this example, we
-will return all the collected data by using the `aggregate` modifier two times.
+will return all the collected data by using the `aggregate` modifier twice.
 
 ```js
 gate.route({
