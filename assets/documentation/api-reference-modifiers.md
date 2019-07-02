@@ -68,7 +68,7 @@ const pipeline = [
 
 ## forwardedHost()
 
-Add the the container headers the property `X-Forwarded-Host` with the value of the original request
+Add the property `X-Forwarded-Host` to the container headers, with the value of the original request
 header `host`.
 
 _Example_
