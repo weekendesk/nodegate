@@ -23,7 +23,7 @@ Each modifier of the pipeline will be called with two arguments:
 
 ## Error handling
 
-To allow a better management of the errors, a callback property named `onError` can be set.
+Better error management can be achieved with a callback property named `onError`.
 This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, this error
 contains:
 
