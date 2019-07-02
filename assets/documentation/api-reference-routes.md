@@ -18,7 +18,7 @@ _Properties_
 The pipelines are lists of modifiers to execute **synchronously** to modify the container.
 
 Each modifier of the pipeline will be called with two arguments:
- - The container, with the update of the previous modifier
+ - The container, with the update of the previous modifier,
  - The original request received by nodegate. (The Express request).
 
 ## Error handling
