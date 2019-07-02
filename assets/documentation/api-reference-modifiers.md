@@ -141,10 +141,10 @@ Mainly useful for the `beforeEach()` pipeline.
 
 _Arguments_
 
-| Argument   | Type    | Description                                            |
-| :--------- | :------ | :----------------------------------------------------- |
-| `regex`    | `regex` | Regular expression to test with the path of the route. |
-| `pipeline` | `array` | Pipeline to execute if the path matches.               |
+| Argument   | Type    | Description                                               |
+| :--------- | :------ | :-------------------------------------------------------- |
+| `regex`    | `regex` | Regular expression to test against the path of the route. |
+| `pipeline` | `array` | Pipeline to execute if the path matches.                  |
 
 _Example_
 
