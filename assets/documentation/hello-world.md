@@ -15,7 +15,7 @@ The route `/api/location/search/?query=(query)` allows us to fetch metadata abou
 containing the `woeid` property, needed to fetch the weather of the city with the route
 `/api/location/(woeid)`.
 
-**Two API calls are needed, perfect example!**
+**Two API calls are needed: perfect example!**
 
 After installing **nodegate**, let's create a file `index.js`. We will require `nodegate` and
 initializing it. We will also need the aggregator modifier, let's import it also.
