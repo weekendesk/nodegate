@@ -137,7 +137,7 @@ const pipeline = [
 ## routeMatch(regex, pipeline)
 
 Execute the `pipeline` argument if the path of the current route matches the regex.
-Mainly usefull for the `beforeEach()` pipeline.
+Mainly useful for the `beforeEach()` pipeline.
 
 _Arguments_
 
