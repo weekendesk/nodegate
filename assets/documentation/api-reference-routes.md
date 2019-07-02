@@ -50,7 +50,7 @@ gateway.route({
     return {
       ...error.container,
       body: {
-        reason: 'An unknow error occured.',
+        reason: 'An unknow error occurred.',
       }
     }:
   };
