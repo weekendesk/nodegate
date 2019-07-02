@@ -56,7 +56,7 @@ gate.route({
 });
 ```
 
-**Note that all the data contained on the container are accessible on the urls.**
+**Note that all the data contained on the container is accessible on the urls.**
 
 We finally just have to listen a port:
 
