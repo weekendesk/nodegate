@@ -19,7 +19,7 @@ The pipelines are lists of modifiers to execute **synchronously** to modify the 
 
 Each modifier of the pipeline will be called with two arguments:
  - The container, with the update of the previous modifier
- - The original requests received by nodegate. (The Express request).
+ - The original request received by nodegate. (The Express request).
 
 ## Error handling
 
