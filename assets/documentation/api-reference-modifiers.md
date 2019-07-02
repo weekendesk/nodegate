@@ -81,13 +81,13 @@ const pipeline = [
 
 ## mergeBody(body)
 
-Merge the body parameter to the container body.
+Merge the body parameter into the container body.
 
 _Arguments_
 
-| Argument | Type     | Description                            |
-| :------- | :------- | :------------------------------------- |
-| `body`   | `object` | Object to merge to the body container. |
+| Argument | Type     | Description                              |
+| :------- | :------- | :--------------------------------------- |
+| `body`   | `object` | Object to merge into the body container. |
 
 _Example_
 
@@ -99,13 +99,13 @@ const pipeline = [
 
 ## mergeHeaders(headers)
 
-Merge the headers parameter to the container headers.
+Merge the headers parameter into the container headers.
 
 _Arguments_
 
-| Argument    | Type     | Description                               |
-| :---------- | :------- | :---------------------------------------- |
-| `headers`   | `object` | Object to merge to the headers container. |
+| Argument    | Type     | Description                                 |
+| :---------- | :------- | :------------------------------------------ |
+| `headers`   | `object` | Object to merge into the headers container. |
 
 _Example_
 
