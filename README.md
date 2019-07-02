@@ -1,6 +1,6 @@
 ![nodegate](assets/images/logo-readme.png)
 
-The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Builded on top of
+The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
 [Express](url-express) & [Request](url-request).
 
 [![CircleCI][circleci-badge]][circleci-url]
