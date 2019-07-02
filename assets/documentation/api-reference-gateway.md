@@ -24,7 +24,7 @@ gateway.listen(8080);
 
 ### route(route)
 
-Add one or more route to the gateway.
+Add one or more routes to the gateway.
 
 ```js
 gateway.route({
