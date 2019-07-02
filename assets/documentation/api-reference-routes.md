@@ -24,8 +24,8 @@ Each modifier of the pipeline will be called with two arguments:
 ## Error handling
 
 Better error management can be achieved with a callback property named `onError`.
-This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, this error
-contains:
+This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, with the
+following contents:
 
  - The error message,
  - If applicable, the last response received by **nodegate**,
