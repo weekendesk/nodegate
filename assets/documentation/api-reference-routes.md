@@ -34,7 +34,7 @@ following contents:
 **This callback must return a container object** used by the route executor to send the response to
 the client.
 
-In case of error, the statusCode will be set to 500. If a response exists on the error, the status
+In case of error, the statusCode will be set to 500. If a response exists in the error, the status
 code will be the same as the response statusCode.
 
 _Examples_
