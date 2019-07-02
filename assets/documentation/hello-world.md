@@ -12,7 +12,7 @@ We gather the weather data from a plugin API: [MetaWeather](https://www.metaweat
 Let's check the [API documentation](https://www.metaweather.com/api/) first:
 
 The route `/api/location/search/?query=(query)` allows us to fetch metadata about a city,
-containing the `woeid` property needed to fetch the weather of the city with the route
+containing the `woeid` property, needed to fetch the weather of the city with the route
 `/api/location/(woeid)`.
 
 **Two API calls are needed, perfect example!**
