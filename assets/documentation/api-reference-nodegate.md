@@ -40,7 +40,7 @@ nodegate.configure({
 });
 ```
 
-If `configure` is called without `options`, the configuration will be reseted.
+If `configure` is called without `options`, the configuration will be reset.
 
 _Configuration properties_
 
