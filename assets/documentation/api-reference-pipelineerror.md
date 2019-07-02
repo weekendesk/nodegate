@@ -15,7 +15,7 @@ Container state before the error.
 
 ### response
 
-If applicable: the last request executed response.
+If applicable: the response for the last executed request.
 
 ## Methods
 
