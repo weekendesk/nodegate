@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Routes
 
-Routes are object defining the behavior of nodegate for a specific path and method.
+Routes are objects defining the behavior of nodegate for a specific path and method.
 
 _Properties_
 
