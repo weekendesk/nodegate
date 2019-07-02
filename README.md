@@ -37,7 +37,7 @@ programmatically configure, develop and run your API gateway, in the simple way.
 > Everything can be done by declaring routes with a pipeline containing modifiers. Each modifier
 > _modify_ a container for composing the response. That's it.
 
-A bunch of modifiers are bundled with this plugin, but everyone can create some easily!
+A bunch of modifiers are bundled with this plugin, but everyone can create more easily!
 
 ## Documentation
 
