@@ -18,7 +18,7 @@ containing the `woeid` property, needed to fetch the weather of the city with th
 **Two API calls are needed: perfect example!**
 
 After installing **nodegate**, let's create a file `index.js`. We will require `nodegate` and
-initialize it. We will also need the aggregator modifier, let's import it also.
+initialize it. We will also need the aggregator modifier, let's import it as well.
 
 ```js
 const nodegate = require('nodegate');
