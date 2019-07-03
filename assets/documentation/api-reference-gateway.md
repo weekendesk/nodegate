@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Gateway
 
-The `gateway` is by convention, the resulting object when calling the top level `nodegate()`
+The `gateway` is, by convention, the resulting object when calling the top level `nodegate()`
 function. It contains the methods you need to configure and start your gateway.
 
 ```js
@@ -24,7 +24,7 @@ gateway.listen(8080);
 
 ### route(route)
 
-Add one or more route to the gateway.
+Add one or more routes to the gateway.
 
 ```js
 gateway.route({
@@ -42,7 +42,7 @@ _Arguments_
 
 ### beforeEach(modifier)
 
-Add one or more modifier to execute before each request.
+Add one or more modifiers to execute before each request.
 
 ```js
 gateway.beforeEach(forwardedHost());

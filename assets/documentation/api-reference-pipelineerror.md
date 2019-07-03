@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > PipelineError
 
-The class PipelineError allow modifiers to return a contextualized error to the pipeline executor.
+The class PipelineError allows modifiers to return a contextualized error to the pipeline executor.
 This error extends the default Node.js `Error` object.
 
 ## Properties
@@ -15,7 +15,7 @@ Container state before the error.
 
 ### response
 
-If applicable: the last request executed response.
+If applicable: the response for the last executed request.
 
 ## Methods
 

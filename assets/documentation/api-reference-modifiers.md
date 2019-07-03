@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Modifiers
 
-All modifiers can be accessed from the top level function of **nodegate** or by direclty import the
+All modifiers can be accessed from the top level function of **nodegate** or by direclty importing the
 modifiers path:
 
 ```js
@@ -29,8 +29,8 @@ Here is the complete list of all the bundled modifiers:
 
 ## aggregate(method, url, [property])
 
-Execute a request with the content of the container and aggregate the result to it. If `property` is
-set, the result will be aggregated to the defined property name on the container.
+Execute a request with the contents of the container and aggregate the result to it. If `property` is
+set, the result will be aggregated into the defined property name on the container.
 
 _Arguments_
 
@@ -68,7 +68,7 @@ const pipeline = [
 
 ## forwardedHost()
 
-Add the the container headers the property `X-Forwarded-Host` with the value of the original request
+Add the property `X-Forwarded-Host` to the container headers, with the value of the original request
 header `host`.
 
 _Example_
@@ -81,13 +81,13 @@ const pipeline = [
 
 ## mergeBody(body)
 
-Merge the body parameter to the container body.
+Merge the body parameter into the container body.
 
 _Arguments_
 
-| Argument | Type     | Description                            |
-| :------- | :------- | :------------------------------------- |
-| `body`   | `object` | Object to merge to the body container. |
+| Argument | Type     | Description                              |
+| :------- | :------- | :--------------------------------------- |
+| `body`   | `object` | Object to merge into the body container. |
 
 _Example_
 
@@ -99,13 +99,13 @@ const pipeline = [
 
 ## mergeHeaders(headers)
 
-Merge the headers parameter to the container headers.
+Merge the headers parameter into the container headers.
 
 _Arguments_
 
-| Argument    | Type     | Description                               |
-| :---------- | :------- | :---------------------------------------- |
-| `headers`   | `object` | Object to merge to the headers container. |
+| Argument    | Type     | Description                                 |
+| :---------- | :------- | :------------------------------------------ |
+| `headers`   | `object` | Object to merge into the headers container. |
 
 _Example_
 
@@ -136,15 +136,15 @@ const pipeline = [
 
 ## routeMatch(regex, pipeline)
 
-Execute the `pipeline` argument if the path of the current route match the regex.
-Mainly usefull for the `beforeEach()` pipeline.
+Execute the `pipeline` argument if the path of the current route matches the regex.
+Mainly useful for the `beforeEach()` pipeline.
 
 _Arguments_
 
-| Argument   | Type    | Description                                            |
-| :--------- | :------ | :----------------------------------------------------- |
-| `regex`    | `regex` | Regular expression to test with the path of the route. |
-| `pipeline` | `array` | Pipeline to execute if the path match.                 |
+| Argument   | Type    | Description                                               |
+| :--------- | :------ | :-------------------------------------------------------- |
+| `regex`    | `regex` | Regular expression to test against the path of the route. |
+| `pipeline` | `array` | Pipeline to execute if the path matches.                  |
 
 _Example_
 

@@ -4,28 +4,28 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Routes
 
-Routes are object defining the behavior of nodegate for a specific path and method.
+Routes are objects defining the behavior of nodegate for a specific path and method.
 
 _Properties_
 
 | Argument   | Type       | Description                                                                                                               |
 | :--------- | :--------- | :------------------------------------------------------------------------------------------------------------------------ |
 | `method`   | `string`   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                                            |
-| `path`     | `string`   | **Required.** Path of the route, the path can be written on the Express way, for example: `/user/:id`                     |
+| `path`     | `string`   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id`                        |
 | `pipeline` | `array`    | **Required.** List of the modifiers to apply to the container.                                                            |
 | `onError`  | `function` | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
 
-The pipelines are the list of modifiers to execute **synchronously** to modify the container.
+The pipelines are lists of modifiers to execute **synchronously** to modify the container.
 
 Each modifier of the pipeline will be called with two arguments:
- - The container, with the update of the previous modifier
- - The original requests received by nodegate. (The Express request).
+ - The container, with the update of the previous modifier,
+ - The original request received by nodegate. (The Express request).
 
 ## Error handling
 
-To allow a better management of the errors, a callback property named `onError` can be set.
-This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, this error
-contains:
+Better error management can be achieved with a callback property named `onError`.
+This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, with the
+following contents:
 
  - The error message,
  - If applicable, the last response received by **nodegate**,
@@ -34,7 +34,7 @@ contains:
 **This callback must return a container object** used by the route executor to send the response to
 the client.
 
-In case of error, the statusCode will be set to 500. If a response exists on the error, the status
+In case of error, the statusCode will be set to 500. If a response exists in the error, the status
 code will be the same as the response statusCode.
 
 _Examples_
@@ -50,7 +50,7 @@ gateway.route({
     return {
       ...error.container,
       body: {
-        reason: 'An unknow error occured.',
+        reason: 'An unknow error occurred.',
       }
     }:
   };

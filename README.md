@@ -1,6 +1,6 @@
 ![nodegate](assets/images/logo-readme.png)
 
-The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Builded on top of
+The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
 [Express](url-express) & [Request](url-request).
 
 [![CircleCI][circleci-badge]][circleci-url]
@@ -29,15 +29,15 @@ gate.listen(8080);
 
 ![Nodegate usage](assets/images/schema-readme.png)
 
-This plugin help you to solve the well known problem of [API management][url-wiki-api-management].
-Some people are doing this by themselves, others by using complex tools or services, but even with
-this kind of systems you will have to program some mechanics. **Nodegate** help you to
+This plugin will help you to solve the well known problem of [API management][url-wiki-api-management].
+Some people are doing this by themselves, others by using complex tools or services. But even with
+this kind of systems you will have to program some mechanics. **Nodegate** helps you to
 programmatically configure, develop and run your API gateway, in the simple way.
 
 > Everything can be done by declaring routes with a pipeline containing modifiers. Each modifier
 > _modify_ a container for composing the response. That's it.
 
-A bunch of modifiers are bundled with this plugin, but everyone can create some easily!
+A bunch of modifiers are bundled with this plugin, but everyone can create more easily!
 
 ## Documentation
 
