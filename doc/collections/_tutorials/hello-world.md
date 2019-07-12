@@ -12,14 +12,14 @@ We gather the weather data from a plugin API: [MetaWeather](https://www.metaweat
 
 Let's check the [API documentation](https://www.metaweather.com/api/) first:
 
-The route `/api/location/search/?query=(query)` allow us to fetch metadata about a city,
-containing the `woeid` property needed to fetch the weather of the city with the route
+The route `/api/location/search/?query=(query)` allows us to fetch metadata about a city,
+containing the `woeid` property, needed to fetch the weather of the city with the route
 `/api/location/(woeid)`.
 
-**Two API calls are needed, perfect example!**
+**Two API calls are needed: perfect example!**
 
 After installing **nodegate**, let's create a file `index.js`. We will require `nodegate` and
-initializing it. We will also need the aggregator modifier, let's import it also.
+initialize it. We will also need the aggregator modifier, let's import it as well.
 
 ```js
 const nodegate = require('nodegate');
@@ -29,7 +29,7 @@ const { aggregate } = nodegate.modifiers;
 ```
 
 Now we will create our first route, `GET`, with the name of the city on the path. The route object
-need three attributes: the method, the path, and the pipeline. The pipeline will then be processes
+needs three attributes: the method, the path, and the pipeline. The pipeline will then be processed
 synchronously, using on each step a *container* generated from the request, and containing the
 parameters and the body of the request.
 
@@ -44,7 +44,7 @@ gate.route({
 
 Now we have to set the pipeline of our route. The process is simple: we need to fetch the `woeid`
 from the first route of the API, then to fetch the weather from the second one. On this example, we
-will return all the collected data by using the `aggregate` modifier two times.
+will return all the collected data by using the `aggregate` modifier twice.
 
 ```js
 gate.route({
@@ -57,7 +57,7 @@ gate.route({
 });
 ```
 
-**Note that all the data contained on the container are accessible on the urls.**
+**Note that all the data contained on the container is accessible on the urls.**
 
 We finally just have to listen a port:
 

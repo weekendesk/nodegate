@@ -3,4 +3,20 @@ layout: content
 title: Modifiers - Project
 ---
 
-# Project
+# project(projections)
+
+Create a new body by projecting value paths from the current one to the new one.
+
+_Arguments_
+
+| Argument     | Type       | Description                             |
+| :----------- | :--------- | :-------------------------------------- |
+| projections  | **array**  | **required** Projection rules to apply. |
+
+_Example_
+
+```js
+const pipeline = [
+  project([['user.name', 'username']]),
+];
+```

@@ -1,10 +1,8 @@
 toc:
-  - title: Installation
+  - title: Introduction
     content:
       - title: Getting started
         url: /docs/getting-started.html
-      - title: Installation
-        url: /docs/installation.html
   - title: API
     content:
       - title: Gateway

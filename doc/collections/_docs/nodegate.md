@@ -21,9 +21,7 @@ This object contains all the built-in modifiers shipped with nodegate.
 ```js
 const nodegate = require('nodegate');
 const { aggregate } = nodegate.modifiers;
-
 // or
-
 const aggregate = nodegate.modifiers.aggregate;
 ```
 
@@ -41,11 +39,11 @@ nodegate.configure({
 });
 ```
 
-If `configure` is called without `options`, the configuration will be reseted.
+If `configure` is called without `options`, the configuration will be reset.
 
 _Configuration properties_
 
-| Property          | Type      | Description                                                   | Default |
-| :---------------- | :-------- | :------------------------------------------------------------ | :------ |
-| `express`         | `object`  | An object containing the express configuration.               |         |
-| `express.useCors` | `boolean` | Express will use the CORS middleware with the default values. | `true`  |
+| Property        | Type      | Description                                                     | Default |
+| :-------------- | :-------- | :-------------------------------------------------------------- | :------ |
+| express         | **object**  | An object containing the express configuration.               |         |
+| express.useCors | **boolean** | Express will use the CORS middleware with the default values. | `true`  |
