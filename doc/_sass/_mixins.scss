@@ -11,6 +11,9 @@
   @if $color == $color-black {
     $text-color: $color-white;
   }
+  @if $color == $color-brand {
+    $text-color: $color-white;
+  }
 
   background: $color;
   color: $text-color;
@@ -28,3 +31,32 @@
 @mixin marginBottom() {
   margin-bottom: grid(4);
 }
+
+@mixin displayBlock() {
+  display: block;
+  box-sizing: border-box;
+}
+
+@mixin surfaceButton() {
+  @include borderRadius();
+  @include marginBottom();
+  @include surface($color-white);
+  @include displayBlock();
+  text-decoration: none;
+  border: 1px solid rgba($color-black, 0.15);
+  box-shadow: rgba($color-black, 0.5) 0 0 0;
+  padding: grid(2);
+  transition: all ease-in-out 0.2s;
+
+  &:hover {
+    border: 1px solid rgba($color-black, 0.15);
+    box-shadow: rgba($color-black, 0.25) 0 3px 5px;
+  }
+}
+
+@mixin singleLineHeight($height) {
+  height: $height;
+  line-height: $height;
+  vertical-align: middle;
+}
+
