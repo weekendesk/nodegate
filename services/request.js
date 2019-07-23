@@ -24,6 +24,7 @@ const doRequest = (container, method, url, options) => {
     method,
     url: (typeof url === 'function' && url(container)) || url,
     body: (container && container.body) || {},
+    qs: (container && container.query) || {},
   };
 
   return requestNative(parameters);

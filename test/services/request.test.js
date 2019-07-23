@@ -127,6 +127,19 @@ describe('services/request', () => {
       expect(result.statusCode).toBe(200);
       expect(result.body.ship).toEqual('NCC-1701');
     });
+    it('should use the container query', async () => {
+      const container = extractFromRequest({
+        query: {
+          ship: 'NCC-1701',
+        },
+      });
+      nock('https://wiki.federation.com')
+        .get('/ships')
+        .query({ ship: 'NCC-1701' })
+        .reply(200);
+      const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships'));
+      expect(result.statusCode).toBe(200);
+    });
   });
   describe('#(container).post()', () => {
     it('should do a simple request', async () => {
