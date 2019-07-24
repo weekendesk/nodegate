@@ -23,7 +23,11 @@ module.exports = (method, url, path) => {
       const error = new PipelineError(err, err.response);
       error.setContainer({
         ...container,
-        errorBody: err.response.body,
+        ...(
+          err.response && err.response.body
+            ? { errorBody: err.response.body }
+            : null
+        ),
       });
       throw error;
     }
