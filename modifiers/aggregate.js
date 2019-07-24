@@ -15,6 +15,9 @@ module.exports = (method, url, path) => {
   return async (container) => {
     try {
       const { body, statusCode } = await request(container)[method](buildedUrl);
+      if (typeof body !== 'object' && !path) {
+        return merge(cloneDeep(container), { statusCode });
+      }
       if (path) {
         return merge(cloneDeep(container), { statusCode, body: set({}, path, body) });
       }
