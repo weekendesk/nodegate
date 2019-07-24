@@ -184,4 +184,15 @@ describe('modifiers/aggregate', () => {
       expect(err.container.statusCode).toEqual(404);
     }
   });
+  it('should not throw an error "Cannot read property \'body\' of undefined" if not related to a request', async () => {
+    expect.assertions(1);
+    try {
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/armaments',
+      )(null);
+    } catch (err) {
+      expect(err.message).not.toEqual('Cannot read property \'body\' of undefined');
+    }
+  });
 });
