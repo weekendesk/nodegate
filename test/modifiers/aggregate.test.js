@@ -195,4 +195,42 @@ describe('modifiers/aggregate', () => {
       expect(err.message).not.toEqual('Cannot read property \'body\' of undefined');
     }
   });
+  it('should, without path, ignore the response if it is a full text response', async () => {
+    const container = {
+      ...getEmpty(),
+      body: {
+        ship: 'NCC-1717',
+      },
+    };
+    nock('https://wiki.federation.com')
+      .post('/armaments')
+      .reply(200, '\n');
+    const result = await aggregate(
+      'post',
+      'https://wiki.federation.com/armaments',
+    )(container);
+    expect(result.body).toEqual({
+      ship: 'NCC-1717',
+    });
+  });
+  it('should, with path, set the full text response at the path value', async () => {
+    const container = {
+      ...getEmpty(),
+      body: {
+        ship: 'NCC-1717',
+      },
+    };
+    nock('https://wiki.federation.com')
+      .post('/armaments')
+      .reply(200, 'OK');
+    const result = await aggregate(
+      'post',
+      'https://wiki.federation.com/armaments',
+      'text',
+    )(container);
+    expect(result.body).toEqual({
+      ship: 'NCC-1717',
+      text: 'OK',
+    });
+  });
 });
