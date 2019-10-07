@@ -6,7 +6,7 @@ layout: empty
   <div class="left-menu">
     {% for item in site.data.docs_toc.toc %}
     <h3 class="left-menu__title">{{ item.title }}</h3>
-    <ul>
+    <ul class="left-menu__entry-block">
       {% for entry in item.content %}
       <li class="left-menu__entry">
         <a class="left-menu__link {% if entry.url == page.url %}left-menu__link--current{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a>

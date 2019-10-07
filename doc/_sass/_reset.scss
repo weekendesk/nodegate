@@ -21,8 +21,14 @@ a {
   &:hover,
   &:active {
     border-bottom: 1px solid $color-brand;
-    background: rgba($color-brand, 0.1);
+    background: rgba($color-brand, 0.05);
   }
+}
+
+code {
+  background: rgba($color-black, 0.08);
+  padding: 2px;
+  border-radius: 2px;
 }
 
 p, table {
@@ -46,6 +52,11 @@ table {
     font-size: 14px;
   }
   td {
-    background: rgba($color-black, 0.05);
+    background: rgba($color-black, 0.08);
   }
+}
+
+ul {
+  padding-left: 28px;
+  @include marginBottom();
 }

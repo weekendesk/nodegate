@@ -11,10 +11,8 @@ title: Modifiers
     <div class="modifiers-list__content">
       {% for modifier in category.content %}
         <a class="modifiers-list__button" href="{{ modifier.url }}">
-          {% if modifier.icon %}
-            <i class="modifiers-list__icon fas fa-{{ modifier.icon }}"></i>
-          {% endif %}
-          <span class="big-button__title">{{ modifier.title }}</span>
+          <div class="modifiers-list__title">{{ modifier.title }}</div>
+          <div class="modifiers-list__description">{{ modifier.description }}</div>
         </a>
       {% endfor %}
     </div>

@@ -13,7 +13,7 @@ To install **nodegate**, go to your project on your terminal and type:
 $ npm install nodegate --save
 ```
 
-Or, with [Yarn][url-yarn]:
+Or, with [Yarn](https://yarnpkg.com):
 
 ```bash
 $ yarn add nodegate

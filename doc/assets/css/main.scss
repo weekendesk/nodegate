@@ -1,7 +1,7 @@
 ---
 ---
 
-@import '../../node_modules/sass-easy-bem/easy-bem';
+@import '../../node_modules/sass-easy-bem/sass-easy-bem';
 @import 'settings';
 @import 'functions';
 @import 'mixins';
@@ -97,13 +97,16 @@
 
 @include b('left-menu') {
   @include marginBottom();
-
   flex: 0 0 $size-left-menu;
   margin: grid(4);
   padding: grid(4);
 
   @include e('entry') {
     list-style: none;
+  }
+
+  @include e('entry-block') {
+    padding: 0;
   }
 
   @include e('title') {
@@ -169,44 +172,18 @@
   }
 }
 
-@include b('big-button') {
-  @include surfaceButton();
-
-  @include e('title') {
-    font-weight: 500;
-    display: block;
-  }
-  @include e('description') {
-    font-weight: 200;
-    display: block;
-  }
-}
-
 @include b('modifiers-list') {
   @include e('content') {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 grid(-2);
+    @include grid();
   }
-
   @include e('button') {
     @include surfaceButton();
-    @include singleLineHeight(grid(8));
-    margin: grid(1) grid(2);
-    padding: 0 0 0 grid(9);
-    width: calc(25% - #{grid(4)});
-    position: relative;
-    border-radius: grid(8);
+    @include gridElement();
   }
-
-  @include e('icon') {
-    @include surface($color-brand);
-    @include displayBlock();
-    position: absolute;
-    width: grid(8);
-    height: grid(8);
-    border-radius: grid(8);
-    top: 0;
-    left: 0;
+  @include e('title') {
+    font-weight: 500;
+  }
+  @include e('description') {
+    @include fontSmall();
   }
 }
