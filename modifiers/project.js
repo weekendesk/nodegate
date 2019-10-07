@@ -7,7 +7,7 @@
 
 const { cloneDeep, get, set } = require('lodash');
 
-module.exports = projections => (container) => {
+module.exports = (projections) => (container) => {
   const body = {};
   projections.forEach((projection) => {
     set(body, projection[1], get(container.body, projection[0]));

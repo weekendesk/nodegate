@@ -29,7 +29,7 @@ const doRequest = (container, method, url, options) => {
   return requestNative(parameters);
 };
 
-const request = container => ({
+const request = (container) => ({
   get: (url, options) => doRequest(container, 'get', url, options),
   post: (url, options) => doRequest(container, 'post', url, options),
   patch: (url, options) => doRequest(container, 'patch', url, options),
