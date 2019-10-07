@@ -6,7 +6,7 @@
  */
 
 const { extractFromRequest } = require('./container');
-const PipelineError = require('./PipelineError');
+const WorkflowError = require('./WorkflowError');
 
 const executeChunk = async (chunk, originalContainer, req) => {
   let container = originalContainer;
@@ -23,8 +23,8 @@ const executeChunk = async (chunk, originalContainer, req) => {
     return container;
   } catch (err) {
     let error = err;
-    if (!(error instanceof PipelineError)) {
-      error = new PipelineError(err.message);
+    if (!(error instanceof WorkflowError)) {
+      error = new WorkflowError(err.message);
       error.setContainer({ ...container, statusCode: 500 });
     }
     if (!error.container) {
@@ -38,7 +38,7 @@ const execute = (route, beforeEach = []) => async (req, res) => {
   let container = extractFromRequest(req);
   try {
     container = await executeChunk(beforeEach, container, req);
-    container = await executeChunk(route.pipeline, container, req);
+    container = await executeChunk(route.workflow, container, req);
     res.status(container.statusCode).send(container.body);
   } catch (err) {
     if (route.onError) {

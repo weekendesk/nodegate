@@ -17,7 +17,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   statusCode(201),
 ];
 ```

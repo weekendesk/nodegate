@@ -19,7 +19,7 @@ _Arguments_
 _Examples_
 
 ```js
-const pipeline = [
+const workflow = [
   waitFor(
     'get',
     'https://api.github.com/users/shudrum',
@@ -29,7 +29,7 @@ const pipeline = [
 ```
 
 ```js
-const pipeline = [
+const workflow = [
   waitFor(
     'get',
     'https://api.github.com/users/shudrum',

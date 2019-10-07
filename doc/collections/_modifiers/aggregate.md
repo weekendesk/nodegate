@@ -21,7 +21,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   aggregate('get', 'https://api.github.com/users/shudrum'),
 ];
 ```

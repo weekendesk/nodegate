@@ -11,7 +11,7 @@ describe('modifiers/routeMatch', () => {
   it('should correctly return a function', () => {
     expect(routeMatch()).toBeInstanceOf(Function);
   });
-  it('should execute the pipeline if the route match', () => {
+  it('should execute the workflow if the route match', () => {
     routeMatch(/\/captain*/, [step])(
       { body: { name: 'Kirk' } },
       { route: { path: '/captain/:name' } },
@@ -20,7 +20,7 @@ describe('modifiers/routeMatch', () => {
     expect(execute.mock.calls.length).toBe(1);
     expect(execute.mock.calls[0][0]).toEqual([step]);
   });
-  it('should not execute the pipeline if the route does not match', () => {
+  it('should not execute the workflow if the route does not match', () => {
     routeMatch(/\/captain*/, [step])(
       { body: { name: 'Kirk' } },
       { route: { path: '/ship/:name' } },

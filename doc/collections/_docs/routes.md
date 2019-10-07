@@ -13,19 +13,19 @@ _Properties_
 | :------- | :----------- | :------------------------------------------------------------------------------------------------------------------------ |
 | method   | **string**   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                                            |
 | path     | **string**   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id`                        |
-| pipeline | **array**    | **Required.** List of the modifiers to apply to the container.                                                            |
+| workflow | **array**    | **Required.** List of the modifiers to apply to the container.                                                            |
 | onError  | **function** | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
 
 The pipelines are lists of modifiers to execute **synchronously** to modify the container.
 
-Each modifier of the pipeline will be called with two arguments:
+Each modifier of the workflow will be called with two arguments:
  - The container, with the update of the previous modifier,
  - The original request received by nodegate. (The Express request).
 
 ## Error handling
 
 Better error management can be achieved with a callback property named `onError`.
-This callback will receive a [PipelineError](api-reference-pipelineerror.md) argument, with the
+This callback will receive a [WorkflowError](api-reference-pipelineerror.md) argument, with the
 following contents:
 
  - The error message,
@@ -46,7 +46,7 @@ To answer a specific body with the error:
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
   onError: (error) => {
     return {
       ...error.container,
@@ -64,7 +64,7 @@ To define a specific error code:
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
   onError: (error) => {
     return {
       ...error.container,

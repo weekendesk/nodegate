@@ -1,7 +1,7 @@
 const nock = require('nock');
 const aggregate = require('../../modifiers/aggregate');
 const { getEmpty, extractFromRequest } = require('../../entities/container');
-const PipelineError = require('../../entities/PipelineError');
+const WorkflowError = require('../../entities/WorkflowError');
 
 describe('modifiers/aggregate', () => {
   it('should correctly return a function', () => {
@@ -105,7 +105,7 @@ describe('modifiers/aggregate', () => {
     )(container);
     expect(result.statusCode).toBe(201);
   });
-  it('should throw a Pipeline error in case of 500 error', async () => {
+  it('should throw a Workflow error in case of 500 error', async () => {
     expect.assertions(1);
     try {
       const container = getEmpty();
@@ -117,7 +117,7 @@ describe('modifiers/aggregate', () => {
         'https://wiki.federation.com/section31',
       )(container);
     } catch (err) {
-      expect(err).toBeInstanceOf(PipelineError);
+      expect(err).toBeInstanceOf(WorkflowError);
     }
   });
   it('should contain the request result on the error', async () => {
@@ -135,7 +135,7 @@ describe('modifiers/aggregate', () => {
       expect(err.response.statusCode).toEqual(500);
     }
   });
-  it('should set the container on the PipelineError', async () => {
+  it('should set the container on the WorkflowError', async () => {
     expect.assertions(1);
     try {
       const container = getEmpty();

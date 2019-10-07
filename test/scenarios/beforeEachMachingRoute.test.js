@@ -13,14 +13,14 @@ describe('scenarios/beforeEachMachingRoute', () => {
     gate.route({
       method: 'get',
       path: '/captain/:name',
-      pipeline: [
+      workflow: [
         aggregate('get', 'https://federation.com/captains/{params.name}', 'data'),
       ],
     });
     gate.route({
       method: 'get',
       path: '/ships',
-      pipeline: [
+      workflow: [
         aggregate('get', 'https://federation.com/ships'),
       ],
     });

@@ -15,7 +15,7 @@ const gateway = nodegate();
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
 });
 
 gateway.listen(8080);
@@ -31,7 +31,7 @@ Add one or more routes to the gateway.
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
 });
 ```
 

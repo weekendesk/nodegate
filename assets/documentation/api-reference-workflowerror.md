@@ -2,9 +2,9 @@
 
 ---
 
-# [Documentation](README.md) > [API reference](api-reference.md) > PipelineError
+# [Documentation](README.md) > [API reference](api-reference.md) > WorkflowError
 
-The class PipelineError allows modifiers to return a contextualized error to the pipeline executor.
+The class WorkflowError allows modifiers to return a contextualized error to the workflow executor.
 This error extends the default Node.js `Error` object.
 
 ## Properties
@@ -21,7 +21,7 @@ If applicable: the response for the last executed request.
 
 ### constructor(message, [response])
 
-Constructor of the `PipelineError`.
+Constructor of the `WorkflowError`.
 
 _Arguments_
 
@@ -33,7 +33,7 @@ _Arguments_
 _Example_
 
 ```js
-new PipelineError('Invalid request', {
+new WorkflowError('Invalid request', {
   statusCode: 500,
   body: {
     reason: 'Missing parameter: param',
@@ -54,7 +54,7 @@ _Arguments_
 _Example_
 
 ```js
-const error = new PipelineError('Invalid request');
+const error = new WorkflowError('Invalid request');
 error.setContainer({
   statusCode: 200,
   body: {

@@ -10,7 +10,7 @@ Add the property `X-Forwarded-Host` to the container headers, with the value of 
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   forwardedHost(),
 ];
 ```

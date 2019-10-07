@@ -13,7 +13,7 @@ Everything is detailed below:
   - [Gateway](api-reference-gateway.md)
   - [Routes](api-reference-routes.md)
   - [Modifiers](api-reference-modifiers.md)
-  - [PipelineError](api-reference-pipelinerror.md)
+  - [WorkflowError](api-reference-pipelinerror.md)
 
 ---
 

@@ -16,7 +16,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   mergeBody({ data: 'value' }),
 ];
 ```

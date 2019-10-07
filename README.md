@@ -16,7 +16,7 @@ const { aggregate } = nodegate.modifiers;
 gate.route({
   method: 'get',
   path: '/user/:user',
-  pipeline: [
+  workflow: [
     aggregate('get', 'https://api.github.com/users/{params.user}'),
     aggregate('get', 'https://api.github.com/users/{params.user}/gists'),
   ],
@@ -34,7 +34,7 @@ Some people are doing this by themselves, others by using complex tools or servi
 this kind of systems you will have to program some mechanics. **Nodegate** helps you to
 programmatically configure, develop and run your API gateway, in the simple way.
 
-> Everything can be done by declaring routes with a pipeline containing modifiers. Each modifier
+> Everything can be done by declaring routes with a workflow containing modifiers. Each modifier
 > _modify_ a container for composing the response. That's it.
 
 A bunch of modifiers are bundled with this plugin, but everyone can create more easily!

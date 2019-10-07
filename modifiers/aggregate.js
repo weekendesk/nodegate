@@ -6,7 +6,7 @@
  */
 
 const { cloneDeep, merge, set } = require('lodash');
-const PipelineError = require('../entities/PipelineError');
+const WorkflowError = require('../entities/WorkflowError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
 
@@ -23,7 +23,7 @@ module.exports = (method, url, path) => {
       }
       return merge(cloneDeep(container), { statusCode, body });
     } catch (err) {
-      const error = new PipelineError(err, err.response);
+      const error = new WorkflowError(err, err.response);
       error.setContainer({
         ...container,
         ...(

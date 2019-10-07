@@ -23,7 +23,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/captain/:id',
-      pipeline: [
+      workflow: [
         nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
@@ -44,7 +44,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/',
-      pipeline: [
+      workflow: [
       ],
     });
     await request(gate)
@@ -62,7 +62,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/',
-      pipeline: [
+      workflow: [
       ],
     });
     await request(gate)
@@ -85,7 +85,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/captain/:id',
-      pipeline: [
+      workflow: [
         nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
