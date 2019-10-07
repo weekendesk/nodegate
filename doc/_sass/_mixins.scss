@@ -63,7 +63,7 @@
   border: 1px solid rgba($color-black, 0.15);
   box-shadow: rgba($color-black, 0.5) 0 0 0;
   padding: grid(2);
-  transition: shadow ease-in-out 0.2s;
+  transition: box-shadow ease-in-out 0.2s;
 
   &:hover {
     border: 1px solid rgba($color-black, 0.15);
