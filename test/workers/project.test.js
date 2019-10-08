@@ -1,6 +1,6 @@
-const project = require('../../modifiers/project');
+const project = require('../../workers/project');
 
-describe('modifiers/project', () => {
+describe('workers/project', () => {
   it('should correctly return a function', () => {
     expect(project()).toBeInstanceOf(Function);
   });

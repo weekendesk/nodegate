@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - Aggregate
+title: Workers - Aggregate
 ---
 
 # Aggregate

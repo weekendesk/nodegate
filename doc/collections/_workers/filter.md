@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - Filter
+title: Workers - Filter
 ---
 
 # filter(paths)

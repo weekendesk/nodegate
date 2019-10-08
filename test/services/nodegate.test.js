@@ -33,7 +33,7 @@ describe('services/nodegate', () => {
     });
   });
   describe('#beforeEach()', () => {
-    it('should execute before each request a the modifier', async () => {
+    it('should execute before each request a the worker', async () => {
       const gate = nodegate();
       gate.beforeEach((container) => ({ ...container, body: { before: true } }));
       gate.route({
@@ -48,7 +48,7 @@ describe('services/nodegate', () => {
           expect(body.before).toBe(true);
         });
     });
-    it('should execute before each request a the modifier even if declared after', async () => {
+    it('should execute before each request a the worker even if declared after', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
@@ -63,7 +63,7 @@ describe('services/nodegate', () => {
           expect(body.before).toBe(true);
         });
     });
-    it('should accept an array of modifiers', async () => {
+    it('should accept an array of workers', async () => {
       const gate = nodegate();
       gate.route({
         method: 'post',

@@ -1,6 +1,6 @@
-const filter = require('../../modifiers/filter');
+const filter = require('../../workers/filter');
 
-describe('modifiers/filter', () => {
+describe('workers/filter', () => {
   it('should correctly return a function', () => {
     expect(filter()).toBeInstanceOf(Function);
   });

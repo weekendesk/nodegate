@@ -10,8 +10,8 @@ const request = require('supertest');
 const nodegate = require('../');
 
 describe('index', () => {
-  it('should export the modifiers', () => {
-    expect(nodegate.modifiers).toBeTruthy();
+  it('should export the workers', () => {
+    expect(nodegate.workers).toBeTruthy();
     expect(nodegate.configure).toBeInstanceOf(Object);
   });
   it('should export the configure function', () => {
@@ -24,7 +24,7 @@ describe('index', () => {
       method: 'get',
       path: '/captain/:id',
       workflow: [
-        nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
+        nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
     nock('https://wiki.enterprise.com')
@@ -86,7 +86,7 @@ describe('index', () => {
       method: 'get',
       path: '/captain/:id',
       workflow: [
-        nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
+        nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
     nock('https://wiki.enterprise.com', {

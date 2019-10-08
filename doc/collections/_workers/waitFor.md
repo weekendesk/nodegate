@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - WaitFor
+title: Workers - WaitFor
 ---
 
 # waitFor(method, url, test)

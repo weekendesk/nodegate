@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - MergeHeaders
+title: Workers - MergeHeaders
 ---
 
 # mergeHeaders(headers)

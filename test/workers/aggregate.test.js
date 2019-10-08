@@ -1,9 +1,9 @@
 const nock = require('nock');
-const aggregate = require('../../modifiers/aggregate');
+const aggregate = require('../../workers/aggregate');
 const { getEmpty, extractFromRequest } = require('../../entities/container');
 const WorkflowError = require('../../entities/WorkflowError');
 
-describe('modifiers/aggregate', () => {
+describe('workers/aggregate', () => {
   it('should correctly return a function', () => {
     expect(aggregate()).toBeInstanceOf(Function);
   });

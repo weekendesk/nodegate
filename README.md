@@ -11,7 +11,7 @@ The easy plugin to programmatically manage a horizontally scalable JSON API Gate
 ```js
 const nodegate = require('nodegate');
 const gate = nodegate();
-const { aggregate } = nodegate.modifiers;
+const { aggregate } = nodegate.workers;
 
 gate.route({
   method: 'get',
@@ -34,10 +34,10 @@ Some people are doing this by themselves, others by using complex tools or servi
 this kind of systems you will have to program some mechanics. **Nodegate** helps you to
 programmatically configure, develop and run your API gateway, in the simple way.
 
-> Everything can be done by declaring routes with a workflow containing modifiers. Each modifier
+> Everything can be done by declaring routes with a workflow containing workers. Each worker
 > _modify_ a container for composing the response. That's it.
 
-A bunch of modifiers are bundled with this plugin, but everyone can create more easily!
+A bunch of workers are bundled with this plugin, but everyone can create more easily!
 
 ## Documentation
 

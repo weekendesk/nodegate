@@ -25,6 +25,6 @@ const tryRequest = async (container, method, url, test, settings, tentatives = 0
 
 module.exports = (method, url, test) => {
   const buildedUrl = urlBuilder(url);
-  const settings = getConfiguration().modifiers.waitFor;
+  const settings = getConfiguration().workers.waitFor;
   return async (container) => tryRequest(container, method, buildedUrl, test, settings);
 };

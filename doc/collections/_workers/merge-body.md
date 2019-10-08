@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - MergeBody
+title: Workers - MergeBody
 ---
 
 # mergeBody(body)

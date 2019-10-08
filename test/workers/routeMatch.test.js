@@ -1,9 +1,9 @@
-const routeMatch = require('../../modifiers/routeMatch');
+const routeMatch = require('../../workers/routeMatch');
 
 const step = jest.fn();
 const execute = jest.fn();
 
-describe('modifiers/routeMatch', () => {
+describe('workers/routeMatch', () => {
   beforeEach(() => {
     step.mockClear();
     execute.mockClear();

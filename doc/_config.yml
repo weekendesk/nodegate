@@ -15,7 +15,7 @@ collections:
     output: true
   tutorials:
     output: true
-  modifiers:
+  workers:
     output: true
 sass:
   style: compact

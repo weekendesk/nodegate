@@ -1,7 +1,7 @@
 const nodegate = require('nodegate');
 
 const gate = nodegate();
-const { aggregate } = nodegate.modifiers;
+const { aggregate } = nodegate.workers;
 
 gate.route({
   method: 'get',

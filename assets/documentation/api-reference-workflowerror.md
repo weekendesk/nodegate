@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > WorkflowError
 
-The class WorkflowError allows modifiers to return a contextualized error to the workflow executor.
+The class WorkflowError allows workers to return a contextualized error to the workflow executor.
 This error extends the default Node.js `Error` object.
 
 ## Properties

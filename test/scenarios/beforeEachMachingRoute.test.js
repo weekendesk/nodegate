@@ -1,7 +1,7 @@
 const nock = require('nock');
 const request = require('supertest');
 const nodegate = require('../../services/nodegate');
-const { aggregate, routeMatch } = require('../../modifiers');
+const { aggregate, routeMatch } = require('../../workers');
 
 describe('scenarios/beforeEachMachingRoute', () => {
   let gate;
@@ -42,7 +42,7 @@ describe('scenarios/beforeEachMachingRoute', () => {
         expect(body.type).toEqual('captain');
       });
   });
-  it('should execute the route modifier for path /captain', async () => {
+  it('should execute the route worker for path /captain', async () => {
     await request(gate)
       .get('/captain/kirk')
       .expect(200)

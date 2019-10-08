@@ -172,7 +172,7 @@
   }
 }
 
-@include b('modifiers-list') {
+@include b('workers-list') {
   @include e('content') {
     @include grid();
   }

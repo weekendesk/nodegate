@@ -1,0 +1,20 @@
+---
+layout: content
+title: Workers
+---
+
+<h1>Workers</h1>
+
+{% for category in site.data.workers_toc.toc %}
+  <h2>{{ category.title }}</h2>
+  <div class="workers-list">
+    <div class="workers-list__content">
+      {% for worker in category.content %}
+        <a class="workers-list__button" href="{{ worker.url }}">
+          <div class="workers-list__title">{{ worker.title }}</div>
+          <div class="workers-list__description">{{ worker.description }}</div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}

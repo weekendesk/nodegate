@@ -1,6 +1,6 @@
-const mergeHeaders = require('../../modifiers/mergeHeaders');
+const mergeHeaders = require('../../workers/mergeHeaders');
 
-describe('modifiers/mergeHeaders', () => {
+describe('workers/mergeHeaders', () => {
   it('should correctly return a function', () => {
     expect(mergeHeaders()).toBeInstanceOf(Function);
   });

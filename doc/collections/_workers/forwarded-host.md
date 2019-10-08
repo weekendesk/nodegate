@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - Forwarded Host
+title: Workers - Forwarded Host
 ---
 
 # forwardedHost()

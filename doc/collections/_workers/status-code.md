@@ -1,12 +1,12 @@
 ---
 layout: content
-title: Modifiers - StatusCode
+title: Workers - StatusCode
 ---
 
 # statusCode(code)
 
 Set the status code of the response of the route.
-Note that another modifier called after this one can modify the status code.
+Note that another worker called after this one can modify the status code.
 
 _Arguments_
 

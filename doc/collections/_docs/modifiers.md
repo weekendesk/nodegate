@@ -1,20 +1,20 @@
 ---
 layout: documentation
-title: Modifiers
+title: Workers
 ---
 
-# Modifiers
+# Workers
 
-All modifiers can be accessed from the top level function of **nodegate** or by direclty importing
-the modifiers path:
+All workers can be accessed from the top level function of **nodegate** or by direclty importing
+the workers path:
 
 ```js
 const nodegate = require('nodegate');
 const { aggregate } = nodegate;
 // or
-const { aggregate } = require('nodegate/modifiers');
+const { aggregate } = require('nodegate/workers');
 ```
 
-<a href="/modifiers">
-  Click here to see the complete list of modifiers.
+<a href="/workers">
+  Click here to see the complete list of workers.
 </a>

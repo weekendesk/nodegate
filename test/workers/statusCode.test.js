@@ -1,6 +1,6 @@
-const statusCode = require('../../modifiers/statusCode');
+const statusCode = require('../../workers/statusCode');
 
-describe('modifiers/statusCode', () => {
+describe('workers/statusCode', () => {
   it('should correctly return a function', () => {
     expect(statusCode()).toBeInstanceOf(Function);
   });

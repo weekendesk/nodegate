@@ -12,13 +12,13 @@ _Properties_
 | :--------- | :--------- | :------------------------------------------------------------------------------------------------------------------------ |
 | `method`   | `string`   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                                            |
 | `path`     | `string`   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id`                        |
-| `workflow` | `array`    | **Required.** List of the modifiers to apply to the container.                                                            |
+| `workflow` | `array`    | **Required.** List of the workers to apply to the container.                                                            |
 | `onError`  | `function` | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
 
-The pipelines are lists of modifiers to execute **synchronously** to modify the container.
+The pipelines are lists of workers to execute **synchronously** to modify the container.
 
-Each modifier of the workflow will be called with two arguments:
- - The container, with the update of the previous modifier,
+Each worker of the workflow will be called with two arguments:
+ - The container, with the update of the previous worker,
  - The original request received by nodegate. (The Express request).
 
 ## Error handling
@@ -75,4 +75,4 @@ gateway.route({
 
 ---
 
-**[Next: Modifiers](api-reference-modifiers.md)**
+**[Next: Workers](api-reference-workers.md)**

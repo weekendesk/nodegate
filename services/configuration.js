@@ -16,7 +16,7 @@ const defaultConfiguration = {
     json: true,
     resolveWithFullResponse: true,
   },
-  modifiers: {
+  workers: {
     waitFor: {
       delay: 300,
       tentatives: 10,

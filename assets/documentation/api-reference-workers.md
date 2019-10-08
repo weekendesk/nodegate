@@ -2,10 +2,10 @@
 
 ---
 
-# [Documentation](README.md) > [API reference](api-reference.md) > Modifiers
+# [Documentation](README.md) > [API reference](api-reference.md) > Workers
 
-All modifiers can be accessed from the top level function of **nodegate** or by direclty importing the
-modifiers path:
+All workers can be accessed from the top level function of **nodegate** or by direclty importing the
+workers path:
 
 ```js
 const nodegate = require('nodegate');
@@ -13,10 +13,10 @@ const { aggregate } = nodegate;
 
 // or
 
-const { aggregate } = require('nodegate/modifiers');
+const { aggregate } = require('nodegate/workers');
 ```
 
-Here is the complete list of all the bundled modifiers:
+Here is the complete list of all the bundled workers:
 
  - [aggregate(method, url, [property])](#aggregatemethod-url-property)
  - [filter(properties)](#filterproperties)
@@ -117,7 +117,7 @@ const workflow = [
 
 ## statusCode(code)
 
-Set the status code of the response of the route. Note that another modifier called after this one
+Set the status code of the response of the route. Note that another worker called after this one
 can modify the status code.
 
 _Arguments_
