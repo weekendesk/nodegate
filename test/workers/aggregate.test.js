@@ -19,17 +19,6 @@ describe('workers/aggregate', () => {
     expect(result.body.phasers).toBe(16);
     expect(result.body.torpedoes).toBe(2);
   });
-  it('should return another container', async () => {
-    const container = getEmpty();
-    nock('https://wiki.federation.com')
-      .get('/armaments')
-      .reply(200, {
-        phasers: 16,
-        torpedoes: 2,
-      });
-    const result = await aggregate('get', 'https://wiki.federation.com/armaments')(container);
-    expect(container).not.toBe(result);
-  });
   it('should correclty use the path parameter', async () => {
     const container = getEmpty();
     nock('https://wiki.federation.com')

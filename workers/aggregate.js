@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep, merge, set } = require('lodash');
+const { merge, set } = require('lodash');
 const WorkflowError = require('../entities/WorkflowError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
@@ -19,9 +19,9 @@ module.exports = (method, url, path) => {
         return merge(cloneDeep(container), { statusCode });
       }
       if (path) {
-        return merge(cloneDeep(container), { statusCode, body: set({}, path, body) });
+        return merge(container, { statusCode, body: set({}, path, body) });
       }
-      return merge(cloneDeep(container), { statusCode, body });
+      return merge(container, { statusCode, body });
     } catch (err) {
       const error = new WorkflowError(err, err.response);
       error.setContainer({
