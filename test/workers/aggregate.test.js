@@ -15,20 +15,9 @@ describe('workers/aggregate', () => {
         phasers: 16,
         torpedoes: 2,
       });
-    const result = await aggregate('get', 'https://wiki.federation.com/armaments')(container);
-    expect(result.body.phasers).toBe(16);
-    expect(result.body.torpedoes).toBe(2);
-  });
-  it('should return another container', async () => {
-    const container = getEmpty();
-    nock('https://wiki.federation.com')
-      .get('/armaments')
-      .reply(200, {
-        phasers: 16,
-        torpedoes: 2,
-      });
-    const result = await aggregate('get', 'https://wiki.federation.com/armaments')(container);
-    expect(container).not.toBe(result);
+    await aggregate('get', 'https://wiki.federation.com/armaments')(container);
+    expect(container.body.phasers).toBe(16);
+    expect(container.body.torpedoes).toBe(2);
   });
   it('should correclty use the path parameter', async () => {
     const container = getEmpty();
@@ -38,13 +27,13 @@ describe('workers/aggregate', () => {
         phasers: 16,
         torpedoes: 2,
       });
-    const result = await aggregate(
+    await aggregate(
       'get',
       'https://wiki.federation.com/armaments',
       'armaments',
     )(container);
-    expect(result.body.armaments.phasers).toBe(16);
-    expect(result.body.armaments.torpedoes).toBe(2);
+    expect(container.body.armaments.phasers).toBe(16);
+    expect(container.body.armaments.torpedoes).toBe(2);
   });
   it('should do a correct deep merge', async () => {
     const container = extractFromRequest({
@@ -60,14 +49,14 @@ describe('workers/aggregate', () => {
         phasers: 16,
         torpedoes: 2,
       });
-    const result = await aggregate(
+    await aggregate(
       'get',
       'https://wiki.federation.com/armaments',
       'armaments',
     )(container);
-    expect(result.body.armaments.disruptors).toBe(5);
-    expect(result.body.armaments.phasers).toBe(16);
-    expect(result.body.armaments.torpedoes).toBe(2);
+    expect(container.body.armaments.disruptors).toBe(5);
+    expect(container.body.armaments.phasers).toBe(16);
+    expect(container.body.armaments.torpedoes).toBe(2);
   });
   it('should use the urlBuilder', async () => {
     const container = extractFromRequest({
@@ -84,26 +73,26 @@ describe('workers/aggregate', () => {
         phasers: 16,
         torpedoes: 2,
       });
-    const result = await aggregate(
+    await aggregate(
       'get',
       'https://wiki.federation.com/armaments/{body.name}',
       'armaments',
     )(container);
-    expect(result.body.name).toBe('NCC-1717');
-    expect(result.body.armaments.disruptors).toBe(5);
-    expect(result.body.armaments.phasers).toBe(16);
-    expect(result.body.armaments.torpedoes).toBe(2);
+    expect(container.body.name).toBe('NCC-1717');
+    expect(container.body.armaments.disruptors).toBe(5);
+    expect(container.body.armaments.phasers).toBe(16);
+    expect(container.body.armaments.torpedoes).toBe(2);
   });
   it('should correctly set the statusCode of the container from the request', async () => {
     const container = getEmpty();
     nock('https://wiki.federation.com')
       .post('/armaments')
       .reply(201);
-    const result = await aggregate(
+    await aggregate(
       'post',
       'https://wiki.federation.com/armaments',
     )(container);
-    expect(result.statusCode).toBe(201);
+    expect(container.statusCode).toBe(201);
   });
   it('should throw a Workflow error in case of 500 error', async () => {
     expect.assertions(1);
@@ -205,11 +194,11 @@ describe('workers/aggregate', () => {
     nock('https://wiki.federation.com')
       .post('/armaments')
       .reply(200, '\n');
-    const result = await aggregate(
+    await aggregate(
       'post',
       'https://wiki.federation.com/armaments',
     )(container);
-    expect(result.body).toEqual({
+    expect(container.body).toEqual({
       ship: 'NCC-1717',
     });
   });
@@ -223,12 +212,12 @@ describe('workers/aggregate', () => {
     nock('https://wiki.federation.com')
       .post('/armaments')
       .reply(200, 'OK');
-    const result = await aggregate(
+    await aggregate(
       'post',
       'https://wiki.federation.com/armaments',
       'text',
     )(container);
-    expect(result.body).toEqual({
+    expect(container.body).toEqual({
       ship: 'NCC-1717',
       text: 'OK',
     });

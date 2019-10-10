@@ -5,17 +5,18 @@ describe('workers/filter', () => {
     expect(filter()).toBeInstanceOf(Function);
   });
   it('should filter the container', () => {
-    const result = filter(['ships'])({
+    const container = {
       body: {
         ships: ['enterprise'],
         captains: ['Jean-Luc Picard'],
       },
-    });
-    expect(result.body.ships).toBeTruthy();
-    expect(result.body.captains).toBeFalsy();
+    };
+    filter(['ships'])(container);
+    expect(container.body.ships).toBeTruthy();
+    expect(container.body.captains).toBeFalsy();
   });
   it('should filter the container body only', () => {
-    const result = filter(['ships'])({
+    const container = {
       params: {
         organization: 'Federation',
       },
@@ -23,8 +24,9 @@ describe('workers/filter', () => {
         ships: ['enterprise'],
         captains: ['Jean-Luc Picard'],
       },
-    });
-    expect(result.params.organization).toBeTruthy();
-    expect(result.body.captains).toBeFalsy();
+    };
+    filter(['ships'])(container);
+    expect(container.params.organization).toBeTruthy();
+    expect(container.body.captains).toBeFalsy();
   });
 });

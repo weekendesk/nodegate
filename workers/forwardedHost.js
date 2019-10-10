@@ -5,9 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep, merge } = require('lodash');
-
-module.exports = () => (container, request) => ({
-  ...cloneDeep(container),
-  headers: merge(container.headers, { 'X-Forwarded-Host': request.headers.host }),
-});
+module.exports = () => (container, request) => {
+  container.headers['X-Forwarded-Host'] = request.headers.host;
+};

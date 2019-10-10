@@ -8,19 +8,17 @@
 const { extractFromRequest } = require('./container');
 const WorkflowError = require('./WorkflowError');
 
-const executeChunk = async (chunk, originalContainer, req) => {
-  let container = originalContainer;
+const executeChunk = async (chunk, container, req) => {
   try {
     for (let i = 0; i < chunk.length; i += 1) {
       if (Array.isArray(chunk[i])) {
         // eslint-disable-next-line no-await-in-loop
-        container = await executeChunk(chunk[i], container, req);
+        await executeChunk(chunk[i], container, req);
       } else {
         // eslint-disable-next-line no-await-in-loop
-        container = await chunk[i](container, req, executeChunk);
+        await chunk[i](container, req, executeChunk);
       }
     }
-    return container;
   } catch (err) {
     let error = err;
     if (!(error instanceof WorkflowError)) {
@@ -35,22 +33,16 @@ const executeChunk = async (chunk, originalContainer, req) => {
 };
 
 const execute = (route, beforeEach = []) => async (req, res) => {
-  let container = extractFromRequest(req);
+  const container = extractFromRequest(req);
   try {
-    container = await executeChunk(beforeEach, container, req);
-    container = await executeChunk(route.workflow, container, req);
+    await executeChunk(beforeEach, container, req);
+    await executeChunk(route.workflow, container, req);
     res.status(container.statusCode).send(container.body);
   } catch (err) {
     if (route.onError) {
-      container = route.onError(err);
-      res.status(container.statusCode).send(container.body);
-      return;
+      route.onError(err);
     }
-    if (err.container.errorBody) {
-      res.status(err.container.statusCode).send(err.container.errorBody);
-      return;
-    }
-    res.sendStatus(err.container.statusCode);
+    res.status(err.container.statusCode).send(err.container.errorBody);
   }
 };
 

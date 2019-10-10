@@ -6,13 +6,15 @@ describe('workers/mergeHeaders', () => {
   });
   it('should return the container with the merged header', () => {
     const container = { headers: { } };
-    expect(mergeHeaders({ 'Cache-Control': 'no-cache' })(container)).toEqual({
+    mergeHeaders({ 'Cache-Control': 'no-cache' })(container);
+    expect(container).toEqual({
       headers: { 'Cache-Control': 'no-cache' },
     });
   });
   it('should not remove existing attributes', () => {
     const container = { headers: { 'Content-Language': 'fr-FR' } };
-    expect(mergeHeaders({ 'Cache-Control': 'no-cache' })(container)).toEqual({
+    mergeHeaders({ 'Cache-Control': 'no-cache' })(container);
+    expect(container).toEqual({
       headers: { 'Content-Language': 'fr-FR', 'Cache-Control': 'no-cache' },
     });
   });

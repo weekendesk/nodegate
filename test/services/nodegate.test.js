@@ -33,9 +33,9 @@ describe('services/nodegate', () => {
     });
   });
   describe('#beforeEach()', () => {
-    it('should execute before each request a the worker', async () => {
+    it('should execute before each request a worker', async () => {
       const gate = nodegate();
-      gate.beforeEach((container) => ({ ...container, body: { before: true } }));
+      gate.beforeEach((container) => { container.body.before = true; });
       gate.route({
         method: 'get',
         path: '/',
@@ -48,14 +48,14 @@ describe('services/nodegate', () => {
           expect(body.before).toBe(true);
         });
     });
-    it('should execute before each request a the worker even if declared after', async () => {
+    it('should execute before each request the worker even if declared after', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
         path: '/',
         workflow: [],
       });
-      gate.beforeEach((container) => ({ ...container, body: { before: true } }));
+      gate.beforeEach((container) => { container.body.before = true; });
       await request(gate)
         .get('/')
         .expect(200)
@@ -71,8 +71,8 @@ describe('services/nodegate', () => {
         workflow: [],
       });
       gate.beforeEach([
-        (container) => ({ ...container, body: { count: container.body.count + 1 } }),
-        (container) => ({ ...container, body: { count: container.body.count + 10 } }),
+        (container) => { container.body.count += 1; },
+        (container) => { container.body.count += 10; },
       ]);
       await request(gate)
         .post('/')
@@ -114,7 +114,7 @@ describe('services/nodegate', () => {
         .get('/')
         .expect(404);
     });
-    it('should execute the onError workflow of the route in case of error', async () => {
+    it('should execute the onError callback of the route in case of error', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
@@ -122,10 +122,9 @@ describe('services/nodegate', () => {
         workflow: [
           () => { throw new Error('Section 31 classified'); },
         ],
-        onError: (error) => ({
-          ...error.container,
-          statusCode: 503,
-        }),
+        onError: (error) => {
+          error.container.statusCode = 503;
+        },
       });
       await request(gate)
         .get('/')
