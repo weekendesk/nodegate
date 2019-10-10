@@ -194,11 +194,11 @@ describe('workers/aggregate', () => {
     nock('https://wiki.federation.com')
       .post('/armaments')
       .reply(200, '\n');
-    const result = await aggregate(
+    await aggregate(
       'post',
       'https://wiki.federation.com/armaments',
     )(container);
-    expect(result.body).toEqual({
+    expect(container.body).toEqual({
       ship: 'NCC-1717',
     });
   });
@@ -212,12 +212,12 @@ describe('workers/aggregate', () => {
     nock('https://wiki.federation.com')
       .post('/armaments')
       .reply(200, 'OK');
-    const result = await aggregate(
+    await aggregate(
       'post',
       'https://wiki.federation.com/armaments',
       'text',
     )(container);
-    expect(result.body).toEqual({
+    expect(container.body).toEqual({
       ship: 'NCC-1717',
       text: 'OK',
     });

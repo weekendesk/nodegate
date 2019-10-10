@@ -46,7 +46,7 @@ describe('workers/project', () => {
     expect(container.body.shipName).toEqual('Enterprise');
     expect(container.body.captainName).toEqual('Jean-Luc Picard');
   });
-  it('should ignore non wanted values', () => {
+  it('should keep other values', () => {
     const container = {
       body: {
         ship: 'Enterprise',
@@ -58,6 +58,6 @@ describe('workers/project', () => {
       ['ship', 'shipName'],
       ['captain', 'captainName'],
     ])(container);
-    expect(container.body.quadran).toBeUndefined();
+    expect(container.body.quadran).toEqual('Alpha');
   });
 });

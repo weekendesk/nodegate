@@ -16,6 +16,9 @@ module.exports = (method, url, path) => {
     try {
       const { body, statusCode } = await request(container)[method](buildedUrl);
       container.statusCode = statusCode;
+      if (!path && typeof body !== 'object') {
+        return;
+      }
       if (path && !container.body[path]) {
         container.body[path] = body;
         return;
