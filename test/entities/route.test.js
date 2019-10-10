@@ -5,9 +5,8 @@ const step = jest.fn((container) => container);
 const asyncStep = jest.fn((container) => new Promise((resolve) => resolve(container)));
 
 const send = jest.fn((container) => container);
-const sendStatus = jest.fn();
 const status = jest.fn(() => ({ send }));
-const response = { status, sendStatus };
+const response = { status };
 
 const onError = jest.fn((error) => error.container);
 
@@ -25,7 +24,6 @@ describe('entities/route', () => {
     step.mockClear();
     asyncStep.mockClear();
     send.mockClear();
-    sendStatus.mockClear();
     status.mockClear();
     onError.mockClear();
   });
@@ -58,18 +56,19 @@ describe('entities/route', () => {
       expect(step.mock.calls.length).toBe(3);
     });
     it('should execute the beforeEach workers before the workflow', async () => {
-      await execute({ workflow: [step] }, [() => ({ body: { value: 'before' } })])(request, response);
+      await execute(
+        { workflow: [step] },
+        [(container) => { container.body.value = 'before'; }],
+      )(request, response);
       expect(step.mock.calls[0][0].body.value).toEqual('before');
     });
     it('should respond with the container status code', async () => {
       await execute({ workflow: [() => ({ statusCode: 201 })] })(request, response);
     });
     it('should work with a recursive workflow', async () => {
-      const worker = (letter) => (container) => ({
-        body: {
-          value: `${container.body.value}${letter}`,
-        },
-      });
+      const worker = (letter) => (container) => {
+        container.body.value = `${container.body.value}${letter}`;
+      };
       const workflow = [worker('a'), [worker('b'), worker('c')], worker('d')];
       await execute({ workflow })({ body: { value: '' } }, response);
       expect(send.mock.calls[0][0].value).toEqual('abcd');
@@ -99,16 +98,16 @@ describe('entities/route', () => {
     it('respond 500 error in case of error', async () => {
       const throwingWorker = () => { throw new Error('error'); };
       await execute({ workflow: [throwingWorker] })(request, response);
-      expect(sendStatus.mock.calls.length).toBe(1);
-      expect(sendStatus.mock.calls[0][0]).toEqual(500);
+      expect(status.mock.calls.length).toBe(1);
+      expect(status.mock.calls[0][0]).toEqual(500);
     });
-    it('respond the error container statusCode if set', async () => {
+    it('should respond the error container statusCode if set', async () => {
       const error = new WorkflowError('error');
       error.setContainer({ statusCode: 404 });
       const throwingWorker = () => { throw error; };
       await execute({ workflow: [throwingWorker] })(request, response);
-      expect(sendStatus.mock.calls.length).toBe(1);
-      expect(sendStatus.mock.calls[0][0]).toEqual(404);
+      expect(status.mock.calls.length).toBe(1);
+      expect(status.mock.calls[0][0]).toEqual(404);
     });
     it('should use the response body for the error', async () => {
       const error = new WorkflowError('error');
