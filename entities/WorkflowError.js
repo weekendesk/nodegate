@@ -14,7 +14,7 @@ class WorkflowError extends Error {
   }
 
   setContainer(container) {
-    this.container = { ...container };
+    this.container = container;
     if (this.response && this.response.statusCode) {
       this.container.statusCode = this.response.statusCode;
     }
