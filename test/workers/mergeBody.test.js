@@ -1,6 +1,6 @@
-const mergeBody = require('../../modifiers/mergeBody');
+const mergeBody = require('../../workers/mergeBody');
 
-describe('modifiers/mergeBody', () => {
+describe('workers/mergeBody', () => {
   it('should correctly return a function', () => {
     expect(mergeBody()).toBeInstanceOf(Function);
   });

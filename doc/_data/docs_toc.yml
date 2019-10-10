@@ -9,8 +9,8 @@ toc:
         url: /docs/gateway.html
       - title: nodegate()
         url: /docs/nodegate.html
-      - title: Modifiers
-        url: /docs/modifiers.html
+      - title: Workers
+        url: /docs/workers.html
       - title: Routes
         url: /docs/routes.html
       - title: Errors

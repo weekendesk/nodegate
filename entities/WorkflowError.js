@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-class PipelineError extends Error {
+class WorkflowError extends Error {
   constructor(message, response = null) {
     super(message);
     this.response = response;
@@ -21,4 +21,4 @@ class PipelineError extends Error {
   }
 }
 
-module.exports = PipelineError;
+module.exports = WorkflowError;

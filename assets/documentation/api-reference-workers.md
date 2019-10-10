@@ -2,10 +2,10 @@
 
 ---
 
-# [Documentation](README.md) > [API reference](api-reference.md) > Modifiers
+# [Documentation](README.md) > [API reference](api-reference.md) > Workers
 
-All modifiers can be accessed from the top level function of **nodegate** or by direclty importing the
-modifiers path:
+All workers can be accessed from the top level function of **nodegate** or by direclty importing the
+workers path:
 
 ```js
 const nodegate = require('nodegate');
@@ -13,10 +13,10 @@ const { aggregate } = nodegate;
 
 // or
 
-const { aggregate } = require('nodegate/modifiers');
+const { aggregate } = require('nodegate/workers');
 ```
 
-Here is the complete list of all the bundled modifiers:
+Here is the complete list of all the bundled workers:
 
  - [aggregate(method, url, [property])](#aggregatemethod-url-property)
  - [filter(properties)](#filterproperties)
@@ -24,7 +24,7 @@ Here is the complete list of all the bundled modifiers:
  - [mergeBody(body)](#mergebodybody)
  - [mergeHeaders(headers)](#mergeheadersheaders)
  - [waitFor(method, url, test)](#waitformethod-url-test)
- - [routeMatch(regex, pipeline)](#routematchregex-pipeline)
+ - [routeMatch(regex, workflow)](#routematchregex-workflow)
  - [statusCode(code)](#statuscodecode)
 
 ## aggregate(method, url, [property])
@@ -43,7 +43,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   aggregate('get', 'https://api.github.com/users/shudrum'),
 ];
 ```
@@ -61,7 +61,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   filter(['firstname', 'lastname']),
 ];
 ```
@@ -74,7 +74,7 @@ header `host`.
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   forwardedHost(),
 ];
 ```
@@ -92,7 +92,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   mergeBody({ data: 'value' }),
 ];
 ```
@@ -110,14 +110,14 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   mergeHeaders({ data: 'value' }),
 ];
 ```
 
 ## statusCode(code)
 
-Set the status code of the response of the route. Note that another modifier called after this one
+Set the status code of the response of the route. Note that another worker called after this one
 can modify the status code.
 
 _Arguments_
@@ -129,29 +129,29 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   statusCode(201),
 ];
 ```
 
-## routeMatch(regex, pipeline)
+## routeMatch(regex, workflow)
 
-Execute the `pipeline` argument if the path of the current route matches the regex.
-Mainly useful for the `beforeEach()` pipeline.
+Execute the `workflow` argument if the path of the current route matches the regex.
+Mainly useful for the `beforeEach()` workflow.
 
 _Arguments_
 
 | Argument   | Type    | Description                                               |
 | :--------- | :------ | :-------------------------------------------------------- |
 | `regex`    | `regex` | Regular expression to test against the path of the route. |
-| `pipeline` | `array` | Pipeline to execute if the path matches.                  |
+| `workflow` | `array` | Workflow to execute if the path matches.                  |
 
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   routeMatch(/\/user/, [
-    // pipeline
+    // workflow
   ]),
 ];
 ```
@@ -172,7 +172,7 @@ _Arguments_
 _Examples_
 
 ```js
-const pipeline = [
+const workflow = [
   waitFor(
     'get',
     'https://api.github.com/users/shudrum',
@@ -182,7 +182,7 @@ const pipeline = [
 ```
 
 ```js
-const pipeline = [
+const workflow = [
   waitFor(
     'get',
     'https://api.github.com/users/shudrum',
@@ -202,4 +202,4 @@ _Default configuration_
 
 ---
 
-**[Next: PipelineError](api-reference-pipelineerror.md)**
+**[Next: WorkflowError](api-reference-workflowerror.md)**

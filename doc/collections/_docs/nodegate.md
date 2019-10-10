@@ -14,15 +14,15 @@ const gateway = nodegate();
 
 ## Properties
 
-### modifiers
+### workers
 
-This object contains all the built-in modifiers shipped with nodegate.
+This object contains all the built-in workers shipped with nodegate.
 
 ```js
 const nodegate = require('nodegate');
-const { aggregate } = nodegate.modifiers;
+const { aggregate } = nodegate.workers;
 // or
-const aggregate = nodegate.modifiers.aggregate;
+const aggregate = nodegate.workers.aggregate;
 ```
 
 ## Methods

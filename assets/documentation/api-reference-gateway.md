@@ -14,7 +14,7 @@ const gateway = nodegate();
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
 });
 
 gateway.listen(8080);
@@ -30,7 +30,7 @@ Add one or more routes to the gateway.
 gateway.route({
   method: 'get',
   path: '/gateway-route',
-  pipeline: [...],
+  workflow: [...],
 });
 ```
 
@@ -40,9 +40,9 @@ _Arguments_
 | :------- | :--------------------- | :---------------------------------------------- |
 | `route`  | `object` or `[object]` | Route or array of routes to add to the gateway. |
 
-### beforeEach(modifier)
+### beforeEach(worker)
 
-Add one or more modifiers to execute before each request.
+Add one or more workers to execute before each request.
 
 ```js
 gateway.beforeEach(forwardedHost());
@@ -59,7 +59,7 @@ _Arguments_
 
 | Argument   | Type                       | Description                                                    |
 | :--------- | :------------------------- | :------------------------------------------------------------- |
-| `modifier` | `function` or `[function]` | Modifier or array of modifiers to execute before all requests. |
+| `worker` | `function` or `[function]` | Worker or array of workers to execute before all requests. |
 
 ---
 

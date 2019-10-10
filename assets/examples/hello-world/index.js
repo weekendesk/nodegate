@@ -1,12 +1,12 @@
 const nodegate = require('nodegate');
 
 const gate = nodegate();
-const { aggregate } = nodegate.modifiers;
+const { aggregate } = nodegate.workers;
 
 gate.route({
   method: 'get',
   path: '/weather/:city',
-  pipeline: [
+  workflow: [
     aggregate('get', 'https://www.metaweather.com/api/location/search/?query={params.city}', 'search'),
     aggregate('get', 'https://www.metaweather.com/api/location/{body.search.0.woeid}'),
   ],

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const PipelineError = require('../../entities/PipelineError');
+const WorkflowError = require('../../entities/WorkflowError');
 const nodegate = require('../../services/nodegate');
 
 describe('services/nodegate', () => {
@@ -8,12 +8,12 @@ describe('services/nodegate', () => {
     await request(gate).get('/').expect(404);
   });
   describe('#route()', () => {
-    it('should work with an empty pipeline', async () => {
+    it('should work with an empty workflow', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [],
+        workflow: [],
       });
       await request(gate).get('/').expect(200);
     });
@@ -22,24 +22,24 @@ describe('services/nodegate', () => {
       gate.route([{
         method: 'get',
         path: '/route1',
-        pipeline: [],
+        workflow: [],
       }, {
         method: 'get',
         path: '/route2',
-        pipeline: [],
+        workflow: [],
       }]);
       await request(gate).get('/route1').expect(200);
       await request(gate).get('/route2').expect(200);
     });
   });
   describe('#beforeEach()', () => {
-    it('should execute before each request a the modifier', async () => {
+    it('should execute before each request a the worker', async () => {
       const gate = nodegate();
       gate.beforeEach((container) => ({ ...container, body: { before: true } }));
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [],
+        workflow: [],
       });
       await request(gate)
         .get('/')
@@ -48,12 +48,12 @@ describe('services/nodegate', () => {
           expect(body.before).toBe(true);
         });
     });
-    it('should execute before each request a the modifier even if declared after', async () => {
+    it('should execute before each request a the worker even if declared after', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [],
+        workflow: [],
       });
       gate.beforeEach((container) => ({ ...container, body: { before: true } }));
       await request(gate)
@@ -63,12 +63,12 @@ describe('services/nodegate', () => {
           expect(body.before).toBe(true);
         });
     });
-    it('should accept an array of modifiers', async () => {
+    it('should accept an array of workers', async () => {
       const gate = nodegate();
       gate.route({
         method: 'post',
         path: '/',
-        pipeline: [],
+        workflow: [],
       });
       gate.beforeEach([
         (container) => ({ ...container, body: { count: container.body.count + 1 } }),
@@ -89,7 +89,7 @@ describe('services/nodegate', () => {
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [
+        workflow: [
           () => { throw new Error('Section 31 classified'); },
         ],
       });
@@ -102,9 +102,9 @@ describe('services/nodegate', () => {
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [
+        workflow: [
           () => {
-            const error = new PipelineError('Section 31 classified');
+            const error = new WorkflowError('Section 31 classified');
             error.setContainer({ statusCode: 404 });
             throw error;
           },
@@ -114,12 +114,12 @@ describe('services/nodegate', () => {
         .get('/')
         .expect(404);
     });
-    it('should execute the onError pipeline of the route in case of error', async () => {
+    it('should execute the onError workflow of the route in case of error', async () => {
       const gate = nodegate();
       gate.route({
         method: 'get',
         path: '/',
-        pipeline: [
+        workflow: [
           () => { throw new Error('Section 31 classified'); },
         ],
         onError: (error) => ({

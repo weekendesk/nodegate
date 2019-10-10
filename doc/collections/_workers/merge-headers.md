@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - MergeHeaders
+title: Workers - MergeHeaders
 ---
 
 # mergeHeaders(headers)
@@ -16,7 +16,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   mergeHeaders({ data: 'value' }),
 ];
 ```

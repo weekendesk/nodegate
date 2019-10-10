@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-module.exports = (regex, pipeline) => (container, request, execute) => {
+module.exports = (regex, workflow) => (container, request, execute) => {
   if (request.route.path.match(regex)) {
-    return execute(pipeline, container, request);
+    return execute(workflow, container, request);
   }
   return container;
 };

@@ -19,17 +19,17 @@ containing the `woeid` property, needed to fetch the weather of the city with th
 **Two API calls are needed: perfect example!**
 
 After installing **nodegate**, let's create a file `index.js`. We will require `nodegate` and
-initialize it. We will also need the aggregator modifier, let's import it as well.
+initialize it. We will also need the aggregator worker, let's import it as well.
 
 ```js
 const nodegate = require('nodegate');
 
 const gate = nodegate();
-const { aggregate } = nodegate.modifiers;
+const { aggregate } = nodegate.workers;
 ```
 
 Now we will create our first route, `GET`, with the name of the city on the path. The route object
-needs three attributes: the method, the path, and the pipeline. The pipeline will then be processed
+needs three attributes: the method, the path, and the workflow. The workflow will then be processed
 synchronously, using on each step a *container* generated from the request, and containing the
 parameters and the body of the request.
 
@@ -37,20 +37,20 @@ parameters and the body of the request.
 gate.route({
   method: 'get',
   path: '/weather/:city',
-  pipeline: [
+  workflow: [
   ],
 });
 ```
 
-Now we have to set the pipeline of our route. The process is simple: we need to fetch the `woeid`
+Now we have to set the workflow of our route. The process is simple: we need to fetch the `woeid`
 from the first route of the API, then to fetch the weather from the second one. On this example, we
-will return all the collected data by using the `aggregate` modifier twice.
+will return all the collected data by using the `aggregate` worker twice.
 
 ```js
 gate.route({
   method: 'get',
   path: '/weather/:city',
-  pipeline: [
+  workflow: [
     aggregate('get', 'https://www.metaweather.com/api/location/search/?query={params.city}', 'search'),
     aggregate('get', 'https://www.metaweather.com/api/location/{body.search.0.woeid}'),
   ],

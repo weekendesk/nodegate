@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - Filter
+title: Workers - Filter
 ---
 
 # filter(paths)
@@ -16,7 +16,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   filter(['firstname', 'lastname']),
 ];
 ```

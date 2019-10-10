@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Modifiers - MergeBody
+title: Workers - MergeBody
 ---
 
 # mergeBody(body)
@@ -16,7 +16,7 @@ _Arguments_
 _Example_
 
 ```js
-const pipeline = [
+const workflow = [
   mergeBody({ data: 'value' }),
 ];
 ```

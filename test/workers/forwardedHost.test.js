@@ -1,6 +1,6 @@
-const forwardedHost = require('../../modifiers/forwardedHost');
+const forwardedHost = require('../../workers/forwardedHost');
 
-describe('modifiers/forwardedHost', () => {
+describe('workers/forwardedHost', () => {
   it('should correctly return a function', () => {
     expect(forwardedHost()).toBeInstanceOf(Function);
   });

@@ -10,8 +10,8 @@ const request = require('supertest');
 const nodegate = require('../');
 
 describe('index', () => {
-  it('should export the modifiers', () => {
-    expect(nodegate.modifiers).toBeTruthy();
+  it('should export the workers', () => {
+    expect(nodegate.workers).toBeTruthy();
     expect(nodegate.configure).toBeInstanceOf(Object);
   });
   it('should export the configure function', () => {
@@ -23,8 +23,8 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/captain/:id',
-      pipeline: [
-        nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
+      workflow: [
+        nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
     nock('https://wiki.enterprise.com')
@@ -44,7 +44,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/',
-      pipeline: [
+      workflow: [
       ],
     });
     await request(gate)
@@ -62,7 +62,7 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/',
-      pipeline: [
+      workflow: [
       ],
     });
     await request(gate)
@@ -85,8 +85,8 @@ describe('index', () => {
     gate.route({
       method: 'get',
       path: '/captain/:id',
-      pipeline: [
-        nodegate.modifiers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
+      workflow: [
+        nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
     nock('https://wiki.enterprise.com', {

@@ -1,11 +1,11 @@
 const nock = require('nock');
 const { configure } = require('../../services/configuration');
-const waitFor = require('../../modifiers/waitFor');
+const waitFor = require('../../workers/waitFor');
 const { getEmpty } = require('../../entities/container');
 
-describe('modifiers/waitFor', () => {
+describe('workers/waitFor', () => {
   beforeEach(() => {
-    configure({ modifiers: { waitFor: { delay: 50, tentatives: 1 } } });
+    configure({ workers: { waitFor: { delay: 50, tentatives: 1 } } });
   });
   it('should correctly return a function', () => {
     expect(waitFor()).toBeInstanceOf(Function);
