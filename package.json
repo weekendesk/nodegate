@@ -59,6 +59,16 @@
     "env": {
       "jest": true,
       "node": true
+    },
+    "rules": {
+      "no-param-reassign": [
+        "error",
+        {
+          "ignorePropertyModificationsFor": [
+            "container"
+          ]
+        }
+      ]
     }
   },
   "jest": {
