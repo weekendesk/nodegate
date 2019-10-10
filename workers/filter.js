@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep, pick } = require('lodash');
+const { pick } = require('lodash');
 
-module.exports = (paths) => (container) => ({
-  ...cloneDeep(container),
-  body: pick(container.body, paths),
-});
+module.exports = (paths) => (container) => {
+  container.body = pick(container.body, paths);
+};
