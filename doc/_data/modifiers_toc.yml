@@ -9,7 +9,7 @@ toc:
         description: Remove entries from the container's body.
       - title: mergeBody
         url: /modifiers/merge-body.html
-        description: Manualy add entries onto the containter's body.
+        description: Manually add entries onto the containter's body.
       - title: project
         url: /modifiers/project.html
         description: …
@@ -25,7 +25,7 @@ toc:
     content:
       - title: routeMatch
         url: /modifiers/route-match.html
-        description: Execute a workflow if the route match the defined regex.
+        description: Execute a workflow if the route matches the defined regex.
   - title: Response
     content:
       - title: statusCode
@@ -35,4 +35,4 @@ toc:
     content:
       - title: waitFor
         url: /modifiers/wait-for.html
-        description: Wait for a request to answer with a defined status code.
+        description: Wait for a request to respond with a defined status code.

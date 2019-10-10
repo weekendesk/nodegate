@@ -16,5 +16,5 @@ const { aggregate } = require('nodegate/modifiers');
 ```
 
 <a href="/modifiers">
-  Clic here to see the complete list of modifiers.
+  Click here to see the complete list of modifiers.
 </a>

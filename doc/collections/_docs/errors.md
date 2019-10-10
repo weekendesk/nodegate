@@ -57,7 +57,7 @@ _Example_
 ```js
 const error = new PipelineError('Invalid request');
 error.setContainer({
-  statusCode: 200,
+  statusCode: 400,
   body: {
     reason: 'Missing parameter: param',
   }
