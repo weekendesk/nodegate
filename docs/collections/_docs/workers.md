@@ -15,6 +15,6 @@ const { aggregate } = nodegate;
 const { aggregate } = require('nodegate/workers');
 ```
 
-<a href="/workers">
+<a href="{{ site.baseurl }}/workers">
   Click here to see the complete list of workers.
 </a>

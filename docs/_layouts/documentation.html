@@ -9,7 +9,7 @@ layout: empty
     <ul class="left-menu__entry-block">
       {% for entry in item.content %}
       <li class="left-menu__entry">
-        <a class="left-menu__link {% if entry.url == page.url %}left-menu__link--current{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a>
+        <a class="left-menu__link {% if entry.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a>
       </li>
       {% endfor %}
     </ul>

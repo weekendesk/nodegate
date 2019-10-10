@@ -10,7 +10,7 @@ title: Workers
   <div class="workers-list">
     <div class="workers-list__content">
       {% for worker in category.content %}
-        <a class="workers-list__button" href="{{ worker.url }}">
+        <a class="workers-list__button" href="{{ site.baseurl }}/{{ worker.url }}">
           <div class="workers-list__title">{{ worker.title }}</div>
           <div class="workers-list__description">{{ worker.description }}</div>
         </a>
