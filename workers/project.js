@@ -5,15 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep, get, set } = require('lodash');
+const { get, set } = require('lodash');
 
 module.exports = (projections) => (container) => {
-  const body = {};
   projections.forEach((projection) => {
-    set(body, projection[1], get(container.body, projection[0]));
+    set(container.body, projection[1], get(container.body, projection[0]));
   });
-  return {
-    ...cloneDeep(container),
-    body,
-  };
 };
