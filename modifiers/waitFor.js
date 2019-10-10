@@ -9,7 +9,7 @@ const { getConfiguration } = require('../services/configuration');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
 
-const timeout = duration => new Promise(resolve => setTimeout(resolve, duration));
+const timeout = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
 
 const tryRequest = async (container, method, url, test, settings, tentatives = 0) => {
   const { statusCode, headers, body } = await request(container)[method](url);
@@ -26,5 +26,5 @@ const tryRequest = async (container, method, url, test, settings, tentatives = 0
 module.exports = (method, url, test) => {
   const buildedUrl = urlBuilder(url);
   const settings = getConfiguration().modifiers.waitFor;
-  return async container => tryRequest(container, method, buildedUrl, test, settings);
+  return async (container) => tryRequest(container, method, buildedUrl, test, settings);
 };

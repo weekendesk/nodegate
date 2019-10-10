@@ -7,7 +7,7 @@
 
 const { cloneDeep } = require('lodash');
 
-module.exports = statusCode => container => ({
+module.exports = (statusCode) => (container) => ({
   ...cloneDeep(container),
   statusCode,
 });

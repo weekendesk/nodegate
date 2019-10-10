@@ -45,7 +45,7 @@ const nodegate = () => {
   // TODO: app.passthrough = (route) => {};
 
   app.beforeEach = (modifiers) => {
-    toArray(modifiers).forEach(modifier => beforeEach.push(modifier));
+    toArray(modifiers).forEach((modifier) => beforeEach.push(modifier));
   };
 
   app.route = (routes) => {

@@ -7,7 +7,7 @@
 
 const { cloneDeep, pick } = require('lodash');
 
-module.exports = paths => container => ({
+module.exports = (paths) => (container) => ({
   ...cloneDeep(container),
   body: pick(container.body, paths),
 });

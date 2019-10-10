@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% if page.title %}
+      <title>{{ site.title }} - {{ page.title }}</title>
+    {% else %}
+      <title>{{ site.title }}</title>
+    {% endif %}
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+    <link rel="stylesheet" href="{{ '/assets/css/pygments/monokai.css' | relative_url }}" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="header__container">
+        <a class="header__logo" href="/">
+          <img class="header__logo-image" src="{{ '/assets/images/logo-white.png' | relative_url }}" />
+        </a>
+        <nav class="header__nav">
+          <a class="header__link" href="/">Home</a>
+          <a class="header__link" href="/docs/getting-started.html">Docs</a>
+          <a class="header__link" href="/modifiers">Modifiers</a>
+          <a class="header__link" href="/tutorials">Tutorials</a>
+        </nav>
+      </div>
+    </div>
+    {{ content }}
+    <footer class="footer">
+      <div class="footer__container">
+        &copy; Weekendesk
+      </div>
+    </footer>
+  </body>
+</html>

@@ -7,7 +7,7 @@
 
 const { cloneDeep, merge } = require('lodash');
 
-module.exports = headers => container => ({
+module.exports = (headers) => (container) => ({
   ...cloneDeep(container),
   headers: merge(container.headers, headers),
 });

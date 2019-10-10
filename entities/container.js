@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const extractFromRequest = request => ({
+const extractFromRequest = (request) => ({
   headers: {},
   body: request.body || {},
   errorBody: null,

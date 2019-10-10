@@ -31,7 +31,7 @@ const parseUrl = (url) => {
       part.split(`{${variable}}`),
     );
   });
-  details.parts = details.parts.filter(entry => !!entry);
+  details.parts = details.parts.filter((entry) => !!entry);
   return details;
 };
 
@@ -59,5 +59,5 @@ module.exports = (url) => {
   if (parsedUrl.variables.length === 0) {
     return url;
   }
-  return container => mergeUrl(container, parsedUrl);
+  return (container) => mergeUrl(container, parsedUrl);
 };

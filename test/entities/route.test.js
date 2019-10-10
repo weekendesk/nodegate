@@ -1,15 +1,15 @@
 const { execute } = require('../../entities/route');
 const PipelineError = require('../../entities/PipelineError');
 
-const step = jest.fn(container => container);
-const asyncStep = jest.fn(container => new Promise(resolve => resolve(container)));
+const step = jest.fn((container) => container);
+const asyncStep = jest.fn((container) => new Promise((resolve) => resolve(container)));
 
-const send = jest.fn(container => container);
+const send = jest.fn((container) => container);
 const sendStatus = jest.fn();
 const status = jest.fn(() => ({ send }));
 const response = { status, sendStatus };
 
-const onError = jest.fn(error => error.container);
+const onError = jest.fn((error) => error.container);
 
 const request = {
   headers: {
@@ -65,7 +65,7 @@ describe('entities/route', () => {
       await execute({ pipeline: [() => ({ statusCode: 201 })] })(request, response);
     });
     it('should work with a recursive pipeline', async () => {
-      const modifier = letter => container => ({
+      const modifier = (letter) => (container) => ({
         body: {
           value: `${container.body.value}${letter}`,
         },

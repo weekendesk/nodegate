@@ -35,7 +35,7 @@ describe('services/nodegate', () => {
   describe('#beforeEach()', () => {
     it('should execute before each request a the modifier', async () => {
       const gate = nodegate();
-      gate.beforeEach(container => ({ ...container, body: { before: true } }));
+      gate.beforeEach((container) => ({ ...container, body: { before: true } }));
       gate.route({
         method: 'get',
         path: '/',
@@ -55,7 +55,7 @@ describe('services/nodegate', () => {
         path: '/',
         pipeline: [],
       });
-      gate.beforeEach(container => ({ ...container, body: { before: true } }));
+      gate.beforeEach((container) => ({ ...container, body: { before: true } }));
       await request(gate)
         .get('/')
         .expect(200)
@@ -71,8 +71,8 @@ describe('services/nodegate', () => {
         pipeline: [],
       });
       gate.beforeEach([
-        container => ({ ...container, body: { count: container.body.count + 1 } }),
-        container => ({ ...container, body: { count: container.body.count + 10 } }),
+        (container) => ({ ...container, body: { count: container.body.count + 1 } }),
+        (container) => ({ ...container, body: { count: container.body.count + 10 } }),
       ]);
       await request(gate)
         .post('/')
@@ -122,7 +122,7 @@ describe('services/nodegate', () => {
         pipeline: [
           () => { throw new Error('Section 31 classified'); },
         ],
-        onError: error => ({
+        onError: (error) => ({
           ...error.container,
           statusCode: 503,
         }),
