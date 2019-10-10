@@ -1,0 +1,146 @@
+---
+---
+
+// From https://github.com/shudrum/sass-easy-bem
+
+//
+// Copyright (c) 2018-2019 Julien Martin.
+//
+// This source code is licensed under the MIT license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// Utility functions
+
+@function get-parent-selector($selector) {
+  $parent: null;
+  @while str-index('#{$selector}', ' ') {
+    $first-element: str-slice('#{$selector}', 0, str-index('#{$selector}', ' ') - 1);
+    @if ($parent) {
+      $parent: '#{$parent} #{$first-element}';
+    }
+    @else {
+      $parent: $first-element;
+    }
+    $selector: str-slice('#{$selector}', str-index('#{$selector}', ' ') + 1);
+  }
+  @return $parent;
+}
+
+@function get-last-selector($selector) {
+  @while str-index('#{$selector}', ' ') {
+    $selector: str-slice('#{$selector}', str-index('#{$selector}', ' ') + 1);
+  }
+  @return $selector;
+}
+
+@function get-block($selector) {
+  $have-element: str-index('#{&}', '__');
+  $have-modifier: str-index('#{&}', '--');
+
+  @if ($have-element) {
+    @return str-slice('#{$selector}', 0, str-index('#{&}', '__') - 1);
+  }
+  @if ($have-modifier) {
+    @return str-slice('#{$selector}', 0, str-index('#{&}', '--') - 1);
+  }
+  @return $selector;
+}
+
+@function get-element($selector) {
+  $have-modifier: str-index('#{$selector}', '--');
+  @if ($have-modifier) {
+    $selector: str-slice('#{$selector}', 0, str-index('#{$selector}', '--') - 1);
+    @while (str-index(str-slice('#{$selector}', 2), '.')) {
+      $selector: str-slice('#{$selector}', str-index(str-slice('#{$selector}', 2), '.') + 1);
+    }
+  }
+  @return $selector;
+};
+
+// BEM
+
+@mixin block($block) {
+  @at-root {
+    .#{$block} {
+      @content;
+    }
+  }
+}
+
+@mixin element($element) {
+  $is-modifier: str-index('#{&}', '--');
+  $block: get-block(&);
+
+  @if not $is-modifier {
+    @at-root {
+      #{$block}__#{$element} {
+        @content;
+      }
+    }
+  }
+
+  @if $is-modifier {
+    $is-element: str-index('#{&}', '__');
+
+    @if $is-element {
+      $block: str-slice('#{&}', 0, str-index('#{&}', '__') - 1);
+
+      @at-root {
+        & #{$block}__#{$element} {
+          @content;
+        }
+      }
+    }
+
+    @if not $is-element {
+      $block: str-slice('#{&}', 0, str-index('#{&}', '--') - 1);
+      $block: str-slice($block, 1, str-index(str-slice($block, 2, -1), '.'));
+
+      @at-root {
+        & #{$block}__#{$element} {
+          @content;
+        }
+      }
+    }
+  }
+}
+
+@mixin modifier($modifier) {
+  $parent-selector: get-parent-selector('#{&}');
+  $last-selector: get-last-selector('#{&}');
+  $element: get-element($last-selector);
+
+  @at-root {
+    @if ($parent-selector) {
+      #{$parent-selector} #{$last-selector}#{$element}--#{$modifier} {
+        @content;
+      }
+    }
+    @else {
+      #{$last-selector}#{$element}--#{$modifier} {
+        @content;
+      }
+    }
+  }
+}
+
+// Aliases
+
+@mixin b($name) {
+  @include block($name) {
+    @content;
+  }
+}
+
+@mixin e($name) {
+  @include element($name) {
+    @content;
+  }
+}
+
+@mixin m($name) {
+  @include modifier($name) {
+    @content;
+  }
+}
