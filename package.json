@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --runInBand",
     "lint": "eslint .",
-    "jekyll": "cd doc && bundle exec jekyll serve"
+    "jekyll": "cd docs && bundle exec jekyll serve"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
