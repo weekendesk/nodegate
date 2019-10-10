@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep, merge } = require('lodash');
+const { merge } = require('lodash');
 
-module.exports = (body) => (container) => ({
-  ...cloneDeep(container),
-  body: merge(container.body, body),
-});
+module.exports = (body) => (container) => {
+  merge(container.body, body);
+};
