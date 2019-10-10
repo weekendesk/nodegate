@@ -8,7 +8,7 @@ describe('scenarios/beforeEachMachingRoute', () => {
   beforeEach(() => {
     gate = nodegate();
     gate.beforeEach(routeMatch(/\/captain\/*/, [
-      (container) => ({ ...container, body: { ...container.body, type: 'captain' } }),
+      (container) => { container.body.type = 'captain'; },
     ]));
     gate.route({
       method: 'get',
