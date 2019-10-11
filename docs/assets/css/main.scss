@@ -12,6 +12,11 @@
 
   @include e('container') {
     @include container();
+  }
+
+  @include e('content') {
+    margin: 0 grid(4);
+    padding: 0 grid(4);
     display: flex;
     height: $size-header;
   }
@@ -147,7 +152,11 @@
 
   @include e('container') {
     @include container();
+  }
+
+  @include e('content') {
     padding: grid(4);
+    margin: grid(4);
   }
 }
 
