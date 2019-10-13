@@ -3,7 +3,7 @@ layout: content
 title: Workers - Remove
 ---
 
-# filter(paths)
+# remove(paths)
 
 Remove the properties listed on the `paths` argument array from the container's body
 
