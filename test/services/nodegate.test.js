@@ -131,4 +131,19 @@ describe('services/nodegate', () => {
         .expect(503);
     });
   });
+  describe('Options', () => {
+    it('should allow to limit the size of the body', async () => {
+      const gate = nodegate({
+        payloadSizeLimit: '10o',
+      });
+      gate.route({
+        method: 'post',
+        path: '/',
+        workflow: [],
+      });
+      await request(gate).post('/').send({
+        title: 'This document is too heavy to be hamdled',
+      }).expect(413);
+    });
+  });
 });

@@ -11,14 +11,16 @@ const express = require('express');
 const { execute } = require('../entities/route');
 const { getConfiguration } = require('../services/configuration');
 
-const buildExpressApp = () => {
+const buildExpressApp = (options) => {
   const app = express();
   const configuration = getConfiguration().express;
 
   if (configuration.useCors) {
     app.use(cors());
   }
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({
+    limit: options.payloadSizeLimit || '1mb',
+  }));
 
   app.use((_, res, next) => {
     res.setHeader('x-powered-by', configuration.poweredBy);
@@ -35,8 +37,8 @@ const toArray = (value) => {
   return value;
 };
 
-const nodegate = () => {
-  const expressApp = buildExpressApp();
+const nodegate = (options = {}) => {
+  const expressApp = buildExpressApp(options);
   const beforeEach = [];
   const app = (req, res, next) => {
     expressApp.handle(req, res, next);
