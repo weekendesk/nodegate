@@ -6,6 +6,9 @@ toc:
         description: Aggregate the result of a request onto the container's body.
       - title: filter
         url: /workers/filter.html
+        description: Filter entries from the container's body.
+      - title: remove
+        url: /workers/remove.html
         description: Remove entries from the container's body.
       - title: mergeBody
         url: /workers/merge-body.html
