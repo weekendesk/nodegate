@@ -9,12 +9,12 @@ Routes are objects defining the behavior of nodegate for a specific path and met
 
 _Properties_
 
-| Argument | Type         | Description                                                                                                               |
-| :------- | :----------- | :------------------------------------------------------------------------------------------------------------------------ |
-| method   | **string**   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                                            |
-| path     | **string**   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id`                        |
-| workflow | **array**    | **Required.** List of the workers to apply to the container.                                                            |
-| onError  | **function** | Callback to execute in case of error. This callback must return a container object. See [Error handling](#error-handling) |
+| Argument | Type         | Description                                                                                        |
+| :------- | :----------- | :------------------------------------------------------------------------------------------------- |
+| method   | **string**   | **Required.** Method of the route (`get`, `post`, `patch`, …).                                     |
+| path     | **string**   | **Required.** Path of the route, the path can be written the Express way, for example: `/user/:id` |
+| workflow | **array**    | **Required.** List of the workers to apply to the container.                                       |
+| onError  | **function** | Callback to execute in case of error. See [Error handling](#error-handling)                        |
 
 The pipelines are lists of workers to execute **synchronously** to modify the container.
 
@@ -32,11 +32,7 @@ following contents:
  - If applicable, the last response received by **nodegate**,
  - The container.
 
-**This callback must return a container object** used by the route executor to send the response to
-the client.
-
-In case of error, the `statusCode` will be set to 500. If a response exists in the error, the status
-code will be the same as the response statusCode.
+In case of error, the `statusCode` will be set to 500.
 
 _Examples_
 
@@ -48,12 +44,9 @@ gateway.route({
   path: '/gateway-route',
   workflow: [...],
   onError: (error) => {
-    return {
-      ...error.container,
-      body: {
-        reason: 'An unknow error occurred.',
-      }
-    }:
+    error.container.body = {
+      reason: 'An unknow error occurred.',
+    };
   };
 });
 ```
@@ -66,10 +59,7 @@ gateway.route({
   path: '/gateway-route',
   workflow: [...],
   onError: (error) => {
-    return {
-      ...error.container,
-      statusCode: 503,
-    }:
+    error.container.statusCode = 503;
   };
 });
 ```
