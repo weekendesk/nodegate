@@ -4,49 +4,51 @@ describe('workers/project', () => {
   it('should correctly return a function', () => {
     expect(project()).toBeInstanceOf(Function);
   });
-  it('should project simple values', () => {
+  describe('argument validation', () => {
+    it('should throw an error if the argument is a number', () => {
+      const container = {};
+      expect(() => project(1)(container)).toThrow();
+    });
+    it('should throw an error if the argument is a string', () => {
+      const container = {};
+      expect(() => project('value')(container)).toThrow();
+    });
+    it('should throw an error if the argument is an array', () => {
+      const container = {};
+      expect(() => project(1)(container)).toThrow();
+    });
+  });
+  it('should project to simple values', () => {
     const container = {
       body: {
         ship: 'Enterprise',
         captain: 'Jean-Luc Picard',
       },
     };
-    project([
-      ['ship', 'nextship'],
-      ['captain', 'nextcaptain'],
-    ])(container);
+    project({
+      nextship: 'body.ship',
+      nextcaptain: 'body.captain',
+    })(container);
     expect(container.body.nextship).toEqual('Enterprise');
     expect(container.body.nextcaptain).toEqual('Jean-Luc Picard');
   });
-  it('should project values into arrays', () => {
+  it('should project to deep values', () => {
     const container = {
       body: {
         ship: 'Enterprise',
         captain: 'Jean-Luc Picard',
       },
     };
-    project([
-      ['ship', 'ships[0]'],
-      ['captain', 'captains[0]'],
-    ])(container);
-    expect(container.body.ships[0]).toEqual('Enterprise');
-    expect(container.body.captains[0]).toEqual('Jean-Luc Picard');
-  });
-  it('should allow to rename values', () => {
-    const container = {
-      body: {
-        ship: 'Enterprise',
-        captain: 'Jean-Luc Picard',
+    project({
+      nextShip: {
+        name: 'body.ship',
       },
-    };
-    project([
-      ['ship', 'shipName'],
-      ['captain', 'captainName'],
-    ])(container);
-    expect(container.body.shipName).toEqual('Enterprise');
-    expect(container.body.captainName).toEqual('Jean-Luc Picard');
+      nextCaptain: 'body.captain',
+    })(container);
+    expect(container.body.nextShip.name).toEqual('Enterprise');
+    expect(container.body.nextCaptain).toEqual('Jean-Luc Picard');
   });
-  it('should keep other values', () => {
+  it('should remove other values', () => {
     const container = {
       body: {
         ship: 'Enterprise',
@@ -54,10 +56,10 @@ describe('workers/project', () => {
         quadran: 'Alpha',
       },
     };
-    project([
-      ['ship', 'shipName'],
-      ['captain', 'captainName'],
-    ])(container);
-    expect(container.body.quadran).toEqual('Alpha');
+    project({
+      ship: 'body.ship',
+      captain: 'body.captain',
+    })(container);
+    expect(container.body.quadran).toBeFalsy();
   });
 });
