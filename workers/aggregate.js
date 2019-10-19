@@ -10,21 +10,21 @@ const WorkflowError = require('../entities/WorkflowError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
 
-module.exports = (method, url, path) => {
+module.exports = (method, url, options = {}) => {
   const buildedUrl = urlBuilder(url);
   return async (container) => {
     try {
       const { body, statusCode } = await request(container)[method](buildedUrl);
       container.statusCode = statusCode;
-      if (!path && typeof body !== 'object') {
+      if (!options.path && typeof body !== 'object') {
         return;
       }
-      if (path && !container.body[path]) {
-        container.body[path] = body;
+      if (options.path && !container.body[options.path]) {
+        container.body[options.path] = body;
         return;
       }
-      if (path) {
-        merge(container.body[path], body);
+      if (options.path) {
+        merge(container.body[options.path], body);
         return;
       }
       merge(container.body, body);

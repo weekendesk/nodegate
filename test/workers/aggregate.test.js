@@ -1,6 +1,6 @@
 const nock = require('nock');
 const aggregate = require('../../workers/aggregate');
-const { getEmpty, extractFromRequest } = require('../../entities/container');
+const { getEmpty } = require('../../entities/container');
 const WorkflowError = require('../../entities/WorkflowError');
 
 describe('workers/aggregate', () => {
@@ -19,54 +19,76 @@ describe('workers/aggregate', () => {
     expect(container.body.phasers).toBe(16);
     expect(container.body.torpedoes).toBe(2);
   });
-  it('should correclty use the path parameter', async () => {
-    const container = getEmpty();
-    nock('https://wiki.federation.com')
-      .get('/armaments')
-      .reply(200, {
-        phasers: 16,
-        torpedoes: 2,
-      });
-    await aggregate(
-      'get',
-      'https://wiki.federation.com/armaments',
-      'armaments',
-    )(container);
-    expect(container.body.armaments.phasers).toBe(16);
-    expect(container.body.armaments.torpedoes).toBe(2);
-  });
-  it('should do a correct deep merge', async () => {
-    const container = extractFromRequest({
-      body: {
-        armaments: {
-          disruptors: 5,
-        },
-      },
+  describe('with "path" option', () => {
+    it('should correclty use aggregate the result on the defined path', async () => {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .get('/armaments')
+        .reply(200, {
+          phasers: 16,
+          torpedoes: 2,
+        });
+      await aggregate(
+        'get',
+        'https://wiki.federation.com/armaments',
+        { path: 'armaments' },
+      )(container);
+      expect(container.body.armaments.phasers).toBe(16);
+      expect(container.body.armaments.torpedoes).toBe(2);
     });
-    nock('https://wiki.federation.com')
-      .get('/armaments')
-      .reply(200, {
-        phasers: 16,
-        torpedoes: 2,
+    it('should do a deep merge if values exists at the defined path', async () => {
+      const container = {
+        body: {
+          armaments: {
+            disruptors: 5,
+          },
+        },
+      };
+      nock('https://wiki.federation.com')
+        .get('/armaments')
+        .reply(200, {
+          phasers: 16,
+          torpedoes: 2,
+        });
+      await aggregate(
+        'get',
+        'https://wiki.federation.com/armaments',
+        { path: 'armaments' },
+      )(container);
+      expect(container.body.armaments.disruptors).toBe(5);
+      expect(container.body.armaments.phasers).toBe(16);
+      expect(container.body.armaments.torpedoes).toBe(2);
+    });
+    it('should set the full text response at the path value', async () => {
+      const container = {
+        ...getEmpty(),
+        body: {
+          ship: 'NCC-1717',
+        },
+      };
+      nock('https://wiki.federation.com')
+        .post('/armaments')
+        .reply(200, 'OK');
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/armaments',
+        { path: 'text' },
+      )(container);
+      expect(container.body).toEqual({
+        ship: 'NCC-1717',
+        text: 'OK',
       });
-    await aggregate(
-      'get',
-      'https://wiki.federation.com/armaments',
-      'armaments',
-    )(container);
-    expect(container.body.armaments.disruptors).toBe(5);
-    expect(container.body.armaments.phasers).toBe(16);
-    expect(container.body.armaments.torpedoes).toBe(2);
+    });
   });
-  it('should use the urlBuilder', async () => {
-    const container = extractFromRequest({
+  it('should use the urlBuilder on the URL', async () => {
+    const container = {
       body: {
         name: 'NCC-1717',
         armaments: {
           disruptors: 5,
         },
       },
-    });
+    };
     nock('https://wiki.federation.com')
       .get('/armaments/NCC-1717')
       .reply(200, {
@@ -76,12 +98,12 @@ describe('workers/aggregate', () => {
     await aggregate(
       'get',
       'https://wiki.federation.com/armaments/{body.name}',
-      'armaments',
+      { path: 'armaments' },
     )(container);
-    expect(container.body.name).toBe('NCC-1717');
-    expect(container.body.armaments.disruptors).toBe(5);
-    expect(container.body.armaments.phasers).toBe(16);
-    expect(container.body.armaments.torpedoes).toBe(2);
+    expect(container.body.name).toEqual('NCC-1717');
+    expect(container.body.armaments.disruptors).toEqual(5);
+    expect(container.body.armaments.phasers).toEqual(16);
+    expect(container.body.armaments.torpedoes).toEqual(2);
   });
   it('should correctly set the statusCode of the container from the request', async () => {
     const container = getEmpty();
@@ -200,26 +222,6 @@ describe('workers/aggregate', () => {
     )(container);
     expect(container.body).toEqual({
       ship: 'NCC-1717',
-    });
-  });
-  it('should, with path, set the full text response at the path value', async () => {
-    const container = {
-      ...getEmpty(),
-      body: {
-        ship: 'NCC-1717',
-      },
-    };
-    nock('https://wiki.federation.com')
-      .post('/armaments')
-      .reply(200, 'OK');
-    await aggregate(
-      'post',
-      'https://wiki.federation.com/armaments',
-      'text',
-    )(container);
-    expect(container.body).toEqual({
-      ship: 'NCC-1717',
-      text: 'OK',
     });
   });
 });
