@@ -14,7 +14,7 @@ describe('scenarios/beforeEachMachingRoute', () => {
       method: 'get',
       path: '/captain/:name',
       workflow: [
-        aggregate('get', 'https://federation.com/captains/{params.name}', 'data'),
+        aggregate('get', 'https://federation.com/captains/{params.name}', { path: 'data' }),
       ],
     });
     gate.route({
