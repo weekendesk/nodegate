@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { get } = require('lodash');
+const { get, merge } = require('lodash');
 const requestNative = require('request-promise-native');
 const { getConfiguration } = require('../services/configuration');
 
@@ -47,6 +47,18 @@ const projectKey = (key, requestOptions, container, options) => {
   }
 };
 
+const mergeConfiguration = (requestOptions, configuration) => {
+  if (!configuration.headers) {
+    return;
+  }
+
+  if (typeof requestOptions.headers === 'object' && requestOptions.headers !== null) {
+    merge(requestOptions.headers, configuration.headers);
+  } else {
+    requestOptions.headers = configuration.headers;
+  }
+};
+
 const request = (container, method, url, options = {}) => {
   validateArguments(container, method, url, options);
 
@@ -60,6 +72,8 @@ const request = (container, method, url, options = {}) => {
 
   projectKey('headers', requestOptions, container, options);
   projectKey('body', requestOptions, container, options);
+
+  mergeConfiguration(requestOptions, configuration);
 
   return requestNative(requestOptions);
 };

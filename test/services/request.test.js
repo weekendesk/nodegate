@@ -1,5 +1,6 @@
 const nock = require('nock');
 const request = require('../../services/request');
+const { configure } = require('../../services/configuration');
 const urlBuilder = require('../../services/urlBuilder');
 
 describe('services/request', () => {
@@ -38,6 +39,43 @@ describe('services/request', () => {
     } catch (err) {
       expect(err.statusCode).toEqual(404);
     }
+  });
+  it('should merge the headers from configuration with the container headers', async () => {
+    configure({
+      request: {
+        headers: {
+          'X-Powered-by': 'Cardassians',
+        },
+      },
+    });
+    nock('https://wiki.federation.com', {
+      reqheaders: {
+        authorization: 'Bearer 1234567890',
+        'X-Powered-by': 'Cardassians',
+      },
+    }).get('/ships').reply(200);
+    const container = { headers: { authorization: 'Bearer 1234567890' } };
+    const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+    expect(statusCode).toEqual(200);
+    configure({});
+  });
+  it('should take the headers from configuration by default if container headers are null or undefined', async () => {
+    configure({
+      request: {
+        headers: {
+          'X-Powered-by': 'Cardassians',
+        },
+      },
+    });
+    nock('https://wiki.federation.com', {
+      reqheaders: {
+        'X-Powered-by': 'Cardassians',
+      },
+    }).get('/ships').reply(200);
+    const container = { headers: null };
+    const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+    expect(statusCode).toEqual(200);
+    configure({});
   });
   describe('arguments validation', () => {
     it('should throw an error if the "container" argument is a string', async () => {
