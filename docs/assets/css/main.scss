@@ -19,6 +19,7 @@
     padding: 0 grid(4);
     display: flex;
     height: $size-header;
+    position: relative;
   }
 
   @include e('logo') {
@@ -49,6 +50,17 @@
 
     &:hover {
       background: rgba($color-white, 0.1);
+    }
+
+    @include m('right') {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      padding: {
+        top: 0;
+        bottom: 0;
+      }
+      border: none;
     }
   }
 }
