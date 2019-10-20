@@ -1,9 +1,10 @@
 const urlBuilder = require('../../services/urlBuilder');
 
 describe('services/urlBuilder', () => {
-  it('should return a string if there is no variables', () => {
+  it('should not return a string event if there is no variables', () => {
     const url = urlBuilder('http://wiki.federation.com/armaments');
-    expect(url).toBe('http://wiki.federation.com/armaments');
+    expect(url).toBeInstanceOf(Function);
+    expect(url()).toEqual('http://wiki.federation.com/armaments');
   });
   it('should return a function when a variable exists', () => {
     const url = urlBuilder('http://wiki.federation.com/{body.id}/armaments');

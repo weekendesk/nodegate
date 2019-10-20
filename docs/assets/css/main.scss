@@ -19,18 +19,19 @@
     padding: 0 grid(4);
     display: flex;
     height: $size-header;
+    position: relative;
   }
 
   @include e('logo') {
     line-height: $size-header;
     vertical-align: baseline;
-    margin-right: grid(4);
+    margin-right: grid(8);
   }
 
   @include e('logo-image') {
     display: inline-block;
-    vertical-align: text-bottom;
-    height: $size-header / 3;
+    margin-top: grid(2);
+    height: $size-header - grid(4);
   }
 
   @include e('nav') {
@@ -49,6 +50,17 @@
 
     &:hover {
       background: rgba($color-white, 0.1);
+    }
+
+    @include m('right') {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      padding: {
+        top: 0;
+        bottom: 0;
+      }
+      border: none;
     }
   }
 }
@@ -156,7 +168,7 @@
 
   @include e('content') {
     padding: grid(4);
-    margin: grid(4);
+    margin: 0 grid(4);
   }
 }
 

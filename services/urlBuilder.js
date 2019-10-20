@@ -57,7 +57,7 @@ const mergeUrl = (container, parsedUrl) => {
 module.exports = (url) => {
   const parsedUrl = parseUrl(url);
   if (parsedUrl.variables.length === 0) {
-    return url;
+    return () => url;
   }
   return (container) => mergeUrl(container, parsedUrl);
 };

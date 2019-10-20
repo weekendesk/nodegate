@@ -1,5 +1,5 @@
 ---
-layout: content
+layout: documentation
 title: Workers - Project
 ---
 

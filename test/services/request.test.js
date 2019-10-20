@@ -1,262 +1,365 @@
 const nock = require('nock');
 const request = require('../../services/request');
+const { configure } = require('../../services/configuration');
 const urlBuilder = require('../../services/urlBuilder');
-const { getEmpty, extractFromRequest } = require('../../entities/container');
 
 describe('services/request', () => {
-  describe('#get()', () => {
-    it('should do a simple request', async () => {
-      nock('https://wiki.federation.com')
-        .get('/ships/enterprise')
-        .reply(200, [
-          'NCC-1701',
-          'NCC-1717',
-        ]);
-      const result = await request.get('https://wiki.federation.com/ships/enterprise');
-      expect(result.statusCode).toBe(200);
+  it('should do a simple request', async () => {
+    nock('https://wiki.federation.com').get('/ships/enterprise').reply(200, [
+      'NCC-1701',
+      'NCC-1717',
+    ]);
+    const result = await request({}, 'get', 'https://wiki.federation.com/ships/enterprise');
+    expect(result.statusCode).toBe(200);
+  });
+  it('should inject container data to the url if it is a builded URL', async () => {
+    const url = urlBuilder('https://wiki.federation.com/ships/{body.ship.name}');
+    const container = { body: { ship: { name: 'enterprise' } } };
+    nock('https://wiki.federation.com').get('/ships/enterprise').reply(200, [
+      'NCC-1701',
+      'NCC-1717',
+    ]);
+    const result = await request(container, 'get', url);
+    expect(result.statusCode).toBe(200);
+  });
+  it('should throw an error when the response status code is 500', async () => {
+    expect.assertions(1);
+    nock('https://wiki.federation.com').get('/ships').reply(500);
+    try {
+      await request({}, 'get', 'https://wiki.federation.com/ships');
+    } catch (err) {
+      expect(err.statusCode).toEqual(500);
+    }
+  });
+  it('should throw an error when the response status code is 404', async () => {
+    expect.assertions(1);
+    nock('https://wiki.federation.com').get('/ships').reply(404);
+    try {
+      await request({}, 'get', 'https://wiki.federation.com/ships');
+    } catch (err) {
+      expect(err.statusCode).toEqual(404);
+    }
+  });
+  it('should merge the headers from configuration with the container headers', async () => {
+    configure({
+      request: {
+        headers: {
+          'X-Powered-by': 'Cardassians',
+        },
+      },
     });
-    it('should be possible to specify headers', async () => {
+    nock('https://wiki.federation.com', {
+      reqheaders: {
+        authorization: 'Bearer 1234567890',
+        'X-Powered-by': 'Cardassians',
+      },
+    }).get('/ships').reply(200);
+    const container = { headers: { authorization: 'Bearer 1234567890' } };
+    const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+    expect(statusCode).toEqual(200);
+    configure({});
+  });
+  it('should take the headers from configuration by default if container headers are null or undefined', async () => {
+    configure({
+      request: {
+        headers: {
+          'X-Powered-by': 'Cardassians',
+        },
+      },
+    });
+    nock('https://wiki.federation.com', {
+      reqheaders: {
+        'X-Powered-by': 'Cardassians',
+      },
+    }).get('/ships').reply(200);
+    const container = { headers: null };
+    const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+    expect(statusCode).toEqual(200);
+    configure({});
+  });
+  describe('arguments validation', () => {
+    it('should throw an error if the "container" argument is a string', async () => {
+      expect.assertions(1);
+      try {
+        await request('container', 'get', 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "container" argument is a number', async () => {
+      expect.assertions(1);
+      try {
+        await request(1701, 'get', 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "container" argument is a array', async () => {
+      expect.assertions(1);
+      try {
+        await request([], 'get', 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "container" argument is a function', async () => {
+      expect.assertions(1);
+      try {
+        await request(() => {}, 'get', 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "method" argument is an object', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, {}, 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "method" argument is a number', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 1701, 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "method" argument is an array', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, [], 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "method" argument is a function', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, () => {}, 'https://wiki.federation.com/ships');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "url" argument is an object', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', {});
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "url" argument is a number', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 1701);
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "url" argument is an array', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', []);
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "options" argument is a string', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', 'options');
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "options" argument is a number', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', 1701);
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "options" argument is an array', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', []);
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the "options" argument is a function', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', () => {});
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+  });
+  describe('option "headers"', () => {
+    it('should do the request with the container headers if not set', async () => {
       nock('https://wiki.federation.com', {
         reqheaders: {
-          'x-ship-origin': 'enterprise',
+          authorization: 'Bearer 1234567890',
         },
-      })
-        .get('/ships/enterprise')
-        .reply(200, [
-          'NCC-1701',
-          'NCC-1717',
-        ]);
-      const result = await request.get(
-        'https://wiki.federation.com/ships/enterprise',
-        { headers: { 'x-ship-origin': 'enterprise' } },
-      );
-      expect(result.statusCode).toBe(200);
+      }).get('/ships').reply(200);
+      const container = { headers: { authorization: 'Bearer 1234567890' } };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+      expect(statusCode).toEqual(200);
     });
-  });
-  describe('#post()', () => {
-    it('should do a simple request', async () => {
-      nock('https://wiki.federation.com')
-        .post('/ships')
-        .reply(201);
-      const result = await request.post('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(201);
-    });
-  });
-  describe('#put()', () => {
-    it('should do a simple request', async () => {
-      nock('https://wiki.federation.com')
-        .put('/ships/1')
-        .reply(200);
-      const result = await request.put('https://wiki.federation.com/ships/1');
-      expect(result.statusCode).toBe(200);
-    });
-  });
-  describe('#patch()', () => {
-    it('should do a simple request', async () => {
-      nock('https://wiki.federation.com')
-        .patch('/ships/1')
-        .reply(200);
-      const result = await request.patch('https://wiki.federation.com/ships/1');
-      expect(result.statusCode).toBe(200);
-    });
-  });
-  describe('#delete()', () => {
-    it('should do a simple request', async () => {
-      nock('https://wiki.federation.com')
-        .delete('/ships/1')
-        .reply(200);
-      const result = await request.delete('https://wiki.federation.com/ships/1');
-      expect(result.statusCode).toBe(200);
-    });
-  });
-  describe('#(container).get()', () => {
-    it('should do a simple request', async () => {
-      const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .get('/ships/enterprise')
-        .reply(200, [
-          'NCC-1701',
-          'NCC-1717',
-        ]);
-      const result = await request(container).get('https://wiki.federation.com/ships/enterprise');
-      expect(result.statusCode).toBe(200);
-    });
-    it('should use the headers of the container', async () => {
+    it('should be possible to project values from the container headers', async () => {
+      nock('https://wiki.federation.com', {
+        reqheaders: {
+          authorization: 'Bearer 1234567890',
+        },
+      }).get('/ships').reply(200);
       const container = {
         headers: {
-          origin: 'https://enterprise.com',
+          user: 'Bearer 1234567890',
+          'X-forwarded-from': 'http://klingon.com',
         },
-        body: {},
-        params: {},
       };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
+        headers: {
+          authorization: 'headers.user',
+        },
+      });
+      expect(statusCode).toEqual(200);
+    });
+    it('should be possible to project values from the container body', async () => {
       nock('https://wiki.federation.com', {
         reqheaders: {
-          origin: 'https://enterprise.com',
+          authorization: 'Bearer 1234567890',
         },
-      })
-        .get('/ships/enterprise')
-        .reply(200, [
-          'NCC-1701',
-          'NCC-1717',
-        ]);
-      const result = await request(container).get('https://wiki.federation.com/ships/enterprise');
-      expect(result.statusCode).toBe(200);
-    });
-    it('should use the body for the URL', async () => {
-      const container = extractFromRequest({
+      }).get('/ships').reply(200);
+      const container = {
         body: {
-          ship: 'NCC-1701',
+          user: 'Bearer 1234567890',
+          'X-forwarded-from': 'http://klingon.com',
+        },
+      };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
+        headers: {
+          authorization: 'body.user',
         },
       });
-      nock('https://wiki.federation.com')
-        .get('/ships/NCC-1701')
-        .reply(200, 'Enterprise');
-      const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships/{body.ship}'));
-      expect(result.statusCode).toBe(200);
+      expect(statusCode).toEqual(200);
     });
-    it('should use the container body', async () => {
-      const container = extractFromRequest({
-        body: {
-          ship: 'NCC-1701',
-        },
-      });
-      nock('https://wiki.federation.com')
-        .get('/ships')
-        .reply(200, (_, requestBody) => ({ ...requestBody }));
-      const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships'));
-      expect(result.statusCode).toBe(200);
-      expect(result.body.ship).toEqual('NCC-1701');
-    });
-    it('should use the container query', async () => {
-      const container = extractFromRequest({
-        query: {
-          ship: 'NCC-1701',
-        },
-      });
-      nock('https://wiki.federation.com')
-        .get('/ships')
-        .query({ ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).get(urlBuilder('https://wiki.federation.com/ships'));
-      expect(result.statusCode).toBe(200);
-    });
-  });
-  describe('#(container).post()', () => {
-    it('should do a simple request', async () => {
-      const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .post('/ships')
-        .reply(200);
-      const result = await request(container).post('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
-    });
-    it('should use the headers of the container', async () => {
+    it('should be possible to set the headers to null', async () => {
+      nock('https://wiki.federation.com', {
+        badheaders: ['authorization'],
+      }).get('/ships').reply(200);
       const container = {
         headers: {
-          origin: 'https://enterprise.com',
+          authorization: 'Bearer 1234567890',
+          'X-forwarded-from': 'http://klingon.com',
         },
-        body: {},
-        params: {},
       };
-      nock('https://wiki.federation.com', {
-        reqheaders: {
-          origin: 'https://enterprise.com',
-        },
-      })
-        .post('/ships')
-        .reply(200);
-      const result = await request(container).post('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
+        headers: null,
+      });
+      expect(statusCode).toEqual(200);
     });
-    it('should use the body for the URL', async () => {
-      const container = extractFromRequest({
-        body: {
-          ship: 'NCC-1701',
+    it('should throw an error if the projection is an array', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', {
+          headers: {
+            ship: ['1701'],
+          },
+        });
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should throw an error if the projection is an number', async () => {
+      expect.assertions(1);
+      try {
+        await request({}, 'get', 'https://wiki.federation.com/ships', {
+          headers: {
+            ship: 1701,
+          },
+        });
+      } catch (err) {
+        expect(err).toBeInstanceOf(TypeError);
+      }
+    });
+    it('should not throw error with unknow projection path', async () => {
+      nock('https://wiki.federation.com').get('/ships').reply(200);
+      const { statusCode } = await request({}, 'get', 'https://wiki.federation.com/ships', {
+        headers: {
+          authorization: 'headers.user',
         },
       });
-      nock('https://wiki.federation.com')
-        .post('/ships/NCC-1701')
-        .reply(200, 'Enterprise');
-      const result = await request(container).post(urlBuilder('https://wiki.federation.com/ships/{body.ship}'));
-      expect(result.statusCode).toBe(200);
-    });
-    it('should use the container body', async () => {
-      const container = extractFromRequest({
-        body: {
-          ship: 'NCC-1701',
-        },
-      });
-      nock('https://wiki.federation.com')
-        .post('/ships', { ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).post('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+      expect(statusCode).toEqual(200);
     });
   });
-  describe('#(container).patch()', () => {
-    it('should do a simple request', async () => {
-      const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .patch('/ships')
-        .reply(200);
-      const result = await request(container).patch('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+  describe('option "body"', () => {
+    it('should do the request with the container body if not set', async () => {
+      nock('https://wiki.federation.com').get('/ships', {
+        name: 'Jean-Luc Picard',
+      }).reply(200);
+      const container = { body: { name: 'Jean-Luc Picard' } };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships');
+      expect(statusCode).toEqual(200);
     });
-    it('should use the container body', async () => {
-      const container = extractFromRequest({
+    it('should be possible to project values from the container body', async () => {
+      nock('https://wiki.federation.com').get('/ships', {
+        captain: 'Jean-Luc Picard',
+      }).reply(200);
+      const container = { body: { name: 'Jean-Luc Picard' } };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
         body: {
-          ship: 'NCC-1701',
+          captain: 'body.name',
         },
       });
-      nock('https://wiki.federation.com')
-        .patch('/ships', { ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).patch('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+      expect(statusCode).toEqual(200);
     });
-  });
-  describe('#(container).put()', () => {
-    it('should do a simple request', async () => {
-      const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .put('/ships')
-        .reply(200);
-      const result = await request(container).put('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
-    });
-    it('should use the container body', async () => {
-      const container = extractFromRequest({
+    it('should be possible to project values from the container headers', async () => {
+      nock('https://wiki.federation.com').get('/ships', {
+        captain: 'Jean-Luc Picard',
+      }).reply(200);
+      const container = { headers: { name: 'Jean-Luc Picard' } };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
         body: {
-          ship: 'NCC-1701',
+          captain: 'headers.name',
         },
       });
-      nock('https://wiki.federation.com')
-        .put('/ships', { ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).put('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+      expect(statusCode).toEqual(200);
     });
-  });
-  describe('#(container).delete()', () => {
-    it('should do a simple request', async () => {
-      const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .delete('/ships')
-        .reply(200);
-      const result = await request(container).delete('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+    it('should be possible to set the body to null', async () => {
+      nock('https://wiki.federation.com').get('/ships', (body) => body === null).reply(200);
+      const container = { headers: { name: 'Jean-Luc Picard' } };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
+        body: null,
+      });
+      expect(statusCode).toEqual(200);
     });
-    it('should use the container body', async () => {
-      const container = extractFromRequest({
+    it('should allow deep projections', async () => {
+      nock('https://wiki.federation.com').get('/ships', {
+        captain: 'Jean-Luc Picard',
+        ships: {
+          favorite: 'NCC-1701',
+        },
+      }).reply(200);
+      const container = {
         body: {
-          ship: 'NCC-1701',
+          name: 'Jean-Luc Picard',
+          ships: ['NCC-1701'],
+        },
+      };
+      const { statusCode } = await request(container, 'get', 'https://wiki.federation.com/ships', {
+        body: {
+          captain: 'body.name',
+          ships: {
+            favorite: 'body.ships[0]',
+          },
         },
       });
-      nock('https://wiki.federation.com')
-        .delete('/ships', { ship: 'NCC-1701' })
-        .reply(200);
-      const result = await request(container).delete('https://wiki.federation.com/ships');
-      expect(result.statusCode).toBe(200);
+      expect(statusCode).toEqual(200);
     });
   });
 });

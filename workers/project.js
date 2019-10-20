@@ -5,10 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { get, set } = require('lodash');
+const { get, merge } = require('lodash');
+
+const project = (container, value) => {
+  if (typeof value === 'object') {
+    Object.keys(value).forEach((key) => {
+      value[key] = project(container, value[key]);
+    });
+    return value;
+  }
+  if (typeof value === 'string') {
+    return get(container, value);
+  }
+  throw new TypeError('Bad projection configuration');
+};
 
 module.exports = (projections) => (container) => {
-  projections.forEach((projection) => {
-    set(container.body, projection[1], get(container.body, projection[0]));
+  if (typeof projections !== 'object') {
+    throw new TypeError('Bad projection configuration');
+  }
+  const projectedValues = project(container, projections);
+  Object.keys(container.body).forEach((key) => {
+    delete container.body[key];
   });
+  merge(container.body, projectedValues);
 };

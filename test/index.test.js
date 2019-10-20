@@ -74,6 +74,7 @@ describe('index', () => {
     nodegate.configure({});
   });
   it('should be possible to add a default header for each request', async () => {
+    expect.assertions(1);
     nodegate.configure({
       request: {
         headers: {
