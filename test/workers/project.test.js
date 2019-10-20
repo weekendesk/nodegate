@@ -18,6 +18,9 @@ describe('workers/project', () => {
       expect(() => project(1)(container)).toThrow();
     });
   });
+  it('should throw an error if a project configuration is invalid', () => {
+    expect(() => project({ ship: 1701 })({})).toThrow();
+  });
   it('should project to simple values', () => {
     const container = {
       body: {

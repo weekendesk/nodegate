@@ -17,12 +17,12 @@ const project = (container, value) => {
   if (typeof value === 'string') {
     return get(container, value);
   }
-  throw new Error('Bad projection configuration.');
+  throw new TypeError('Bad projection configuration');
 };
 
 module.exports = (projections) => (container) => {
   if (typeof projections !== 'object') {
-    throw new Error('Bad projection configuration.');
+    throw new TypeError('Bad projection configuration');
   }
   const projectedValues = project(container, projections);
   Object.keys(container.body).forEach((key) => {
