@@ -5,6 +5,8 @@ title: Getting started
 
 # Getting started
 
+> Everything needed to bootstrap a first gateway with Nodegate is explained here.
+
 ## Installation
 
 Assuming you have already installed [Node.js](https://nodejs.org){:target="_blank"}, create a
