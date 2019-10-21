@@ -23,13 +23,13 @@
   @include e('logo') {
     line-height: $size-header;
     vertical-align: baseline;
-    margin: 0 grid(4);
+    margin: 0 grid(6);
   }
 
   @include e('logo-image') {
     display: inline-block;
-    margin-top: grid(2);
-    height: $size-header - grid(4);
+    margin-top: grid(3);
+    height: $size-header - grid(6);
   }
 
   @include e('nav') {
