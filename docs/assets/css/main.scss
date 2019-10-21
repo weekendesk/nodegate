@@ -204,3 +204,26 @@
     @include fontSmall();
   }
 }
+
+@include b('tip') {
+  @include borderRadius();
+  @include marginBottom();
+  background: rgba(255,229,100,0.3);
+  padding: grid(4) grid(4) grid(4) grid(3);
+  margin-left: grid(-4);
+  margin-right: grid(-4);
+  border-left: grid(1) solid #ffe564;
+
+  &:before {
+    content: 'Tip';
+    display: block;
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 600;
+    margin-bottom: grid(2);
+  }
+
+  > :last-child {
+    margin: 0;
+  }
+}
