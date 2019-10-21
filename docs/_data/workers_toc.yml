@@ -1,9 +1,9 @@
 toc:
   - title: Body
     content:
-      - title: aggregate
+      - title: Aggregate
         url: /workers/aggregate.html
-        description: Aggregate the result of a request onto the container's body.
+        description: Aggregate a request response into the container's body.
       - title: filter
         url: /workers/filter.html
         description: Filter entries from the container's body.
