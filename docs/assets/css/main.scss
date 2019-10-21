@@ -112,15 +112,11 @@
     @include m('50-percent') {
       flex: 0 0 50%;
     }
-    @include m('75-percent') {
-      flex: 0 0 75%;
-    }
   }
 }
 
 @include b('left-menu') {
   @include marginBottom();
-  flex: 0 0 $size-left-menu;
   margin: grid(4);
   padding: grid(4);
 
