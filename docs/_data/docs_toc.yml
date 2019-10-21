@@ -1,10 +1,8 @@
 toc:
-  - title: Introduction
+  - title: Main concepts
     content:
       - title: Getting started
         url: /docs/getting-started.html
-  - title: API
-    content:
       - title: Gateway
         url: /docs/gateway.html
       - title: nodegate()
