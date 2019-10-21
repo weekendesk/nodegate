@@ -30,7 +30,7 @@ them. Leave `index.js` as the entry point of your application.
 $ entry point: (index.js)
 ```
 
-Now install **Nodegate** and save it in the dependencies list.
+Now install Nodegate and save it in the dependencies list.
 
 ```bash
 $ npm install nodegate --save
@@ -43,7 +43,7 @@ commands available with npm.
 
 ## The main concept
 
-The concept of **Nodegate** is simple: you create a `gateway` with `routes` defined executing
+The concept of Nodegate is simple: you create a `gateway` with `routes` defined executing
 `workflows` composed of `workers`.
 Here is an exemple of a gateway responding, with only one request, user and gist data from the
 [GitHub API](https://developer.github.com/v3){:target="_blank"}:
@@ -67,7 +67,7 @@ gateway.listen(8080);
 
 ### How does it work?
 
-When a request is handled by **Nodegate**, a `container` is created, this container is automatically
+When a request is handled by Nodegate, a `container` is created, this container is automatically
 filled with different kind of data like the `body` of the request. At the end of the workflow, this
 container `body` will be sent as the response.
 

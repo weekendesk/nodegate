@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > API reference
 
-The API of **nodegate** is really simple to handle. The plugin is a function returning the gateway.
+The API of Nodegate is really simple to handle. The plugin is a function returning the gateway.
 The routes are simple objects. Pipelines are arrays, and workers are pure functions.
 
 Everything is detailed below:

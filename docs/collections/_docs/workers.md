@@ -5,7 +5,7 @@ title: Workers
 
 # Workers
 
-All workers can be accessed from the top level function of **nodegate** or by direclty importing
+All workers can be accessed from the top level function of Nodegate or by direclty importing
 the workers path:
 
 ```js

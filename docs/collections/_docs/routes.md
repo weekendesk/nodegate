@@ -29,7 +29,7 @@ This callback will receive a [WorkflowError](api-reference-pipelineerror.md) arg
 following contents:
 
  - The error message,
- - If applicable, the last response received by **nodegate**,
+ - If applicable, the last response received by Nodegate,
  - The container.
 
 In case of error, the `statusCode` will be set to 500.

@@ -29,7 +29,7 @@ const aggregate = nodegate.workers.aggregate;
 
 ### configure([options])
 
-Set the global configuration for **nodegate**, but also for Express and Request.
+Set the global configuration for Nodegate, but also for Express and Request.
 
 ```js
 const nodegate = require('nodegate');
