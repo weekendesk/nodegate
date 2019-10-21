@@ -83,3 +83,11 @@ h3 {
   font-size: 28px;
   line-height: 28px;
 }
+
+blockquote {
+  margin: 0;
+  font-size: 24px;
+  color: rgba($color-black, 0.6);
+  font-weight: 300;
+  font-style: italic;
+}
