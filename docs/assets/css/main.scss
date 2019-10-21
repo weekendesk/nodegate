@@ -104,7 +104,6 @@
   @include e('content') {
     @include content();
     flex-grow: 1;
-    padding: grid(4);
 
     @include m('25-percent') {
       flex: 0 0 25%;
