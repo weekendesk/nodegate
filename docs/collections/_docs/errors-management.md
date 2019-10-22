@@ -1,7 +1,49 @@
 ---
 layout: documentation
-title: Errors
+title: Error management
 ---
+
+## Error management
+
+Better error management can be achieved with a callback property named `onError`.
+This callback will receive a [WorkflowError](api-reference-pipelineerror.md) argument, with the
+following contents:
+
+ - The error message,
+ - If applicable, the last response received by Nodegate,
+ - The container.
+
+In case of error, the `statusCode` will be set to 500.
+
+_Examples_
+
+To answer a specific body with the error:
+
+```js
+gateway.route({
+  method: 'get',
+  path: '/gateway-route',
+  workflow: [...],
+  onError: (error) => {
+    error.container.body = {
+      reason: 'An unknow error occurred.',
+    };
+  };
+});
+```
+
+To define a specific error code:
+
+```js
+gateway.route({
+  method: 'get',
+  path: '/gateway-route',
+  workflow: [...],
+  onError: (error) => {
+    error.container.statusCode = 503;
+  };
+});
+```
 
 # Errors
 

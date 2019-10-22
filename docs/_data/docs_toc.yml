@@ -9,7 +9,5 @@ toc:
         url: /docs/the-gateway.html
       - title: Workers
         url: /docs/workers.html
-      - title: Routes
-        url: /docs/routes.html
-      - title: Errors
-        url: /docs/errors.html
+      - title: Errors management
+        url: /docs/errors-management.html
