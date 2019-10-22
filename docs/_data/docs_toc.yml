@@ -6,7 +6,7 @@ toc:
       - title: Initialization
         url: /docs/initialization.html
       - title: The gateway
-        url: /docs/gateway.html
+        url: /docs/the-gateway.html
       - title: Workers
         url: /docs/workers.html
       - title: Routes
