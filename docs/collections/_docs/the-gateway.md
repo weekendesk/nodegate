@@ -65,3 +65,17 @@ gateway.beforeEach([
 <div class="tip" markdown="1">
 A workflow is nothing more than an array of workers.
 </div>
+
+## listen(port)
+
+Start the Nodegate server.
+
+```js
+gateway.listen(8080);
+```
+
+### Arguments
+
+| Argument | Type        | Description                      |
+| :------- | :---------- | :------------------------------- |
+| port     | **integer** | Port the gateway will listen to. |
