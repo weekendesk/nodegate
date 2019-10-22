@@ -3,10 +3,10 @@ toc:
     content:
       - title: Getting started
         url: /docs/getting-started.html
-      - title: Gateway
+      - title: Initialization
+        url: /docs/initialization.html
+      - title: The gateway
         url: /docs/gateway.html
-      - title: nodegate()
-        url: /docs/nodegate.html
       - title: Workers
         url: /docs/workers.html
       - title: Routes
