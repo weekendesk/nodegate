@@ -8,19 +8,17 @@
 const deepmerge = require('deepmerge');
 
 const defaultConfiguration = {
-  express: {
-    useCors: true,
-    poweredBy: 'nodegate',
-  },
-  request: {
-    json: true,
-    resolveWithFullResponse: true,
-  },
+  useCors: true,
+  poweredBy: 'nodegate',
   workers: {
     waitFor: {
       delay: 300,
       tentatives: 10,
     },
+  },
+  request: {
+    json: true,
+    resolveWithFullResponse: true,
   },
 };
 
