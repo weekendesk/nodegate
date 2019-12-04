@@ -3,35 +3,32 @@ layout: documentation
 title: Workflow error
 ---
 
-# Workflow error
+# WorkflowError
+
+> The WorkflowError is a class representing an error during a workflow.
 
 The class `WorkflowError` allows workers to return a contextualized error to the workflow executor.
 This error extends the default Node.js `Error` object.
 
-## Properties
+## Reference
 
 ### container
 
-Container state before the error.
+The `container` attribute contains the container values before the error.
 
 ### response
 
-If applicable: the response for the last executed request.
-
-## Methods
+The `response` attribute contains, if applicable, the response for the last executed request by
+Nodegate.
 
 ### constructor(message, [response])
 
-Constructor of the `WorkflowError`.
+Constructor of the `WorkflowError`. The arguments are:
 
-_Arguments_
+ - `message`: **required** string explaining the error,
+ - `response`: object containing the last request's response made by Nodegate.
 
-| Argument | Type       | Description                      |
-| :------- | :--------- | :------------------------------- |
-| message  | **string** | **Required.** Error explanation. |
-| response | **object** | Last request response.           |
-
-_Example_
+Example:
 
 ```js
 new WorkflowError('Invalid request', {
@@ -44,15 +41,8 @@ new WorkflowError('Invalid request', {
 
 ### setContainer(container)
 
-Set the last state of the container to the error.
-
-_Arguments_
-
-| Argument  | Type       | Description                     |
-| :-------- | :--------- | :------------------------------ |
-| container | **object** | **Required.** Container to set. |
-
-_Example_
+This method set the last state of the container to the error, the only argument is the container to
+set. Example:
 
 ```js
 const error = new WorkflowError('Invalid request');
