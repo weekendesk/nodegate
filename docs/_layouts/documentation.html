@@ -15,11 +15,19 @@ layout: empty
           {% endfor %}
         </ul>
       {% endfor %}
-      <h3 class="left-menu__title">Workers</h2>
+      <h3 class="left-menu__title">Workers</h3>
       <ul class="left-menu__entry-block">
         {% for worker in site.data.workers_toc.toc %}
           <li class="left-menu__entry">
             <a class="left-menu__link {% if worker.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ worker.url }}">{{ worker.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <h3 class="left-menu__title">API</h3>
+      <ul class="left-menu__entry-block">
+        {% for api in site.data.api_toc.toc %}
+          <li class="left-menu__entry">
+            <a class="left-menu__link {% if api.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ api.url }}">{{ api.title }}</a>
           </li>
         {% endfor %}
       </ul>
