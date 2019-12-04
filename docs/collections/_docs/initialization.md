@@ -21,7 +21,7 @@ const gateway = nodegate();
 
 ## workers
 
-This property is an object containing all the built-in workers shipped with nodegate:
+This property is an object containing all the built-in workers shipped with Nodegate:
 
 ```js
 const nodegate = require('nodegate');
