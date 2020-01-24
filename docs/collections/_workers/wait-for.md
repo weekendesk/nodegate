@@ -3,12 +3,22 @@ layout: documentation
 title: Workers - WaitFor
 ---
 
-# waitFor(method, url, test)
+# WaitFor
+
+> Wait for a specific request response to continue the workflow.
+
+## waitFor(method, url, test)
 
 Execute a request until the `test` argument function returns `true`.
-The test function will receive two arguments: a simplified response, and the container of the route.
+The test function will receive two arguments:
+ - a simplified response of the request, 
+ - the container.
 
-_Arguments_
+<div class="tip" markdown="1">
+This worker if generaly used when you are waiting for the existance of an entity after a 202 status code.
+</div>
+
+### Arguments
 
 | Argument   | Type         | Description                                             |
 | :--------- | :----------- | :------------------------------------------------------ |
@@ -16,7 +26,9 @@ _Arguments_
 | url        | **string**   | URL to call.                                            |
 | test       | **function** | Function to execute on each request to test the result. |
 
-_Examples_
+### Examples
+
+This workflow will wait for a 200 status code response:
 
 ```js
 const workflow = [
@@ -24,9 +36,12 @@ const workflow = [
     'get',
     'https://api.github.com/users/shudrum',
     response => response.statusCode === 200,
-  );
+  ),
+  // ...
 ];
 ```
+
+This workflow will wait for a response containing the same user firstname as the container's body:
 
 ```js
 const workflow = [
@@ -38,7 +53,7 @@ const workflow = [
 ];
 ```
 
-_Default configuration_
+_The default configuration is:_
 
 ```json
 {
