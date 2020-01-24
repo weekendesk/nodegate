@@ -2,30 +2,30 @@ toc:
   - title: Aggregate
     url: /workers/aggregate.html
     description: Aggregate a request response into the container's body.
-  - title: filter
+  - title: Filter
     url: /workers/filter.html
     description: Filter entries from the container's body.
-  - title: remove
+  - title: Remove
     url: /workers/remove.html
     description: Remove entries from the container's body.
-  - title: mergeBody
+  - title: MergeBody
     url: /workers/merge-body.html
     description: Manually add entries onto the containter's body.
-  - title: project
+  - title: Project
     url: /workers/project.html
     description: …
-  - title: forwardedHost
+  - title: ForwardedHost
     url: /workers/forwarded-host.html
     description: Add the forwarded host on the containers's header.
-  - title: mergeHeaders
+  - title: MergeHeaders
     url: /workers/merge-headers.html
     description: Manually add entries onto the containier's header.
-  - title: routeMatch
+  - title: RouteMatch
     url: /workers/route-match.html
     description: Execute a workflow if the route matches the defined regex.
-  - title: statusCode
+  - title: StatusCode
     url: /workers/status-code.html
     description: Stop the workflow and respond with the defined status code.
-  - title: waitFor
+  - title: WaitFor
     url: /workers/wait-for.html
     description: Wait for a request to respond with a defined status code.
