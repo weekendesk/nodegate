@@ -3,21 +3,31 @@ layout: documentation
 title: Workers - StatusCode
 ---
 
-# statusCode(code)
+# StatusCode
 
-Set the status code of the response of the route.
-Note that another worker called after this one can modify the status code.
+> Change the response status code.
 
-_Arguments_
+## statusCode(code)
+
+Set the status code of the response of the route. Note that another worker called after this one can
+also modify the status code.
+
+### Arguments
 
 | Argument | Type        | Description                  |
 | :------- | :---------- | :--------------------------- |
 | code     | **integer** | Status code of the response. |
 
-_Example_
+### Example
+
+If you call this route, the reponse will be `418 I'm a teapot`.
 
 ```js
-const workflow = [
-  statusCode(201),
-];
+gateway.route({
+  method: 'get',
+  path: '/hello',
+  workflow: [
+    statusCode(418),
+  ],
+});
 ```
