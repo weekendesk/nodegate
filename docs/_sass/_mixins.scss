@@ -1,7 +1,8 @@
-@mixin container() {
+@mixin content() {
   width: 90%;
   max-width: 1260px;
   margin: 0 auto;
+  padding: grid(8) grid(4);
 }
 
 @mixin surface($color) {
@@ -64,7 +65,7 @@
   border: 1px solid rgba($color-black, 0.15);
   box-shadow: rgba($color-black, 0.5) 0 0 0;
   padding: grid(2);
-  transition: box-shadow ease-in-out 0.2s;
+  transition: box-shadow ease-in-out 0.35s;
 
   &:hover {
     border: 1px solid rgba($color-black, 0.15);

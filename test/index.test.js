@@ -54,9 +54,7 @@ describe('index', () => {
   });
   it('should be possible to deactivate the CORS', async () => {
     nodegate.configure({
-      express: {
-        useCors: false,
-      },
+      useCors: false,
     });
     const gate = nodegate();
     gate.route({
@@ -76,10 +74,8 @@ describe('index', () => {
   it('should be possible to add a default header for each request', async () => {
     expect.assertions(1);
     nodegate.configure({
-      request: {
-        headers: {
-          'x-ship-origin': 'enterprise',
-        },
+      headers: {
+        'x-ship-origin': 'enterprise',
       },
     });
     const gate = nodegate();

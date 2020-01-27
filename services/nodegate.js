@@ -11,15 +11,15 @@ const express = require('express');
 const { execute } = require('../entities/route');
 const { getConfiguration } = require('../services/configuration');
 
-const buildExpressApp = (options) => {
+const buildExpressApp = () => {
   const app = express();
-  const configuration = getConfiguration().express;
+  const configuration = getConfiguration();
 
   if (configuration.useCors) {
     app.use(cors());
   }
   app.use(bodyParser.json({
-    limit: options.payloadSizeLimit || '1mb',
+    limit: configuration.payloadSizeLimit || '1mb',
   }));
 
   app.use((_, res, next) => {
@@ -37,8 +37,8 @@ const toArray = (value) => {
   return value;
 };
 
-const nodegate = (options = {}) => {
-  const expressApp = buildExpressApp(options);
+const nodegate = () => {
+  const expressApp = buildExpressApp();
   const beforeEach = [];
   const app = (req, res, next) => {
     expressApp.handle(req, res, next);

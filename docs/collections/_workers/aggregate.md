@@ -5,23 +5,83 @@ title: Workers - Aggregate
 
 # Aggregate
 
-## aggregate(method, url, [path])
+> Aggregate a request response into the container's body.
 
-Execute a request with the contents of the container and aggregate the result to it.
-If `path` is set, the result will be aggregated into the defined property path name on the container.
+## aggregate(method, url, [options])
 
-_Arguments_
+Execute a request with, by default, the `container`'s `headers` and `body` the contents of the
+container and aggregate the response to the `container`'s body. Existing keys of the `container`'s
+body will be overwrited by the reponse ones.
+
+### Arguments
 
 | Argument | Type       | Description                                 |
 | :------- | :--------- | :------------------------------------------ |
 | method   | **string** | **Required.** Method of the request.        |
 | url      | **string** | **Required.** URL to call.                  |
-| path     | **string** | Path of the property to set the result.     |
+| options  | **object** | Options for the request.                    |
 
-_Example_
+The third argument `options` is an object accepting these keys:
+
+ - `path`: [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} like
+ destination for the response of the request. Like the `container`'s body, existing keys will be
+ overwritted.
+ - `body`: object describing the body to send with the request, the values of each key must be an
+ [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} from the `container`.
+ - `headers`: same usage as the body, but for the headers.
+
+## Examples
+
+Let's assume a fictionnal API `https://myapi.com/:username` responding with some data for a user:
+
+```json
+{
+  "username": "shudrum",
+  "birthdate": "1982-12-28"
+}
+```
+
+You can create a simple bridge like this, the response of the gateway will be exactly the same as
+the API:
 
 ```js
-const workflow = [
-  aggregate('get', 'https://api.github.com/users/shudrum'),
-];
+gateway.route({
+  method: 'get',
+  path: '/:username',
+  workflow: [
+    aggregate('get', 'https://myapi.com/{params.user}'),
+  ],
+});
+```
+
+Using two workers and the `path` option you can request two user on the sametime:
+
+```js
+gateway.route({
+  method: 'get',
+  path: '/:user1/:user2',
+  workflow: [
+    aggregate('get', 'https://myapi.com/{params.user1}', {
+      target: 'user1',
+    }),
+    aggregate('get', 'https://myapi.com/{params.user2}', {
+      target: 'user2',
+    }),
+  ],
+});
+```
+
+The reponse of a request matching this route will be like this one:
+
+```json
+{
+  "user1": {
+    "username": "shudrum",
+    "birthdate": "1982-12-28"
+  },
+  "user2": {
+    "username": "anotherprofile",
+    "birthdate": "1992-06-30"
+  },
+}
 ```

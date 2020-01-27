@@ -62,8 +62,9 @@ const mergeConfiguration = (requestOptions, configuration) => {
 const request = (container, method, url, options = {}) => {
   validateArguments(container, method, url, options);
 
-  const { request: configuration } = getConfiguration();
+  const { request: requestConfiguration, ...configuration } = getConfiguration();
   const requestOptions = {
+    ...requestConfiguration,
     ...configuration,
     ...options,
     method,

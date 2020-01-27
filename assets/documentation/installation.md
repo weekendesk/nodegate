@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > Installation
 
-To install **nodegate**, go to your project on your terminal and type:
+To install Nodegate, go to your project on your terminal and type:
 
 ```bash
 $ npm install nodegate --save

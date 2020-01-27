@@ -2,30 +2,38 @@
 layout: empty
 ---
 
-<div class="container container--flex">
-  <div class="left-menu">
-    {% for item in site.data.docs_toc.toc %}
-      <h3 class="left-menu__title">{{ item.title }}</h3>
+<div class="container">
+  <div class="container__columns">
+    <div class="container__content container__content--25-percent">
+      {% for item in site.data.docs_toc.toc %}
+        <h3 class="left-menu__title">{{ item.title }}</h3>
+        <ul class="left-menu__entry-block">
+          {% for entry in item.content %}
+            <li class="left-menu__entry">
+              <a class="left-menu__link {% if entry.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+      <h3 class="left-menu__title">Workers</h3>
       <ul class="left-menu__entry-block">
-        {% for entry in item.content %}
-          <li class="left-menu__entry">
-            <a class="left-menu__link {% if entry.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endfor %}
-    <h3 class="left-menu__title">Workers</h2>
-    <ul class="left-menu__entry-block">
-      {% for category in site.data.workers_toc.toc %}
-        {% for worker in category.content %}
+        {% for worker in site.data.workers_toc.toc %}
           <li class="left-menu__entry">
             <a class="left-menu__link {% if worker.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ worker.url }}">{{ worker.title }}</a>
           </li>
         {% endfor %}
-      {% endfor %}
-    </ul>
+      </ul>
+      <h3 class="left-menu__title">API</h3>
+      <ul class="left-menu__entry-block">
+        {% for api in site.data.api_toc.toc %}
+          <li class="left-menu__entry">
+            <a class="left-menu__link {% if api.url == page.url %}left-menu__link--current{% endif %}" href="{{ site.baseurl }}{{ api.url }}">{{ api.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <article class="container__content">
+      {{ content }}
+    </article>
   </div>
-  <article class="container__content">
-    {{ content }}
-  </article>
 </div>

@@ -1,16 +1,30 @@
 ---
 layout: documentation
-title: Workers - Forwarded Host
+title: Workers - ForwardedHost
 ---
 
-# forwardedHost()
+# ForwardedHost
 
-Add the property `X-Forwarded-Host` to the container headers, with the value of the original request header `host`.
+> Automatically add the forwarder host header.
 
-_Example_
+## forwardedHost()
+
+Add the property `X-Forwarded-Host` to the container's headers, with the value of the original request header `host`.
+
+### Example
+
+This simple workflow:
 
 ```js
 const workflow = [
   forwardedHost(),
 ];
+```
+
+Will automacitally update the container's headers, resulting like:
+
+```json
+{
+  "X-Forwarded-Host": "http://127.0.0.1",
+}
 ```

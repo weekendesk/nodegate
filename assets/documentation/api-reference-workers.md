@@ -4,7 +4,7 @@
 
 # [Documentation](README.md) > [API reference](api-reference.md) > Workers
 
-All workers can be accessed from the top level function of **nodegate** or by direclty importing the
+All workers can be accessed from the top level function of Nodegate or by direclty importing the
 workers path:
 
 ```js

@@ -28,7 +28,7 @@ This callback will receive a [WorkflowError](api-reference-pipelineerror.md) arg
 following contents:
 
  - The error message,
- - If applicable, the last response received by **nodegate**,
+ - If applicable, the last response received by Nodegate,
  - The container.
 
 **This callback must return a container object** used by the route executor to send the response to

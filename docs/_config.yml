@@ -13,6 +13,8 @@ collections_dir: collections
 collections:
   docs:
     output: true
+  api:
+    output: true
   tutorials:
     output: true
   workers:

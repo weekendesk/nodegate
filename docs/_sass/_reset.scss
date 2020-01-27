@@ -1,4 +1,4 @@
-body, p, ul, li, h1, h2, h3, h4, h5, h6, pre {
+body, p, ul, li, h1, h2, h3, h4, h5, h6, pre, div {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,7 +14,7 @@ a {
   color: $color-brand;
   text-decoration: none;
   border-bottom: 1px solid rgba($color-brand, 0.5);
-  padding: 2px;
+  padding: 2px 4px;
   border-radius: 2px;
   background: rgba($color-brand, 0.05);
 
@@ -27,7 +27,7 @@ a {
 
 code {
   background: rgba($color-black, 0.08);
-  padding: 2px;
+  padding: 2px 4px;
   border-radius: 2px;
 }
 
@@ -52,11 +52,42 @@ table {
     font-size: 14px;
   }
   td {
-    background: rgba($color-black, 0.08);
+    background: rgba($color-black, 0.05);
   }
 }
 
 ul {
   padding-left: 28px;
   @include marginBottom();
+}
+
+h1, h2, h3, h4, h5 {
+  @include marginBottom();
+  margin-top: grid(8);
+  font-weight: 500;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: grid(8);
+  font-size: 48px;
+  line-height: 48px;
+}
+
+h2 {
+  font-size: 36px;
+  line-height: 36px;
+}
+
+h3 {
+  font-size: 28px;
+  line-height: 28px;
+}
+
+blockquote {
+  margin: 0;
+  font-size: 24px;
+  color: rgba($color-black, 0.6);
+  font-weight: 300;
+  font-style: italic;
 }

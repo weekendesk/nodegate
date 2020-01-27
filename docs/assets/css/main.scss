@@ -8,15 +8,13 @@
 @import 'reset';
 
 @include b('header') {
-  background: $color-brand;
-
-  @include e('container') {
-    @include container();
-  }
-
   @include e('content') {
-    margin: 0 grid(4);
-    padding: 0 grid(4);
+    @include content();
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+    padding: 0;
     display: flex;
     height: $size-header;
     position: relative;
@@ -25,13 +23,13 @@
   @include e('logo') {
     line-height: $size-header;
     vertical-align: baseline;
-    margin-right: grid(8);
+    margin: 0 grid(6);
   }
 
   @include e('logo-image') {
     display: inline-block;
-    margin-top: grid(2);
-    height: $size-header - grid(4);
+    margin-top: grid(3);
+    height: $size-header - grid(6);
   }
 
   @include e('nav') {
@@ -56,65 +54,68 @@
       position: absolute;
       right: 0;
       height: 100%;
-      padding: {
-        top: 0;
-        bottom: 0;
-      }
+      margin: 0 grid(4);
       border: none;
     }
   }
 }
 
-@include b('home-jumbo') {
-  background: rgba($color-black, 0.05);
-
-  &__container {
-    @include container();
-    text-align: center;
-    padding: grid(16) grid(4);
-  }
-
-  &__logo {
-    display: inline-block;
-    width: 90%;
-    max-width: 400px;
-  }
-
-  &__headline {
-    font-weight: 100;
-    font-size: 24px;
-  }
-}
 @include b('home') {
-  @include e('container') {
-    @include container();
-  }
-
   @include e('schema') {
     display: block;
     width: 750px;
     max-width: 90%;
     margin: grid(16) auto;
   }
+  @include e('jumbo') {
+    text-align: center;
+    padding: grid(16) grid(4);
+  }
+  @include e('logo') {
+    display: inline-block;
+    width: 90%;
+    max-width: 400px;
+  }
+  @include e('headline') {
+    font-weight: 100;
+    font-size: 24px;
+  }
 }
 
 @include b('container') {
-  @include container();
+  @include m('brand') {
+    @include surface($color-brand);
+  }
 
-  @include m('flex') {
+  @include m('gray') {
+    background: rgba($color-black, 0.05);
+  }
+
+  @include m('black') {
+    @include surface($color-black);
+  }
+
+  @include e('columns') {
+    @include content();
     display: flex;
+    padding: 0;
   }
 
   @include e('content') {
+    @include content();
     flex-grow: 1;
-    padding: grid(4);
-    margin: grid(4);
+
+    @include m('25-percent') {
+      flex: 0 0 25%;
+    }
+    @include m('50-percent') {
+      flex: 0 0 50%;
+    }
   }
 }
 
 @include b('left-menu') {
   @include marginBottom();
-  flex: 0 0 $size-left-menu;
   margin: grid(4);
   padding: grid(4);
 
@@ -133,6 +134,7 @@
     text-transform: uppercase;
     margin-top: grid(4);
     margin-bottom: grid(2);
+    font-weight: 600;
 
     &:first-child {
       margin-top: 0;
@@ -161,14 +163,15 @@
 
 @include b('footer') {
   @include surface($color-black);
-
-  @include e('container') {
-    @include container();
-  }
-
   @include e('content') {
     padding: grid(4);
     margin: 0 grid(4);
+  }
+}
+
+.highlight {
+  > code {
+    padding: 0;
   }
 }
 
@@ -206,5 +209,28 @@
   }
   @include e('description') {
     @include fontSmall();
+  }
+}
+
+@include b('tip') {
+  @include borderRadius();
+  @include marginBottom();
+  background: rgba(255,229,100,0.3);
+  padding: grid(4) grid(4) grid(4) grid(3);
+  margin-left: grid(-4);
+  margin-right: grid(-4);
+  border-left: grid(1) solid #ffe564;
+
+  &:before {
+    content: 'Tip';
+    display: block;
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 600;
+    margin-bottom: grid(2);
+  }
+
+  > :last-child {
+    margin: 0;
   }
 }

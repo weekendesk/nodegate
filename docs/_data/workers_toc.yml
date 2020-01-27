@@ -1,41 +1,31 @@
 toc:
-  - title: Body
-    content:
-      - title: aggregate
-        url: /workers/aggregate.html
-        description: Aggregate the result of a request onto the container's body.
-      - title: filter
-        url: /workers/filter.html
-        description: Filter entries from the container's body.
-      - title: remove
-        url: /workers/remove.html
-        description: Remove entries from the container's body.
-      - title: mergeBody
-        url: /workers/merge-body.html
-        description: Manually add entries onto the containter's body.
-      - title: project
-        url: /workers/project.html
-        description: …
-  - title: Header
-    content:
-      - title: forwardedHost
-        url: /workers/forwarded-host.html
-        description: Add the forwarded host on the containers's header.
-      - title: mergeHeaders
-        url: /workers/merge-headers.html
-        description: Manually add entries onto the containier's header.
-  - title: Conditions
-    content:
-      - title: routeMatch
-        url: /workers/route-match.html
-        description: Execute a workflow if the route matches the defined regex.
-  - title: Response
-    content:
-      - title: statusCode
-        url: /workers/status-code.html
-        description: Stop the workflow and respond with the defined status code.
-  - title: Workflow
-    content:
-      - title: waitFor
-        url: /workers/wait-for.html
-        description: Wait for a request to respond with a defined status code.
+  - title: Aggregate
+    url: /workers/aggregate.html
+    description: Aggregate a request response into the container's body.
+  - title: Filter
+    url: /workers/filter.html
+    description: Filter entries from the container's body.
+  - title: Remove
+    url: /workers/remove.html
+    description: Remove entries from the container's body.
+  - title: MergeBody
+    url: /workers/merge-body.html
+    description: Manually add entries onto the containter's body.
+  - title: Project
+    url: /workers/project.html
+    description: …
+  - title: ForwardedHost
+    url: /workers/forwarded-host.html
+    description: Add the forwarded host on the containers's header.
+  - title: MergeHeaders
+    url: /workers/merge-headers.html
+    description: Manually add entries onto the containier's header.
+  - title: RouteMatch
+    url: /workers/route-match.html
+    description: Execute a workflow if the route matches the defined regex.
+  - title: StatusCode
+    url: /workers/status-code.html
+    description: Stop the workflow and respond with the defined status code.
+  - title: WaitFor
+    url: /workers/wait-for.html
+    description: Wait for a request to respond with a defined status code.

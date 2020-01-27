@@ -42,10 +42,8 @@ describe('services/request', () => {
   });
   it('should merge the headers from configuration with the container headers', async () => {
     configure({
-      request: {
-        headers: {
-          'X-Powered-by': 'Cardassians',
-        },
+      headers: {
+        'X-Powered-by': 'Cardassians',
       },
     });
     nock('https://wiki.federation.com', {
@@ -61,10 +59,8 @@ describe('services/request', () => {
   });
   it('should take the headers from configuration by default if container headers are null or undefined', async () => {
     configure({
-      request: {
-        headers: {
-          'X-Powered-by': 'Cardassians',
-        },
+      headers: {
+        'X-Powered-by': 'Cardassians',
       },
     });
     nock('https://wiki.federation.com', {

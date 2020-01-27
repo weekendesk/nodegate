@@ -1,17 +1,15 @@
 toc:
-  - title: Introduction
+  - title: Main concepts
     content:
       - title: Getting started
         url: /docs/getting-started.html
-  - title: API
-    content:
-      - title: Gateway
-        url: /docs/gateway.html
-      - title: nodegate()
-        url: /docs/nodegate.html
+      - title: Initialization
+        url: /docs/initialization.html
+      - title: The gateway
+        url: /docs/the-gateway.html
       - title: Workers
         url: /docs/workers.html
-      - title: Routes
-        url: /docs/routes.html
-      - title: Errors
-        url: /docs/errors.html
+      - title: The container
+        url: /docs/the-container.html
+      - title: Errors management
+        url: /docs/errors-management.html
