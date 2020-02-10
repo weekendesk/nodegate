@@ -49,7 +49,7 @@ gateway.route({
   method: 'get',
   path: '/:username',
   workflow: [
-    aggregate('get', 'https://myapi.com/{params.user}'),
+    aggregate('get', 'https://myapi.com/{params.username}'),
   ],
 });
 ```
