@@ -1,4 +1,4 @@
-![nodegate](assets/images/logo-readme.png)
+![nodegate](docs/assets/images/readme-logo.png)
 
 The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
 [Express](url-express) & [Request](url-request).
@@ -27,7 +27,7 @@ gate.listen(8080);
 
 ## Usage
 
-![Nodegate usage](assets/images/schema-readme.png)
+![Nodegate usage](docs/assets/images/readme-schema.png)
 
 This plugin will help you to solve the well known problem of [API management][url-wiki-api-management].
 Some people are doing this by themselves, others by using complex tools or services. But even with
@@ -41,7 +41,7 @@ A bunch of workers are bundled with this plugin, but everyone can create more ea
 
 ## Documentation
 
-[The complete documentation can be found here](assets/documentation/README.md)
+[The complete documentation can be found here](https://weekendesk.github.io/nodegate)
 
 ## License
 

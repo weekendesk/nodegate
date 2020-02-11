@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "nodegate": "file:../../../"
-  }
-}
