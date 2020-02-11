@@ -17,6 +17,9 @@ toc:
   - title: ForwardedHost
     url: /workers/forwarded-host.html
     description: Add the forwarded host on the containers's header.
+  - title: KeepHeaders
+    url: /workers/keep-headers.html
+    description: Add headers of the request to the container's headers.
   - title: MergeHeaders
     url: /workers/merge-headers.html
     description: Manually add entries onto the containier's header.
