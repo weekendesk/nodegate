@@ -8,6 +8,7 @@
 const aggregate = require('./aggregate');
 const filter = require('./filter');
 const forwardedHost = require('./forwardedHost');
+const keepHeaders = require('./keepHeaders');
 const mergeBody = require('./mergeBody');
 const project = require('./project');
 const mergeHeaders = require('./mergeHeaders');
@@ -20,6 +21,7 @@ module.exports = {
   aggregate,
   filter,
   forwardedHost,
+  keepHeaders,
   mergeBody,
   project,
   mergeHeaders,
