@@ -41,7 +41,7 @@ A bunch of workers are bundled with this plugin, but everyone can create more ea
 
 ## Documentation
 
-[The complete documentation can be found here](assets/documentation/README.md)
+[The complete documentation can be found here](https://weekendesk.github.io/nodegate)
 
 ## License
 
