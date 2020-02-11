@@ -1,4 +1,4 @@
-![nodegate](assets/images/logo-readme.png)
+![nodegate](assets/images/readme-logo.png)
 
 The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
 [Express](url-express) & [Request](url-request).
