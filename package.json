@@ -5,7 +5,7 @@
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "jest",
     "lint": "eslint .",
     "doc:start": "cd docs && bundle exec jekyll serve",
     "doc:install": "cd docs && bundle install"
