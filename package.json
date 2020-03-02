@@ -16,7 +16,7 @@
     "deepmerge": "^4.1.1",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
@@ -24,7 +24,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "jest": "^25.1.0",
-    "nock": "^11.8.2",
+    "nock": "^12.0.2",
     "supertest": "^4.0.2"
   },
   "repository": "weekendesk/nodegate",
