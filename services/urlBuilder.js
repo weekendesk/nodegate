@@ -40,7 +40,7 @@ const getValue = (container, path) => {
   if (value === undefined) {
     throw new Error(`Missing value for {${path}}`);
   }
-  return value;
+  return encodeURIComponent(value);
 };
 
 const mergeUrl = (container, parsedUrl) => {
