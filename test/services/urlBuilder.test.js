@@ -56,4 +56,13 @@ describe('services/urlBuilder', () => {
     };
     expect(url(container)).toBe('http://wiki.federation.com/NCC-1700');
   });
+  it('should encode values', () => {
+    const url = urlBuilder('http://wiki.federation.com/{body.shipPassword}');
+    const container = {
+      body: {
+        shipPassword: '//borgs & romulians are week$',
+      },
+    };
+    expect(url(container)).toEqual('http://wiki.federation.com/%2F%2Fborgs%20%26%20romulians%20are%20week%24');
+  });
 });
