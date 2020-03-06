@@ -169,5 +169,17 @@ describe('workers/aggregate', () => {
         expect(err.container.statusCode).toEqual(404);
       }
     });
+    it('should not throw if the statusCode is not on the "failStatusCodes" option', async () => {
+      const container = getEmpty();
+      nock('https://wiki.federation.com')
+        .post('/armaments')
+        .reply(404, { content: 'This article does not exists' });
+      await aggregate(
+        'post',
+        'https://wiki.federation.com/armaments',
+        { failStatusCodes: [500] },
+      )(container);
+      expect(container.body.content).toEqual('This article does not exists');
+    });
   });
 });

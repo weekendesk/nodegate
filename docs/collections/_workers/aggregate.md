@@ -23,6 +23,8 @@ body will be overwrited by the reponse ones.
 
 The third argument `options` is an object accepting these keys:
 
+ - `failStatusCodes`: Array of generic status codes which will break the workflow, starting the
+ worklows `onError` option. The default value is `[400, 500]`.
  - `path`: [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} like
  destination for the response of the request. Like the `container`'s body, existing keys will be
  overwritted.
