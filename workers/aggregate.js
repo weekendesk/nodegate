@@ -27,6 +27,7 @@ const setBodyToContainer = (body, container, options) => {
 
 module.exports = (method, url, options = {}) => {
   const buildedUrl = urlBuilder(url);
+  const failStatusCodes = options.failStatusCodes || [400, 500];
   return async (container) => {
     try {
       const { body, statusCode } = await request(
@@ -38,12 +39,22 @@ module.exports = (method, url, options = {}) => {
       container.statusCode = statusCode;
       setBodyToContainer(body, container, options);
     } catch (err) {
+      const body = err.response && err.response.body;
+      const statusCode = err.response ? err.response.statusCode : 500;
+
+      if (body && !failStatusCodes.includes(parseInt(`${`${statusCode}[0]`}00`, 10))) {
+        setBodyToContainer(body, container, options);
+        container.statusCode = statusCode;
+        return;
+      }
+
       const error = new WorkflowError(err, err.response);
       error.setContainer(container);
-      if (err.response && err.response.body) {
-        container.errorBody = err.response.body;
+      if (body) {
+        container.errorBody = body;
       }
-      container.statusCode = err.response ? err.response.statusCode : 500;
+      container.statusCode = statusCode;
+
       throw error;
     }
   };
