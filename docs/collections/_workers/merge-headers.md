@@ -7,7 +7,7 @@ title: Workers - MergeHeaders
 
 > Merge data into the container's headers.
 
-## mergeBody(headers)
+## mergeHeaders(headers)
 
 Merge an object into the container's headers.
 
@@ -31,7 +31,7 @@ You can add values with the `mergeHeaders` worker like that:
 
 ```js
 const workflow = [
-  mergeBody({ 'gateway-id': '007' }),
+  mergeHeaders({ 'gateway-id': '007' }),
 ];
 ```
 
