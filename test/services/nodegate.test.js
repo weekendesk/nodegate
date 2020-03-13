@@ -1,3 +1,4 @@
+const nock = require('nock');
 const request = require('supertest');
 const WorkflowError = require('../../entities/WorkflowError');
 const nodegate = require('../../services/nodegate');
@@ -81,6 +82,61 @@ describe('services/nodegate', () => {
         .then(({ body }) => {
           expect(body.count).toEqual(11);
         });
+    });
+  });
+  describe('#passthrough', () => {
+    it('should call the target URL with the right verb', async () => {
+      nock('http://service.com').get('/').reply(200);
+      const gate = nodegate();
+      gate.passthrough({
+        method: 'get',
+        path: '/service',
+        target: 'http://service.com',
+      });
+      await request(gate).get('/service').expect(200);
+    });
+    it('should call the target URL with the headers', async () => {
+      nock('http://service.com', {
+        reqheaders: {
+          authorization: 'shu:drum',
+        },
+      }).get('/').reply(200);
+      const gate = nodegate();
+      gate.passthrough({
+        method: 'get',
+        path: '/service',
+        target: 'http://service.com',
+      });
+      await request(gate)
+        .get('/service')
+        .set('authorization', 'shu:drum')
+        .expect(200);
+    });
+    it('should call the target URL with the body', async () => {
+      nock('http://service.com').get('/', { username: 'shudrum' }).reply(200);
+      const gate = nodegate();
+      gate.passthrough({
+        method: 'get',
+        path: '/service',
+        target: 'http://service.com',
+      });
+      await request(gate)
+        .get('/service')
+        .send({ username: 'shudrum' })
+        .expect(200);
+    });
+    it('should return the raw body', async () => {
+      nock('http://service.com').get('/').reply(200, 'Multiline\nContent');
+      const gate = nodegate();
+      gate.passthrough({
+        method: 'get',
+        path: '/service',
+        target: 'http://service.com',
+      });
+      const { text } = await request(gate)
+        .get('/service')
+        .expect(200);
+      expect(text).toEqual('Multiline\nContent');
     });
   });
   describe('HTTP status codes', () => {
