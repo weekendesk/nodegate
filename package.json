@@ -1,7 +1,7 @@
 {
   "name": "nodegate",
   "description": "API gateway made simple, fast and easy to configure.",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
   "scripts": {
