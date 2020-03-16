@@ -139,6 +139,59 @@ describe('services/nodegate', () => {
       expect(text).toEqual('Multiline\nContent');
     });
   });
+  describe('#use', () => {
+    it('should work with express middlewares', async () => {
+      expect.assertions(1);
+      const gate = nodegate();
+      gate.use((req, _, next) => {
+        req.testValue = 'Hello';
+        next();
+      });
+      gate.route({
+        method: 'get',
+        path: '/route1',
+        workflow: [(_, req) => {
+          expect(req.testValue).toEqual('Hello');
+        }],
+      });
+      await request(gate).get('/route1').expect(200);
+    });
+    it('should work with multiple middlewares on the right order', async () => {
+      expect.assertions(1);
+      const gate = nodegate();
+      gate.use([(req, _, next) => {
+        req.testValue = 'Hello';
+        next();
+      }, (req, _, next) => {
+        req.testValue += ' world';
+        next();
+      }]);
+      gate.route({
+        method: 'get',
+        path: '/route1',
+        workflow: [(_, req) => {
+          expect(req.testValue).toEqual('Hello world');
+        }],
+      });
+      await request(gate).get('/route1').expect(200);
+    });
+    it('should ignore routes added before the middleware', async () => {
+      expect.assertions(1);
+      const gate = nodegate();
+      gate.route({
+        method: 'get',
+        path: '/route1',
+        workflow: [(_, req) => {
+          expect(req.testValue).toBeUndefined();
+        }],
+      });
+      gate.use((req, _, next) => {
+        req.testValue = 'Hello';
+        next();
+      });
+      await request(gate).get('/route1').expect(200);
+    });
+  });
   describe('HTTP status codes', () => {
     it('should respond a 500 error in case of error', async () => {
       const gate = nodegate();

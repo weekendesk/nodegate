@@ -10,7 +10,7 @@ const cors = require('cors');
 const express = require('express');
 const request = require('request');
 const { execute } = require('../entities/route');
-const { getConfiguration } = require('../services/configuration');
+const { getConfiguration } = require('./configuration');
 
 const buildExpressApp = () => {
   const app = express();
@@ -66,6 +66,12 @@ const nodegate = () => {
         route.path,
         execute(route, beforeEach),
       );
+    });
+  };
+
+  app.use = (middlewares) => {
+    toArray(middlewares).forEach((middleware) => {
+      expressApp.use(middleware);
     });
   };
 
