@@ -69,6 +69,12 @@ const nodegate = () => {
     });
   };
 
+  app.use = (middlewares) => {
+    toArray(middlewares).forEach((middleware) => {
+      expressApp.use(middleware);
+    });
+  };
+
   app.listen = expressApp.listen;
 
   return app;
