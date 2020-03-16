@@ -7,7 +7,7 @@
 
 const nock = require('nock');
 const request = require('supertest');
-const nodegate = require('../');
+const nodegate = require('..');
 
 describe('index', () => {
   it('should export the workers', () => {

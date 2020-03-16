@@ -7,7 +7,7 @@
 
 const { get, merge } = require('lodash');
 const requestNative = require('request-promise-native');
-const { getConfiguration } = require('../services/configuration');
+const { getConfiguration } = require('./configuration');
 
 const project = (container, value) => {
   if (typeof value === 'object' && !Array.isArray(value)) {
