@@ -3,6 +3,9 @@ libraries {
     environment="node:lts"
     build="yarn install"
     lint="yarn lint"
-    test="yarn test"
+    test {
+      command="yarn test"
+      junitReports="junit.xml"
+    }
   }
 }
