@@ -8,6 +8,10 @@ describe('services/nodegate', () => {
     const gate = nodegate();
     await request(gate).get('/').expect(404);
   });
+  it('should expose the express app', () => {
+    const gate = nodegate();
+    expect(typeof gate.expressApp).toEqual('function');
+  });
   describe('#route()', () => {
     it('should work with an empty workflow', async () => {
       const gate = nodegate();

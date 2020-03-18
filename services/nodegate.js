@@ -75,6 +75,7 @@ const nodegate = () => {
     });
   };
 
+  app.expressApp = expressApp;
   app.listen = expressApp.listen;
 
   return app;
