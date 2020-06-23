@@ -20,6 +20,15 @@ describe('workers/aggregate', () => {
   });
   it('should override existing keys on the container\'s body', async () => {
     const container = getEmpty();
+    container.body.phasers = 4;
+    nock('https://wiki.federation.com').get('/armaments').reply(200, {
+      phasers: 16,
+    });
+    await aggregate('get', 'https://wiki.federation.com/armaments')(container);
+    expect(container.body.phasers).toEqual(16);
+  });
+  it('should override existing keys on the container\'s body', async () => {
+    const container = getEmpty();
     container.body.captains = ['Jean-Luc Picard'];
     const captains = { list: ['Janeway', 'Cisco', 'Kirk', 'Jean-Luc Picard'] };
     nock('https://wiki.federation.com').get('/captains').reply(200, { captains });
