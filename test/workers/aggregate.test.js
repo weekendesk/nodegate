@@ -26,6 +26,17 @@ describe('workers/aggregate', () => {
     await aggregate('get', 'https://wiki.federation.com/captains')(container);
     expect(container.body.captains).toEqual(captains);
   });
+  it('should be mutable', async () => {
+    const container = getEmpty();
+    const { body } = container;
+    nock('https://wiki.federation.com').get('/armaments').reply(200, {
+      phasers: 16,
+    });
+    await aggregate('get', 'https://wiki.federation.com/armaments')(container);
+    expect(container.body.phasers).toEqual(16);
+    expect(body.phasers).toEqual(16);
+    expect(container.body).toBe(body);
+  });
   describe('without option', () => {
     it('should aggregate to an empty content', async () => {
       const container = getEmpty();
