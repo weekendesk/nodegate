@@ -18,6 +18,14 @@ describe('workers/aggregate', () => {
       expect(err.message).not.toEqual('TypeError: Cannot read property \'headers\' of null');
     }
   });
+  it('should override existing keys on the container\'s body', async () => {
+    const container = getEmpty();
+    container.body.captains = ['Jean-Luc Picard'];
+    const captains = { list: ['Janeway', 'Cisco', 'Kirk', 'Jean-Luc Picard'] };
+    nock('https://wiki.federation.com').get('/captains').reply(200, { captains });
+    await aggregate('get', 'https://wiki.federation.com/captains')(container);
+    expect(container.body.captains).toEqual(captains);
+  });
   describe('without option', () => {
     it('should aggregate to an empty content', async () => {
       const container = getEmpty();

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { merge } = require('lodash');
+const { assign } = require('lodash');
 const WorkflowError = require('../entities/WorkflowError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
@@ -19,10 +19,10 @@ const setBodyToContainer = (body, container, options) => {
     return;
   }
   if (options.path) {
-    merge(container.body[options.path], body);
+    assign(container.body[options.path], body);
     return;
   }
-  merge(container.body, body);
+  assign(container.body, body);
 };
 
 module.exports = (method, url, options = {}) => {
