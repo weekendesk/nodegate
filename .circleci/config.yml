@@ -7,13 +7,13 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: yarn install
+          command: npm install
       - run:
           name: Run tests
-          command: yarn test
+          command: npm run test
       - run:
           name: Run linter
-          command: yarn lint
+          command: npm run lint
   coverage:
     docker:
       - image: circleci/node
@@ -21,14 +21,14 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: yarn install
+          command: npm install
       - run:
           name: Run tests for coverage
-          command: yarn test --coverage
+          command: npm run test --coverage
       - run:
           name: Collect coverage
           command: |
-            yarn add coveralls
+            npm install coveralls
             ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info
 
 workflows:
