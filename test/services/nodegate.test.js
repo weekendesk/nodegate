@@ -148,7 +148,7 @@ describe('services/nodegate', () => {
       gate.passthrough({
         method: 'get',
         path: '/client/:clientId',
-        target: (req) => `http://service.com/client/${req.params.clientId}`,
+        target: (params) => `http://service.com/client/${params.clientId}`,
       });
       await request(gate).get('/client/123').expect(200);
     });
