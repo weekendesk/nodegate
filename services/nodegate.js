@@ -52,7 +52,10 @@ const nodegate = () => {
   app.passthrough = (routes) => {
     toArray(routes).forEach((route) => {
       expressApp[route.method.toLowerCase()](route.path, (req, res) => {
-        request[route.method.toLowerCase()](route.target, {
+        const target = typeof route.target === 'function'
+          ? route.target(req)
+          : route.target;
+        request[route.method.toLowerCase()](target, {
           ...(req.headers && { headers: req.headers }),
           ...(req.body && { form: req.body }),
         }).pipe(res);

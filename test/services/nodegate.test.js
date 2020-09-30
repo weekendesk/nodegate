@@ -142,6 +142,16 @@ describe('services/nodegate', () => {
         .expect(200);
       expect(text).toEqual('Multiline\nContent');
     });
+    it('should build the target url', async () => {
+      nock('http://service.com').get(/client\/[0-9]*/).reply(200);
+      const gate = nodegate();
+      gate.passthrough({
+        method: 'get',
+        path: '/client/:clientId',
+        target: (req) => `http://service.com/client/${req.params.clientId}`,
+      });
+      await request(gate).get('/client/123').expect(200);
+    });
   });
   describe('#use', () => {
     it('should work with express middlewares', async () => {
