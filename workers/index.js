@@ -6,6 +6,7 @@
  */
 
 const aggregate = require('./aggregate');
+const executeIf = require('./executeIf');
 const filter = require('./filter');
 const forwardedHost = require('./forwardedHost');
 const keepHeaders = require('./keepHeaders');
@@ -19,6 +20,7 @@ const waitFor = require('./waitFor');
 
 module.exports = {
   aggregate,
+  executeIf,
   filter,
   forwardedHost,
   keepHeaders,
