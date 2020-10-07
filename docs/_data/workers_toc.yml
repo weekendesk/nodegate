@@ -2,6 +2,9 @@ toc:
   - title: Aggregate
     url: /workers/aggregate.html
     description: Aggregate a request response into the container's body.
+  - title: ExecuteIf
+    url: /workers/execute-if.html
+    description: Execute a workflow if a condition is met.
   - title: Filter
     url: /workers/filter.html
     description: Filter entries from the container's body.
