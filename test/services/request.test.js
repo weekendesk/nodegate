@@ -292,6 +292,17 @@ describe('services/request', () => {
       });
       expect(statusCode).toEqual(200);
     });
+    it('should be an immutable projection', async () => {
+      nock('https://wiki.federation.com').get('/ships').reply(200);
+      const headers = { authorization: 'headers.user' };
+      await request(
+        { headers: { user: 'Bearer 1234567890' } },
+        'get',
+        'https://wiki.federation.com/ships',
+        { headers },
+      );
+      expect(headers.authorization).toEqual('headers.user');
+    });
   });
   describe('option "body"', () => {
     it('should do the request with the container body if not set', async () => {
@@ -356,6 +367,17 @@ describe('services/request', () => {
         },
       });
       expect(statusCode).toEqual(200);
+    });
+    it('should be an immutable projection', async () => {
+      nock('https://wiki.federation.com').get('/ships').reply(200);
+      const body = { name: 'body.name' };
+      await request(
+        { body: { name: 'Jean-Luc Picard' } },
+        'get',
+        'https://wiki.federation.com/ships',
+        { body },
+      );
+      expect(body.name).toEqual('body.name');
     });
   });
 });

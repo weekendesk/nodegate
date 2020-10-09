@@ -24,7 +24,7 @@ jobs:
           command: npm install
       - run:
           name: Run tests for coverage
-          command: npm run test --coverage
+          command: npm run test:coverage
       - run:
           name: Collect coverage
           command: |

@@ -1,11 +1,12 @@
 {
   "name": "nodegate",
   "description": "API gateway made simple, fast and easy to configure.",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --collectCoverage",
     "lint": "eslint .",
     "doc:start": "cd docs && bundle exec jekyll serve",
     "doc:install": "cd docs && bundle install"
