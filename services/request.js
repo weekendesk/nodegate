@@ -43,7 +43,7 @@ const projectKey = (key, requestOptions, container, options) => {
   } else if (!options[key]) {
     requestOptions[key] = container[key] || null;
   } else {
-    requestOptions[key] = project(container, options[key]);
+    requestOptions[key] = project(container, { ...options[key] });
   }
 };
 
