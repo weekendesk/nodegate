@@ -5,9 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { cloneDeep } = require('lodash');
-
-module.exports = (statusCode) => (container) => ({
-  ...cloneDeep(container),
-  statusCode,
-});
+module.exports = (statusCode) => (container) => {
+  container.statusCode = statusCode;
+};
