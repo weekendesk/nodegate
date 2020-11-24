@@ -5,6 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-module.exports = (condition, workflow) => async (container, request, executeChunk) => {
-  if (condition(container, request)) await executeChunk(workflow, container, request);
-};
+module.exports = (condition, workflow, elseWorkflow) => (
+  async (container, request, executeChunk) => {
+    if (condition(container, request)) {
+      await executeChunk(workflow, container, request);
+      return;
+    }
+    if (!elseWorkflow) return;
+    await executeChunk(elseWorkflow, container, request);
+  }
+);
