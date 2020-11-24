@@ -56,4 +56,15 @@ describe('workers/executeIf', () => {
     await executeIf(() => true, [])({}, {}, wait);
     expect(value).toEqual(1);
   });
+  it('should execute the else workflow if the condition fails', async () => {
+    const container = { statusCode: 200 };
+    executeIf(() => false, [], [(workflowContainer) => { workflowContainer.statusCode = 501; }])(
+      container,
+      null,
+      (workflowParameter, containerParameter) => {
+        workflowParameter[0](containerParameter);
+      },
+    );
+    expect(container.statusCode).toEqual(501);
+  });
 });
