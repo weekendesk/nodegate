@@ -6,12 +6,9 @@
  */
 
 const { assign } = require('lodash');
-const { getLogger } = require('wed-nodejs-logger');
 const WorkflowError = require('../entities/WorkflowError');
 const request = require('../services/request');
 const urlBuilder = require('../services/urlBuilder');
-
-const logger = getLogger('aggregate');
 
 const setBodyToContainer = (body, container, options) => {
   if (!options.path && typeof body !== 'object') {
@@ -29,14 +26,14 @@ const setBodyToContainer = (body, container, options) => {
 };
 
 module.exports = (method, url, options = {}) => {
-  const computedUrl = urlBuilder(url);
+  const buildedUrl = urlBuilder(url);
   const failStatusCodes = options.failStatusCodes || [400, 500];
   return async (container) => {
     try {
       const { body, statusCode } = await request(
         container,
         method,
-        computedUrl,
+        buildedUrl,
         options,
       );
       container.statusCode = statusCode;
@@ -44,7 +41,6 @@ module.exports = (method, url, options = {}) => {
     } catch (err) {
       const body = err.response && err.response.body;
       const statusCode = err.response ? err.response.statusCode : 500;
-      logger.error(`Failed call http ${statusCode} ${method} ${typeof computedUrl === 'function' ? computedUrl(container) : computedUrl} ${body ? JSON.stringify(body) : ''}`);
 
       if (body && !failStatusCodes.includes(parseInt(`${`${statusCode}[0]`}00`, 10))) {
         setBodyToContainer(body, container, options);

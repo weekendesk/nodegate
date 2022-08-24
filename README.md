@@ -48,7 +48,7 @@ Copyright (c) Weekendesk SAS.
 
 [MIT](LICENSE)
 
-[github-badge]: https://github.com/weekendesk/nodegate/actions/workflows/test.yml/badge.svg?event=push
+[github-badge]: https://github.com/weekendesk/nodegate/actions/workflows/test.yml/badge.svg
 [github-url]: https://github.com/weekendesk/nodegate/actions/workflows/test.yml
 [david-badge]: https://david-dm.org/weekendesk/nodegate/status.svg
 [david-url]: https://david-dm.org/weekendesk/nodegate

@@ -1,7 +1,7 @@
 {
   "name": "nodegate",
   "description": "API gateway made simple, fast and easy to configure.",
-  "version": "1.10.0",
+  "version": "1.9.0",
   "author": "Julien Martin <martin.julien82@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -18,8 +18,7 @@
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "request": "^2.88.2",
-    "request-promise-native": "^1.0.9",
-    "wed-nodejs-logger": "git+https://github.com/weekendesk/wed-nodejs-logger.git"
+    "request-promise-native": "^1.0.9"
   },
   "devDependencies": {
     "eslint": "^7.10.0",
