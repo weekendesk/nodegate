@@ -3,9 +3,8 @@
 The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
 [Express](url-express) & [Request](url-request).
 
-[![CircleCI][circleci-badge]][circleci-url]
+[![Test and lint][github-badge]][github-url]
 [![Dependencies status][david-badge]][david-url]
-[![Coverage status][coveralls-badge]][coveralls-url]
 [![Version][version-badge]][version-url]
 
 ```js
@@ -49,12 +48,10 @@ Copyright (c) Weekendesk SAS.
 
 [MIT](LICENSE)
 
-[circleci-badge]: https://circleci.com/gh/weekendesk/nodegate.svg?style=shield
-[circleci-url]: https://circleci.com/gh/weekendesk/nodegate
+[github-badge]: https://github.com/weekendesk/nodegate/actions/workflows/test.yml/badge.svg
+[github-url]: https://github.com/weekendesk/nodegate/actions/workflows/test.yml
 [david-badge]: https://david-dm.org/weekendesk/nodegate/status.svg
 [david-url]: https://david-dm.org/weekendesk/nodegate
-[coveralls-badge]: https://coveralls.io/repos/github/weekendesk/nodegate/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/weekendesk/nodegate?branch=master
 [version-badge]: https://badge.fury.io/js/nodegate.svg
 [version-url]: https://badge.fury.io/js/nodegate
 [url-express]: https://expressjs.com/
