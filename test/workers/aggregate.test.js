@@ -1,10 +1,7 @@
 const nock = require('nock');
-const { initLogger } = require('wed-nodejs-logger');
 const aggregate = require('../../workers/aggregate');
 const { getEmpty } = require('../../entities/container');
 const WorkflowError = require('../../entities/WorkflowError');
-
-initLogger(process.env.LOG_LEVEL || 'WARN');
 
 describe('workers/aggregate', () => {
   it('should correctly return a function', () => {
