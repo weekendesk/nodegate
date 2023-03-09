@@ -19,7 +19,7 @@ In case of error, the `statusCode` will be set to 500.
 
 ## Examples
 
-To answer a specific body with the error:
+To answer a specific body with an error that **will overwrite** the original error response:
 
 ```js
 gateway.route({
@@ -27,7 +27,7 @@ gateway.route({
   path: '/gateway-route',
   workflow: [...],
   onError: (error) => {
-    error.container.body = {
+    error.container.errorBody = {
       reason: 'An unknow error occurred.',
     };
   };
