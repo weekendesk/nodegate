@@ -31,6 +31,7 @@ The third argument `options` is an object accepting these keys:
  - `body`: object describing the body to send with the request, the values of each key must be an
  [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} from the `container`.
  - `headers`: same usage as the body, but for the headers.
+ - `onError`: It's an object that will provide custom information to our response in case of failure.
 
 ## Examples
 
@@ -85,5 +86,37 @@ The reponse of a request matching this route will be like this one:
     "username": "anotherprofile",
     "birthdate": "1992-06-30"
   },
+}
+```
+
+### Custom errors
+
+You can set custom information when an error is triggered by a request,
+
+```js
+gateway.route({
+  method: 'get',
+  path: '/:username',
+  workflow: [
+    aggregate('get', `https://myapi.com/priceChecking?amount=xxx`, {
+      id: 'priceChecking',
+      onError: {
+        includeMetaInfo: true,
+        message: 'Custom and detailed message for this aggregate request',
+      },
+    }),
+  ],
+});
+```
+
+By setting up includeMetaInfo to "true" a meta field will be added to body with information about the aggregate function that threw the error:
+
+```json
+{
+    "meta": {
+        "url": "https://myapi.com/priceChecking?amount=xxx",
+        "id": "priceChecking"
+    },
+    "error": "Custom and detailed message for this aggregate request"
 }
 ```

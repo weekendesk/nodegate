@@ -209,5 +209,43 @@ describe('workers/aggregate', () => {
       )(container);
       expect(container.body.content).toEqual('This article does not exists');
     });
+    it('should set the container errorBody on with custom information', async () => {
+      expect.assertions(2);
+      const expectedMetaInfo = {
+        url: 'https://wiki.federation.com/armaments',
+        id: 'armaments',
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        await aggregate('post', 'https://wiki.federation.com/armaments', {
+          id: 'armaments',
+          onError: {
+            includeMetaInfo: true,
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(404);
+        expect(err.container.errorBody.meta).toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should set the container errorBody on with custom information', async () => {
+      expect.assertions(2);
+      const expectedErrorMessage = 'not available armaments';
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        await aggregate('post', 'https://wiki.federation.com/armaments', {
+          id: 'armaments',
+          onError: {
+            includeMetaInfo: true,
+            message: expectedErrorMessage,
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(404);
+        expect(err.container.errorBody.error).toEqual(expectedErrorMessage);
+      }
+    });
   });
 });
