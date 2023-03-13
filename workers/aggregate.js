@@ -50,8 +50,9 @@ module.exports = (method, url, options = {}) => {
 
       const error = new WorkflowError(err, err.response);
       error.setContainer(container);
-      const { onError: { includeMetaInfo, message } = {}, ...restOptions } = options;
-      container.errorBody = (body || includeMetaInfo || message) && {
+      const { errorOptions: { includeMetaInfo, messages = {} } = {}, ...restOptions } = options;
+      const errorMessage = messages[statusCode];
+      container.errorBody = (body || includeMetaInfo || errorMessage) && {
         ...body,
         ...(includeMetaInfo && {
           meta: {
@@ -59,7 +60,7 @@ module.exports = (method, url, options = {}) => {
             ...restOptions,
           },
         }),
-        ...(message && { error: message }),
+        ...(errorMessage && { message: errorMessage }),
       };
       container.statusCode = statusCode;
       throw error;

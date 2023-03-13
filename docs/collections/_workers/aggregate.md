@@ -31,7 +31,7 @@ The third argument `options` is an object accepting these keys:
  - `body`: object describing the body to send with the request, the values of each key must be an
  [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} from the `container`.
  - `headers`: same usage as the body, but for the headers.
- - `onError`: It's an object that will provide custom information to our response in case of failure.
+ - `errorOptions`: It's an object that will provide custom information to our response in case of failure.
 
 ## Examples
 
@@ -91,7 +91,7 @@ The reponse of a request matching this route will be like this one:
 
 ### Custom errors
 
-You can set custom information when an error is triggered by a request,
+You can set a custom message for different errors based on their status code when they're triggered by a request,
 
 ```js
 gateway.route({
@@ -100,9 +100,12 @@ gateway.route({
   workflow: [
     aggregate('get', `https://myapi.com/priceChecking?amount=xxx`, {
       id: 'priceChecking',
-      onError: {
+      errorOptions: {
         includeMetaInfo: true,
-        message: 'Custom and detailed message for this aggregate request',
+        messages: {
+          400: 'Custom and detailed message for this aggregate request',
+          418: 'This is not a regular teapot error message anymore 🫖',
+        }
       },
     }),
   ],

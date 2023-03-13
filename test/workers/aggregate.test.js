@@ -220,7 +220,7 @@ describe('workers/aggregate', () => {
         nock('https://wiki.federation.com').post('/armaments').reply(404);
         await aggregate('post', 'https://wiki.federation.com/armaments', {
           id: 'armaments',
-          onError: {
+          errorOptions: {
             includeMetaInfo: true,
           },
         })(container);
@@ -234,17 +234,39 @@ describe('workers/aggregate', () => {
       const expectedErrorMessage = 'not available armaments';
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        nock('https://wiki.federation.com').post('/armaments').reply(400);
         await aggregate('post', 'https://wiki.federation.com/armaments', {
           id: 'armaments',
-          onError: {
+          errorOptions: {
             includeMetaInfo: true,
-            message: expectedErrorMessage,
+            messages: {
+              400: expectedErrorMessage,
+            },
           },
         })(container);
       } catch (err) {
-        expect(err.container.statusCode).toEqual(404);
-        expect(err.container.errorBody.error).toEqual(expectedErrorMessage);
+        expect(err.container.statusCode).toEqual(400);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
+      }
+    });
+    it('should response a passthrough error from failed service', async () => {
+      expect.assertions(2);
+      const expectedErrorMessage = 'not available armaments';
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(400);
+        await aggregate('post', 'https://wiki.federation.com/armaments', {
+          id: 'armaments',
+          errorOptions: {
+            includeMetaInfo: true,
+            messages: {
+              400: expectedErrorMessage,
+            },
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(400);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
       }
     });
   });
