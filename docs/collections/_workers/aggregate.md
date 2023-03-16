@@ -24,7 +24,7 @@ body will be overwrited by the reponse ones.
 The third argument `options` is an object accepting these keys:
 
  - `failStatusCodes`: Array of generic status codes which will break the workflow, starting the
- worklows `onError` option. The default value is `[400, 500]`.
+ worklows `onError` option. So, in case another status code different than 4xx/5xx needs to be treated as an error, it's necessary to establish this property. The default value is `[400, 500]`.
  - `path`: [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} like
  destination for the response of the request. Like the `container`'s body, existing keys will be
  overwritted.
@@ -101,7 +101,6 @@ gateway.route({
     aggregate('get', `https://myapi.com/priceChecking?amount=xxx`, {
       id: 'priceChecking',
       errorOptions: {
-        includeMetaInfo: true,
         messages: {
           400: 'Custom and detailed message for this aggregate request',
           418: 'This is not a regular teapot error message anymore 🫖',
@@ -112,7 +111,7 @@ gateway.route({
 });
 ```
 
-By setting up includeMetaInfo to "true" a meta field will be added to body with information about the aggregate function that threw the error:
+A meta field will be always added by default to response body with information about the aggregate function that threw the error, including the service url which failed together with the rest of options that were passed as a parameter in the aggregate function:
 
 ```json
 {
@@ -123,3 +122,5 @@ By setting up includeMetaInfo to "true" a meta field will be added to body with 
     "error": "Custom and detailed message for this aggregate request"
 }
 ```
+
+Notice that's possible to get rid of any metadata adding the property `includeMetaInfo` set to `false`.
