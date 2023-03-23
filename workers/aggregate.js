@@ -60,14 +60,14 @@ module.exports = (method, url, options = {}) => {
       } = options;
       const errorMessage = messages[statusCode];
       container.errorBody = {
-        ...(includeMetaInfo && {
+        ...includeMetaInfo && {
           metaInfo: {
             url,
             ...restOptions,
           },
-        }),
+        },
         ...body,
-        ...(errorMessage && { message: errorMessage }),
+        ...errorMessage && { message: errorMessage },
       };
       container.statusCode = statusCode;
       throw error;
