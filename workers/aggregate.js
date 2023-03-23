@@ -61,7 +61,7 @@ module.exports = (method, url, options = {}) => {
       const errorMessage = messages[statusCode];
       container.errorBody = {
         ...(includeMetaInfo && {
-          meta: {
+          metaInfo: {
             url,
             ...restOptions,
           },

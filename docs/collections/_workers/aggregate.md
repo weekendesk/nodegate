@@ -24,7 +24,10 @@ body will be overwrited by the reponse ones.
 The third argument `options` is an object accepting these keys:
 
  - `failStatusCodes`: Array of generic status codes which will break the workflow, starting the
- worklows `onError` option. So, in case another status code different than 4xx/5xx needs to be treated as an error, it's necessary to establish this property. The default value is `[400, 500]`.
+ worklows `onError` option. So, in case another status code different than 4xx/5xx needs to be treated as an error, it's necessary to establish this property. The default value is `[400, 500]`. Be aware that this functionality only works in the next cases:
+    - If original request does provide an error body, but an specific code is supplied. For instance, `{ failStatusCode: [302] }` will only understand that `302` is an error.
+    - If original request doesn't provide an error body, the code supplied will be taken into account as a range of errors. For instance, `{ failStatusCode: [300] }` will understand that all the status codes in a range of `3xx` are an error.
+ <!-- TODO: Include a comment about body and failStatusCode -->
  - `path`: [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} like
  destination for the response of the request. Like the `container`'s body, existing keys will be
  overwritted.
@@ -111,11 +114,11 @@ gateway.route({
 });
 ```
 
-A meta field will be always added by default to response body with information about the aggregate function that threw the error, including the service url which failed together with the rest of options that were passed as a parameter in the aggregate function:
+A `metaInfo` field will be always added by default to response body with information about the aggregate function that threw the error, including the service url which failed together with the rest of options that were passed as a parameter in the aggregate function:
 
 ```json
 {
-    "meta": {
+    "metaInfo": {
         "url": "https://myapi.com/priceChecking?amount=xxx",
         "id": "priceChecking"
     },
