@@ -24,13 +24,17 @@ body will be overwrited by the reponse ones.
 The third argument `options` is an object accepting these keys:
 
  - `failStatusCodes`: Array of generic status codes which will break the workflow, starting the
- worklows `onError` option. The default value is `[400, 500]`.
+ worklows `onError` option. So, in case another status code different than 4xx/5xx needs to be treated as an error, it's necessary to establish this property. The default value is `[400, 500]`. Be aware that this functionality only works in the next cases:
+    - If original request does provide an error body, but an specific code is supplied. For instance, `{ failStatusCode: [302] }` will only understand that `302` is an error.
+    - If original request doesn't provide an error body, the code supplied will be taken into account as a range of errors. For instance, `{ failStatusCode: [300] }` will understand that all the status codes in a range of `3xx` are an error.
+ <!-- TODO: Include a comment about body and failStatusCode -->
  - `path`: [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} like
  destination for the response of the request. Like the `container`'s body, existing keys will be
  overwritted.
  - `body`: object describing the body to send with the request, the values of each key must be an
  [object path](https://github.com/mariocasciaro/object-path){:target="_blank"} from the `container`.
  - `headers`: same usage as the body, but for the headers.
+ - `errorOptions`: It's an object that will provide custom information to our response in case of failure.
 
 ## Examples
 
@@ -87,3 +91,39 @@ The reponse of a request matching this route will be like this one:
   },
 }
 ```
+
+### Custom errors
+
+You can set a custom message for different errors based on their status code when they're triggered by a request,
+
+```js
+gateway.route({
+  method: 'get',
+  path: '/:username',
+  workflow: [
+    aggregate('get', `https://myapi.com/priceChecking?amount=xxx`, {
+      id: 'priceChecking',
+      errorOptions: {
+        messages: {
+          400: 'Custom and detailed message for this aggregate request',
+          418: 'This is not a regular teapot error message anymore 🫖',
+        }
+      },
+    }),
+  ],
+});
+```
+
+A `metaInfo` field will be always added by default to response body with information about the aggregate function that threw the error, including the service url which failed together with the rest of options that were passed as a parameter in the aggregate function:
+
+```json
+{
+    "metaInfo": {
+        "url": "https://myapi.com/priceChecking?amount=xxx",
+        "id": "priceChecking"
+    },
+    "error": "Custom and detailed message for this aggregate request"
+}
+```
+
+Notice that's possible to get rid of any metadata adding the property `includeMetaInfo` set to `false`.

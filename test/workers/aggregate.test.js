@@ -183,6 +183,9 @@ describe('workers/aggregate', () => {
         await aggregate('post', 'https://wiki.federation.com/section31')(container);
       } catch (err) {
         expect(err.container.errorBody).toEqual({
+          metaInfo: {
+            url: 'https://wiki.federation.com/section31',
+          },
           reason: 'Section 31 does not exists',
         });
       }
@@ -208,6 +211,140 @@ describe('workers/aggregate', () => {
         { failStatusCodes: [500] },
       )(container);
       expect(container.body.content).toEqual('This article does not exists');
+    });
+    it('should set the container errorBody with metadata information', async () => {
+      expect.assertions(2);
+      const serviceUrl = 'https://wiki.federation.com/armaments';
+      const expectedMetaInfo = {
+        url: serviceUrl,
+        id: 'armaments',
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        await aggregate('post', serviceUrl, {
+          id: 'armaments',
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(404);
+        expect(err.container.errorBody.metaInfo).toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should not set the metadata information', async () => {
+      expect.assertions(2);
+      const serviceUrl = 'https://wiki.federation.com/armaments';
+      const expectedMetaInfo = {
+        url: serviceUrl,
+        id: 'armaments',
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        await aggregate('post', serviceUrl, {
+          id: 'armaments',
+          errorOptions: {
+            includeMetaInfo: false,
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(404);
+        expect(err.container.errorBody.metaInfo).not
+          .toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should set the container errorBody with custom message', async () => {
+      expect.assertions(3);
+      const serviceUrl = 'https://wiki.federation.com/armaments';
+      const expectedErrorMessage = 'not available armaments';
+      const expectedMetaInfo = {
+        url: serviceUrl,
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(400);
+        await aggregate('post', serviceUrl, {
+          id: 'armaments',
+          errorOptions: {
+            messages: {
+              400: expectedErrorMessage,
+            },
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(400);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
+        expect(err.container.errorBody.metaInfo).toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should set the container errorBody with custom message when status code is not included in 4xx/5xx range and the service response contains a body', async () => {
+      expect.assertions(3);
+      const serviceUrl = 'https://wiki.federation.com/armaments';
+      const expectedErrorMessage = 'not available armaments';
+      const expectedMetaInfo = {
+        url: serviceUrl,
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(302, {});
+        await aggregate('post', serviceUrl, {
+          failStatusCodes: [302],
+          id: 'armaments',
+          errorOptions: {
+            messages: {
+              302: expectedErrorMessage,
+            },
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(302);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
+        expect(err.container.errorBody.metaInfo).toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should set the container errorBody with custom message when status code is included in the failStatusCode range and the service response does not contain a body', async () => {
+      expect.assertions(3);
+      const serviceUrl = 'https://wiki.federation.com/armaments';
+      const expectedErrorMessage = 'not available armaments';
+      const expectedMetaInfo = {
+        url: serviceUrl,
+      };
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(302);
+        await aggregate('post', serviceUrl, {
+          failStatusCodes: [300],
+          id: 'armaments',
+          errorOptions: {
+            messages: {
+              302: expectedErrorMessage,
+            },
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(302);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
+        expect(err.container.errorBody.metaInfo).toEqual(expect.objectContaining(expectedMetaInfo));
+      }
+    });
+    it('should response a passthrough error from failed service', async () => {
+      expect.assertions(2);
+      const expectedErrorMessage = 'not available armaments';
+      try {
+        const container = getEmpty();
+        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        await aggregate('post', 'https://wiki.federation.com/armaments', {
+          id: 'armaments',
+          errorOptions: {
+            includeMetaInfo: true,
+            messages: {
+              404: expectedErrorMessage,
+            },
+          },
+        })(container);
+      } catch (err) {
+        expect(err.container.statusCode).toEqual(404);
+        expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
+      }
     });
   });
 });
