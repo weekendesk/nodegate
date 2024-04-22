@@ -49,10 +49,12 @@ describe('workers/executeIf', () => {
   });
   it('should await for the execution of the executeChunk', async () => {
     let value = 0;
-    const wait = () => new Promise((resolve) => setTimeout(() => {
-      value = 1;
-      resolve();
-    }), 50);
+    const wait = () => new Promise((resolve) => {
+      setTimeout(() => {
+        value = 1;
+        resolve();
+      });
+    }, 50);
     await executeIf(() => true, [])({}, {}, wait);
     expect(value).toEqual(1);
   });
