@@ -2,7 +2,9 @@ const { execute } = require('../../entities/route');
 const WorkflowError = require('../../entities/WorkflowError');
 
 const step = jest.fn((container) => container);
-const asyncStep = jest.fn((container) => new Promise((resolve) => resolve(container)));
+const asyncStep = jest.fn((container) => new Promise((resolve) => {
+  resolve(container);
+}));
 
 const send = jest.fn((container) => container);
 const status = jest.fn(() => ({ send }));
