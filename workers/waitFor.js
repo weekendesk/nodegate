@@ -14,8 +14,13 @@ const timeout = (duration) => new Promise((resolve) => {
 });
 
 const tryRequest = async (container, method, url, test, configuration, tentatives = 0) => {
-  const { statusCode, headers, body } = await request(container, method, url);
-  if (!test({ statusCode, headers, body }, container)) {
+  const response = await request(container, method, url);
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+  const { status, headers } = response;
+  const body = await response.json();
+  if (!test({ status, headers, body }, container)) {
     if (tentatives < configuration.tentatives) {
       await timeout(configuration.delay);
       return tryRequest(container, method, url, test, configuration, tentatives + 1);

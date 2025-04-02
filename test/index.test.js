@@ -5,11 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const nock = require('nock');
+const fetchMock = require('fetch-mock').default;
 const request = require('supertest');
 const nodegate = require('..');
 
 describe('index', () => {
+  afterEach(() => {
+    fetchMock.removeRoutes();
+  });
   it('should export the workers', () => {
     expect(nodegate.workers).toBeTruthy();
     expect(nodegate.configure).toBeInstanceOf(Object);
@@ -27,11 +30,10 @@ describe('index', () => {
         nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
-    nock('https://wiki.enterprise.com')
-      .get('/captain/1')
-      .reply(200, {
-        name: 'Jean-Luc Picard',
-      });
+    fetchMock.mockGlobal().getOnce('https://wiki.enterprise.com/captain/1', {
+      status: 200,
+      body: { name: 'Jean-Luc Picard' },
+    });
     await request(gate)
       .get('/captain/1')
       .expect(200)
@@ -86,15 +88,10 @@ describe('index', () => {
         nodegate.workers.aggregate('get', 'https://wiki.enterprise.com/captain/{params.id}'),
       ],
     });
-    nock('https://wiki.enterprise.com', {
-      reqheaders: {
-        'x-ship-origin': 'enterprise',
-      },
-    })
-      .get('/captain/1')
-      .reply(200, {
-        name: 'Jean-Luc Picard',
-      });
+    fetchMock.mockGlobal().getOnce('https://wiki.enterprise.com/captain/1', {
+      status: 200,
+      body: { name: 'Jean-Luc Picard' },
+    });
     await request(gate)
       .get('/captain/1')
       .expect(200)

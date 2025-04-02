@@ -30,25 +30,41 @@ module.exports = (method, url, options = {}) => {
   const failStatusCodes = options.failStatusCodes || [400, 500];
   return async (container) => {
     try {
-      const { body, statusCode } = await request(
+      const response = await request(
         container,
         method,
         buildedUrl,
         options,
       );
-      container.statusCode = statusCode;
-      setBodyToContainer(body, container, options);
+      if (response.headers.get('content-type') && response.headers.get('content-type') !== 'application/json') {
+        const text = await response.text();
+        container.statusCode = response.status;
+        setBodyToContainer(text, container, options);
+        return;
+      }
+      let body;
+      if (response.headers.get('content-type')) {
+        body = await response.json();
+        setBodyToContainer(body, container, options);
+      }
+      container.statusCode = response.status;
+      if (!response.ok) {
+        throw new WorkflowError('Fetch error', { body, statusCode: response.status });
+      }
     } catch (err) {
       const body = err.response && err.response.body;
       const statusCode = err.response ? err.response.statusCode : 500;
 
-      if (body && !failStatusCodes.includes(parseInt(`${`${statusCode}[0]`}00`, 10))) {
+      const isValidStatus = !failStatusCodes.includes(Math.floor(statusCode / 100) * 100)
+        && !failStatusCodes.includes(statusCode);
+
+      if (body && isValidStatus) {
         setBodyToContainer(body, container, options);
         container.statusCode = statusCode;
         return;
       }
 
-      const error = new WorkflowError(err, err.response);
+      const error = new WorkflowError('', err.response);
       error.setContainer(container);
       const {
         errorOptions:

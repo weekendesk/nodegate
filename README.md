@@ -1,16 +1,16 @@
 ![nodegate](docs/assets/images/readme-logo.png)
 
 The easy plugin to programmatically manage a horizontally scalable JSON API Gateway. Built on top of
-[Express](url-express) & [Request](url-request).
+[Express](url-express)
 
 [![Test and lint][github-badge]][github-url]
 [![Dependencies status][david-badge]][david-url]
 [![Version][version-badge]][version-url]
 
 ```js
-const nodegate = require('nodegate');
-const gate = nodegate();
-const { aggregate } = nodegate.workers;
+const nodegate = require('nodegate')
+const gate = nodegate()
+const { aggregate } = nodegate.workers
 
 gate.route({
   method: 'get',
@@ -19,9 +19,9 @@ gate.route({
     aggregate('get', 'https://api.github.com/users/{params.user}'),
     aggregate('get', 'https://api.github.com/users/{params.user}/gists'),
   ],
-});
+})
 
-gate.listen(8080);
+gate.listen(8080)
 ```
 
 ## Usage
@@ -55,5 +55,4 @@ Copyright (c) Weekendesk SAS.
 [version-badge]: https://badge.fury.io/js/nodegate.svg
 [version-url]: https://badge.fury.io/js/nodegate
 [url-express]: https://expressjs.com/
-[url-request]: https://github.com/request/request
 [url-wiki-api-management]: https://en.wikipedia.org/wiki/API_management
