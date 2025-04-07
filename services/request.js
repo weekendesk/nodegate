@@ -71,7 +71,9 @@ const request = (container, method, url, options = {}) => {
   const uri = typeof url === 'function' ? url(container) : url;
 
   projectKey('headers', requestOptions, container, options);
-  if (method !== 'get') {
+  if (['get', 'head'].includes(method)) {
+    requestOptions.body = null;
+  } else {
     projectKey('body', requestOptions, container, options);
   }
 
