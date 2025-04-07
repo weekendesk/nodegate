@@ -36,7 +36,7 @@ module.exports = (method, url, options = {}) => {
         buildedUrl,
         options,
       );
-      if (response.headers.get('content-type') && response.headers.get('content-type') !== 'application/json') {
+      if (response.headers.get('content-type') && !response.headers.get('content-type').includes('application/json')) {
         const text = await response.text();
         container.statusCode = response.status;
         setBodyToContainer(text, container, options);
