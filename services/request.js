@@ -66,7 +66,7 @@ const request = (container, method, url, options = {}) => {
     ...requestConfiguration,
     ...configuration,
     ...options,
-    method,
+    method: method.toUpperCase(),
   };
   const uri = typeof url === 'function' ? url(container) : url;
 
