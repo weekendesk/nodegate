@@ -401,4 +401,62 @@ describe('workers/aggregate', () => {
       }
     });
   });
+  describe('with different content-types', () => {
+    it('should aggregate the JSON result with a response content-type "application/json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/json; charset=utf-8"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/vnd.contentful.delivery.v1+json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/vnd.contentful.delivery.v1+json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/ld+json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/ld+json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+  });
 });

@@ -25,6 +25,11 @@ const setBodyToContainer = (body, container, options) => {
   assign(container.body, body);
 };
 
+function isJsonContentType(contentType) {
+  return typeof contentType === 'string'
+    && (contentType.includes('application/json') || contentType.includes('+json'));
+}
+
 module.exports = (method, url, options = {}) => {
   const buildedUrl = urlBuilder(url);
   const failStatusCodes = options.failStatusCodes || [400, 500];
@@ -36,7 +41,7 @@ module.exports = (method, url, options = {}) => {
         buildedUrl,
         options,
       );
-      if (response.headers.get('content-type') && !response.headers.get('content-type').includes('application/json')) {
+      if (response.headers.get('content-type') && !isJsonContentType(response.headers.get('content-type'))) {
         const text = await response.text();
         container.statusCode = response.status;
         setBodyToContainer(text, container, options);
