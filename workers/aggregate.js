@@ -41,10 +41,13 @@ module.exports = (method, url, options = {}) => {
         buildedUrl,
         options,
       );
+      container.statusCode = response.status;
       if (response.headers.get('content-type') && !isJsonContentType(response.headers.get('content-type'))) {
         const text = await response.text();
-        container.statusCode = response.status;
         setBodyToContainer(text, container, options);
+        if (!response.ok) {
+          throw new WorkflowError('Fetch error', { text, statusCode: response.status });
+        }
         return;
       }
       let body;
@@ -52,7 +55,6 @@ module.exports = (method, url, options = {}) => {
         body = await response.json();
         setBodyToContainer(body, container, options);
       }
-      container.statusCode = response.status;
       if (!response.ok) {
         throw new WorkflowError('Fetch error', { body, statusCode: response.status });
       }
@@ -69,7 +71,7 @@ module.exports = (method, url, options = {}) => {
         return;
       }
 
-      const error = new WorkflowError('', err.response);
+      const error = new WorkflowError(err, err.response);
       error.setContainer(container);
       const {
         errorOptions:

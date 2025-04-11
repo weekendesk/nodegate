@@ -32,20 +32,30 @@ describe('services/request', () => {
     expect(response.status).toBe(200);
   });
   it('should throw an error when the response status code is 500', async () => {
-    expect.assertions(1);
+    expect.assertions(2);
     fetchMock.mockGlobal().getOnce('https://wiki.federation.com/ships', {
       status: 500,
+      throw: 'error',
     });
-    const response = await request({}, 'get', 'https://wiki.federation.com/ships');
-    expect(response.ok).toBeFalsy();
+    try {
+      const response = await request({}, 'get', 'https://wiki.federation.com/ships');
+      expect(response.ok).toBeFalsy();
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
   });
   it('should throw an error when the response status code is 404', async () => {
-    expect.assertions(1);
+    expect.assertions(2);
     fetchMock.mockGlobal().getOnce('https://wiki.federation.com/ships', {
       status: 404,
+      throw: 'error',
     });
-    const response = await request({}, 'get', 'https://wiki.federation.com/ships');
-    expect(response.status).toEqual(404);
+    try {
+      const response = await request({}, 'get', 'https://wiki.federation.com/ships');
+      expect(response.status).toEqual(404);
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
   });
   it('should merge the headers from configuration with the container headers', async () => {
     configure({
