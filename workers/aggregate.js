@@ -25,24 +25,47 @@ const setBodyToContainer = (body, container, options) => {
   assign(container.body, body);
 };
 
+function isJsonContentType(contentType) {
+  return typeof contentType === 'string'
+    && (contentType.includes('application/json') || contentType.includes('+json'));
+}
+
 module.exports = (method, url, options = {}) => {
   const buildedUrl = urlBuilder(url);
   const failStatusCodes = options.failStatusCodes || [400, 500];
   return async (container) => {
     try {
-      const { body, statusCode } = await request(
+      const response = await request(
         container,
         method,
         buildedUrl,
         options,
       );
-      container.statusCode = statusCode;
-      setBodyToContainer(body, container, options);
+      container.statusCode = response.status;
+      if (response.headers.get('content-type') && !isJsonContentType(response.headers.get('content-type'))) {
+        const text = await response.text();
+        setBodyToContainer(text, container, options);
+        if (!response.ok) {
+          throw new WorkflowError('Fetch error', { text, statusCode: response.status });
+        }
+        return;
+      }
+      let body;
+      if (response.headers.get('content-type')) {
+        body = await response.json();
+        setBodyToContainer(body, container, options);
+      }
+      if (!response.ok) {
+        throw new WorkflowError('Fetch error', { body, statusCode: response.status });
+      }
     } catch (err) {
       const body = err.response && err.response.body;
       const statusCode = err.response ? err.response.statusCode : 500;
 
-      if (body && !failStatusCodes.includes(parseInt(`${`${statusCode}[0]`}00`, 10))) {
+      const isValidStatus = !failStatusCodes.includes(Math.floor(statusCode / 100) * 100)
+        && !failStatusCodes.includes(statusCode);
+
+      if (body && isValidStatus) {
         setBodyToContainer(body, container, options);
         container.statusCode = statusCode;
         return;

@@ -1,4 +1,4 @@
-const nock = require('nock');
+const fetchMock = require('fetch-mock').default;
 const request = require('supertest');
 const nodegate = require('../../services/nodegate');
 const { aggregate, statusCode } = require('../../workers');
@@ -9,7 +9,7 @@ describe('scenarios/containerStatusCodeResponse', () => {
     gate = nodegate();
   });
   afterEach(() => {
-    nock.cleanAll();
+    fetchMock.removeRoutes();
   });
   it('should respond with the 202 status code from the container', async () => {
     gate.route({
@@ -31,9 +31,9 @@ describe('scenarios/containerStatusCodeResponse', () => {
         aggregate('get', 'https://federation.com/captains'),
       ],
     });
-    nock('https://federation.com')
-      .get('/captains')
-      .reply(403);
+    fetchMock.mockGlobal().getOnce('https://federation.com/captains', {
+      status: 403,
+    });
     await request(gate)
       .get('/error')
       .expect(403);

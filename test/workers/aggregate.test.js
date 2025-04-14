@@ -1,9 +1,12 @@
-const nock = require('nock');
+const fetchMock = require('fetch-mock').default;
 const aggregate = require('../../workers/aggregate');
 const { getEmpty } = require('../../entities/container');
 const WorkflowError = require('../../entities/WorkflowError');
 
 describe('workers/aggregate', () => {
+  afterEach(() => {
+    fetchMock.removeRoutes();
+  });
   it('should correctly return a function', () => {
     expect(aggregate()).toBeInstanceOf(Function);
   });
@@ -21,27 +24,32 @@ describe('workers/aggregate', () => {
   it('should override existing keys on the container\'s body', async () => {
     const container = getEmpty();
     container.body.phasers = 4;
-    nock('https://wiki.federation.com').get('/armaments').reply(200, {
-      phasers: 16,
+    fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+      status: 200,
+      body: { phasers: 16 },
     });
-    await aggregate('get', 'https://wiki.federation.com/armaments')(container);
+    await aggregate('post', 'https://wiki.federation.com/armaments')(container);
     expect(container.body.phasers).toEqual(16);
   });
   it('should override existing keys on the container\'s body', async () => {
     const container = getEmpty();
     container.body.captains = ['Jean-Luc Picard'];
     const captains = { list: ['Janeway', 'Cisco', 'Kirk', 'Jean-Luc Picard'] };
-    nock('https://wiki.federation.com').get('/captains').reply(200, { captains });
-    await aggregate('get', 'https://wiki.federation.com/captains')(container);
+    fetchMock.mockGlobal().postOnce('https://wiki.federation.com/captains', {
+      status: 200,
+      body: { captains },
+    });
+    await aggregate('post', 'https://wiki.federation.com/captains')(container);
     expect(container.body.captains).toEqual(captains);
   });
   it('should be mutable', async () => {
     const container = getEmpty();
     const { body } = container;
-    nock('https://wiki.federation.com').get('/armaments').reply(200, {
-      phasers: 16,
+    fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+      status: 200,
+      body: { phasers: 16 },
     });
-    await aggregate('get', 'https://wiki.federation.com/armaments')(container);
+    await aggregate('post', 'https://wiki.federation.com/armaments')(container);
     expect(container.body.phasers).toEqual(16);
     expect(body.phasers).toEqual(16);
     expect(container.body).toBe(body);
@@ -49,9 +57,12 @@ describe('workers/aggregate', () => {
   describe('without option', () => {
     it('should aggregate to an empty content', async () => {
       const container = getEmpty();
-      nock('https://wiki.federation.com').get('/armaments').reply(200, {
-        phasers: 16,
-        torpedoes: 2,
+      fetchMock.mockGlobal().getOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+          torpedoes: 2,
+        },
       });
       await aggregate('get', 'https://wiki.federation.com/armaments')(container);
       expect(container.body.phasers).toBe(16);
@@ -64,9 +75,12 @@ describe('workers/aggregate', () => {
           disruptors: 5,
         },
       };
-      nock('https://wiki.federation.com').get('/armaments/NCC-1717').reply(200, {
-        phasers: 16,
-        torpedoes: 2,
+      fetchMock.mockGlobal().getOnce('https://wiki.federation.com/armaments/NCC-1717', {
+        status: 200,
+        body: {
+          phasers: 16,
+          torpedoes: 2,
+        },
       });
       await aggregate('get', 'https://wiki.federation.com/armaments/{body.name}')(container);
       expect(container.body.disruptors).toEqual(5);
@@ -75,7 +89,9 @@ describe('workers/aggregate', () => {
     });
     it('should correctly set the statusCode of the container from the request', async () => {
       const container = getEmpty();
-      nock('https://wiki.federation.com').post('/armaments').reply(201);
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 201,
+      });
       await aggregate('post', 'https://wiki.federation.com/armaments')(container);
       expect(container.statusCode).toBe(201);
     });
@@ -86,7 +102,10 @@ describe('workers/aggregate', () => {
           ship: 'NCC-1717',
         },
       };
-      nock('https://wiki.federation.com').post('/armaments').reply(200, 'Too much armaments to display');
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: 'Too much armaments to display',
+      });
       await aggregate('post', 'https://wiki.federation.com/armaments')(container);
       expect(container.body).toEqual({
         ship: 'NCC-1717',
@@ -96,11 +115,14 @@ describe('workers/aggregate', () => {
   describe('with "path" option', () => {
     it('should correclty use aggregate the result on the defined path', async () => {
       const container = getEmpty();
-      nock('https://wiki.federation.com').get('/armaments').reply(200, {
-        phasers: 16,
-        torpedoes: 2,
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+          torpedoes: 2,
+        },
       });
-      await aggregate('get', 'https://wiki.federation.com/armaments', {
+      await aggregate('post', 'https://wiki.federation.com/armaments', {
         path: 'armaments',
       })(container);
       expect(container.body.armaments.phasers).toBe(16);
@@ -114,11 +136,14 @@ describe('workers/aggregate', () => {
           },
         },
       };
-      nock('https://wiki.federation.com').get('/armaments').reply(200, {
-        phasers: 16,
-        torpedoes: 2,
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+          torpedoes: 2,
+        },
       });
-      await aggregate('get', 'https://wiki.federation.com/armaments', {
+      await aggregate('post', 'https://wiki.federation.com/armaments', {
         path: 'armaments',
       })(container);
       expect(container.body.armaments.disruptors).toBe(5);
@@ -132,7 +157,10 @@ describe('workers/aggregate', () => {
           ship: 'NCC-1717',
         },
       };
-      nock('https://wiki.federation.com').post('/armaments').reply(200, 'OK');
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: 'OK',
+      });
       await aggregate('post', 'https://wiki.federation.com/armaments', {
         path: 'text',
       })(container);
@@ -147,7 +175,9 @@ describe('workers/aggregate', () => {
       expect.assertions(1);
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/section31').reply(500);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/section31', {
+          status: 500,
+        });
         await aggregate('post', 'https://wiki.federation.com/section31')(container);
       } catch (err) {
         expect(err).toBeInstanceOf(WorkflowError);
@@ -157,7 +187,9 @@ describe('workers/aggregate', () => {
       expect.assertions(1);
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/section31').reply(500);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/section31', {
+          status: 500,
+        });
         await aggregate('post', 'https://wiki.federation.com/section31')(container);
       } catch (err) {
         expect(err.response.statusCode).toEqual(500);
@@ -167,7 +199,9 @@ describe('workers/aggregate', () => {
       expect.assertions(1);
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/section31').reply(500);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/section31', {
+          status: 500,
+        });
         await aggregate('post', 'https://wiki.federation.com/section31')(container);
       } catch (err) {
         expect(err.container).toBeTruthy();
@@ -177,8 +211,11 @@ describe('workers/aggregate', () => {
       expect.assertions(1);
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/section31').reply(500, {
-          reason: 'Section 31 does not exists',
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/section31', {
+          status: 500,
+          body: {
+            reason: 'Section 31 does not exists',
+          },
         });
         await aggregate('post', 'https://wiki.federation.com/section31')(container);
       } catch (err) {
@@ -194,7 +231,9 @@ describe('workers/aggregate', () => {
       expect.assertions(1);
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 404,
+        });
         await aggregate('post', 'https://wiki.federation.com/armaments')(container);
       } catch (err) {
         expect(err.container.statusCode).toEqual(404);
@@ -202,9 +241,12 @@ describe('workers/aggregate', () => {
     });
     it('should not throw if the statusCode is not on the "failStatusCodes" option', async () => {
       const container = getEmpty();
-      nock('https://wiki.federation.com')
-        .post('/armaments')
-        .reply(404, { content: 'This article does not exists' });
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 404,
+        body: {
+          content: 'This article does not exists',
+        },
+      });
       await aggregate(
         'post',
         'https://wiki.federation.com/armaments',
@@ -221,7 +263,9 @@ describe('workers/aggregate', () => {
       };
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 404,
+        });
         await aggregate('post', serviceUrl, {
           id: 'armaments',
         })(container);
@@ -239,7 +283,9 @@ describe('workers/aggregate', () => {
       };
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 404,
+        });
         await aggregate('post', serviceUrl, {
           id: 'armaments',
           errorOptions: {
@@ -261,7 +307,9 @@ describe('workers/aggregate', () => {
       };
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(400);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 400,
+        });
         await aggregate('post', serviceUrl, {
           id: 'armaments',
           errorOptions: {
@@ -285,7 +333,9 @@ describe('workers/aggregate', () => {
       };
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(302, {});
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 302,
+        });
         await aggregate('post', serviceUrl, {
           failStatusCodes: [302],
           id: 'armaments',
@@ -310,7 +360,9 @@ describe('workers/aggregate', () => {
       };
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(302);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 302,
+        });
         await aggregate('post', serviceUrl, {
           failStatusCodes: [300],
           id: 'armaments',
@@ -331,7 +383,9 @@ describe('workers/aggregate', () => {
       const expectedErrorMessage = 'not available armaments';
       try {
         const container = getEmpty();
-        nock('https://wiki.federation.com').post('/armaments').reply(404);
+        fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+          status: 404,
+        });
         await aggregate('post', 'https://wiki.federation.com/armaments', {
           id: 'armaments',
           errorOptions: {
@@ -345,6 +399,64 @@ describe('workers/aggregate', () => {
         expect(err.container.statusCode).toEqual(404);
         expect(err.container.errorBody.message).toEqual(expectedErrorMessage);
       }
+    });
+  });
+  describe('with different content-types', () => {
+    it('should aggregate the JSON result with a response content-type "application/json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/json; charset=utf-8"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/vnd.contentful.delivery.v1+json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/vnd.contentful.delivery.v1+json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should aggregate the JSON result with a response content-type "application/ld+json"', async () => {
+      const container = getEmpty();
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: {
+          phasers: 16,
+        },
+        headers: {
+          'Content-Type': 'application/ld+json',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
     });
   });
 });

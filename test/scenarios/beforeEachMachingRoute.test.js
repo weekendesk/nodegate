@@ -1,4 +1,4 @@
-const nock = require('nock');
+const fetchMock = require('fetch-mock').default;
 const request = require('supertest');
 const nodegate = require('../../services/nodegate');
 const { aggregate, routeMatch } = require('../../workers');
@@ -24,15 +24,17 @@ describe('scenarios/beforeEachMachingRoute', () => {
         aggregate('get', 'https://federation.com/ships'),
       ],
     });
-    nock('https://federation.com')
-      .get('/captains/kirk')
-      .reply(200, { completeName: 'James T. Kirk' });
-    nock('https://federation.com')
-      .get('/ships')
-      .reply(200, { list: ['enterprise', 'voyager'] });
+    fetchMock.mockGlobal().getOnce('https://federation.com/captains/kirk', {
+      status: 200,
+      body: { completeName: 'James T. Kirk' },
+    });
+    fetchMock.mockGlobal().getOnce('https://federation.com/ships', {
+      status: 200,
+      body: { list: ['enterprise', 'voyager'] },
+    });
   });
   afterEach(() => {
-    nock.cleanAll();
+    fetchMock.removeRoutes();
   });
   it('should set the "type" property if the path match /captain', async () => {
     await request(gate)

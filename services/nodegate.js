@@ -8,7 +8,6 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const request = require('request');
 const { execute } = require('../entities/route');
 const { getConfiguration } = require('./configuration');
 
@@ -47,17 +46,6 @@ const nodegate = () => {
 
   app.beforeEach = (workers) => {
     toArray(workers).forEach((worker) => beforeEach.push(worker));
-  };
-
-  app.passthrough = (routes) => {
-    toArray(routes).forEach((route) => {
-      expressApp[route.method.toLowerCase()](route.path, (req, res) => {
-        request[route.method.toLowerCase()](route.target, {
-          ...(req.headers && { headers: req.headers }),
-          ...(req.body && { form: req.body }),
-        }).pipe(res);
-      });
-    });
   };
 
   app.route = (routes) => {

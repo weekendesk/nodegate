@@ -6,7 +6,6 @@
  */
 
 const { get, merge } = require('lodash');
-const requestNative = require('request-promise-native');
 const { getConfiguration } = require('./configuration');
 
 const project = (container, value) => {
@@ -67,16 +66,22 @@ const request = (container, method, url, options = {}) => {
     ...requestConfiguration,
     ...configuration,
     ...options,
-    method,
-    uri: typeof url === 'function' ? url(container) : url,
+    method: method.toUpperCase(),
   };
+  const uri = typeof url === 'function' ? url(container) : url;
 
   projectKey('headers', requestOptions, container, options);
-  projectKey('body', requestOptions, container, options);
+  if (['get', 'head'].includes(method)) {
+    requestOptions.body = null;
+  } else {
+    projectKey('body', requestOptions, container, options);
+  }
 
   mergeConfiguration(requestOptions, configuration);
-
-  return requestNative(requestOptions);
+  if (requestOptions.body) {
+    requestOptions.body = JSON.stringify(requestOptions.body);
+  }
+  return fetch(uri, requestOptions);
 };
 
 module.exports = request;
