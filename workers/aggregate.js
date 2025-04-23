@@ -44,7 +44,11 @@ module.exports = (method, url, options = {}) => {
       container.statusCode = response.status;
       if (response.headers.get('content-type') && !isJsonContentType(response.headers.get('content-type'))) {
         const text = await response.text();
-        setBodyToContainer(text, container, options);
+        setBodyToContainer(
+          container.headers['content-type'] === 'application/json' ? JSON.parse(text) : text,
+          container,
+          options,
+        );
         if (!response.ok) {
           throw new WorkflowError('Fetch error', { text, statusCode: response.status });
         }

@@ -458,5 +458,42 @@ describe('workers/aggregate', () => {
       await aggregate('post', 'https://wiki.federation.com/armaments')(container);
       expect(container.body.phasers).toBe(16);
     });
+    it('forces text parsing as json when the container headers is application/json', async () => {
+      const container = {
+        ...getEmpty(),
+        headers: {
+          'content-type': 'application/json',
+        },
+      };
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: '{ "phasers": 16 }',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+        },
+      });
+      await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      expect(container.body.phasers).toBe(16);
+    });
+    it('should throw an error when the parsing failed', async () => {
+      const container = {
+        ...getEmpty(),
+        headers: {
+          'content-type': 'application/json',
+        },
+      };
+      fetchMock.mockGlobal().postOnce('https://wiki.federation.com/armaments', {
+        status: 200,
+        body: '{ "badJSON: true }',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+        },
+      });
+      try {
+        await aggregate('post', 'https://wiki.federation.com/armaments')(container);
+      } catch (err) {
+        expect(err.message).toEqual('SyntaxError: Unterminated string in JSON at position 18');
+      }
+    });
   });
 });
